@@ -14,7 +14,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Prevenção e Combate ao Assédio no Ambiente de Trabalho",
     "categoria": "desenvolvimento",
     "resumo": "Promovendo ambientes de trabalho respeitosos, inclusivos e seguros por meio da conscientização, prevenção e combate ao assédio.",
-    "imagem": "assets/img/treinamentos/assedio.webp",
+    "imagem": "/assets/img/treinamentos/assedio.webp",
     "aprender": [
       "Conceitos de assédio moral e assédio sexual",
       "Diferença entre gestão, cobrança de resultados e assédio",
@@ -59,7 +59,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Desenvolvimento de Lideranças em Segurança",
     "categoria": "desenvolvimento",
     "resumo": "Desenvolvendo líderes capazes de influenciar comportamentos, fortalecer a cultura de segurança e inspirar equipes a trabalharem com segurança como valor.",
-    "imagem": "assets/img/treinamentos/liderancas.webp",
+    "imagem": "/assets/img/treinamentos/liderancas.webp",
     "aprender": [
       "O papel da liderança na Cultura de Segurança",
       "Segurança como valor organizacional",
@@ -106,7 +106,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Integração de Saúde, Segurança e Meio Ambiente (SSMA)",
     "categoria": "normativo",
     "resumo": "Integrando pessoas, fortalecendo a Cultura de Segurança e promovendo ambientes de trabalho mais seguros, saudáveis e sustentáveis.",
-    "imagem": "assets/img/treinamentos/integracao-ssma.webp",
+    "imagem": "/assets/img/treinamentos/integracao-ssma.webp",
     "aprender": [
       "Conceitos fundamentais de Saúde, Segurança e Meio Ambiente (SSMA)",
       "Direitos e deveres dos trabalhadores e empregadores",
@@ -148,7 +148,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Gestão de SSMA e Indicadores de Monitoramento",
     "categoria": "desenvolvimento",
     "resumo": "Desenvolvendo líderes capazes de transformar dados em decisões e fortalecer a Cultura de Segurança nas organizações.",
-    "imagem": "assets/img/treinamentos/gestao-ssma-indicadores.webp",
+    "imagem": "/assets/img/treinamentos/gestao-ssma-indicadores.webp",
     "aprender": [
       "Conceitos fundamentais de Gestão de SSMA",
       "Estruturação de indicadores de desempenho (KPIs)",
@@ -190,7 +190,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 05 – Comissão Interna de Prevenção de Acidentes e de Assédio (CIPA)",
     "categoria": "normativo",
     "resumo": "Formação de membros da CIPA para promover ambientes de trabalho mais seguros, saudáveis e respeitosos.",
-    "imagem": "assets/img/treinamentos/nr05-cipa.webp",
+    "imagem": "/assets/img/treinamentos/nr05-cipa.webp",
     "aprender": [
       "Identificar perigos e riscos presentes no ambiente de trabalho",
       "Contribuir para a prevenção de acidentes e doenças ocupacionais",
@@ -218,7 +218,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 06 – Equipamentos de Proteção Individual (EPI)",
     "categoria": "normativo",
     "resumo": "Promovendo o uso consciente dos Equipamentos de Proteção Individual para fortalecer a segurança e preservar vidas.",
-    "imagem": "assets/img/treinamentos/nr06-epi.webp",
+    "imagem": "/assets/img/treinamentos/nr06-epi.webp",
     "aprender": [
       "Conceitos e fundamentos da NR 06",
       "Responsabilidades do empregador e dos trabalhadores",
@@ -258,7 +258,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Curso Básico",
     "categoria": "normativo",
     "resumo": "Capacitando profissionais para atuar com segurança em instalações e serviços com eletricidade.",
-    "imagem": "assets/img/treinamentos/nr10-basico.webp",
+    "imagem": "/assets/img/treinamentos/nr10-basico.webp",
     "aprender": [
       "Conceitos básicos de eletricidade",
       "Riscos em instalações e serviços com eletricidade",
@@ -296,7 +296,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Sistema Elétrico de Potência (SEP)",
     "categoria": "normativo",
     "resumo": "Preparando profissionais para atuar com segurança em atividades envolvendo o Sistema Elétrico de Potência e suas proximidades.",
-    "imagem": "assets/img/treinamentos/nr10-sep.webp",
+    "imagem": "/assets/img/treinamentos/nr10-sep.webp",
     "aprender": [
       "Características do Sistema Elétrico de Potência (SEP)",
       "Organização do trabalho em atividades com SEP",
@@ -334,7 +334,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Operação Segura de Equipamentos de Movimentação de Cargas",
     "categoria": "normativo",
     "resumo": "Capacitando operadores para atuar com segurança, eficiência e responsabilidade na movimentação de materiais.",
-    "imagem": "assets/img/treinamentos/nr11-movimentacao-cargas.webp",
+    "imagem": "/assets/img/treinamentos/nr11-movimentacao-cargas.webp",
     "aprender": [
       "Conceitos e requisitos aplicáveis à NR 11",
       "Princípios de movimentação e armazenagem de materiais",
@@ -420,7 +420,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 12 – Segurança no Trabalho em Máquinas e Equipamentos",
     "categoria": "normativo",
     "resumo": "Desenvolvendo profissionais capacitados para atuar com segurança na operação, inspeção, manutenção e intervenção em máquinas e equipamentos.",
-    "imagem": "assets/img/treinamentos/nr12-maquinas.webp",
+    "imagem": "/assets/img/treinamentos/nr12-maquinas.webp",
     "aprender": [
       "Fundamentos e requisitos da NR 12",
       "Identificação de perigos e avaliação de riscos em máquinas e equipamentos",
@@ -462,7 +462,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Segurança na Operação de Caldeiras",
     "categoria": "normativo",
     "resumo": "Capacitando operadores para atuar com segurança, responsabilidade e eficiência na operação de caldeiras.",
-    "imagem": "assets/img/treinamentos/nr13-caldeiras.webp",
+    "imagem": "/assets/img/treinamentos/nr13-caldeiras.webp",
     "aprender": [
       "Fundamentos da NR 13",
       "Princípios de funcionamento das caldeiras",
@@ -499,7 +499,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Operação de Unidades de Processo",
     "categoria": "normativo",
     "resumo": "Desenvolvendo profissionais preparados para atuar com segurança em processos industriais que envolvem equipamentos abrangidos pela NR 13.",
-    "imagem": "assets/img/treinamentos/nr13-unidades-processo.webp",
+    "imagem": "/assets/img/treinamentos/nr13-unidades-processo.webp",
     "aprender": [
       "Fundamentos da NR 13",
       "Conceitos básicos de processos industriais",
@@ -538,7 +538,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Ergonomia e Qualidade de Vida no Trabalho",
     "categoria": "normativo",
     "resumo": "Promovendo saúde, bem-estar e desempenho por meio da adaptação do trabalho às características e necessidades das pessoas.",
-    "imagem": "assets/img/treinamentos/nr17-ergonomia.webp",
+    "imagem": "/assets/img/treinamentos/nr17-ergonomia.webp",
     "aprender": [
       "Fundamentos e princípios da ergonomia",
       "Conceitos de adaptação do trabalho ao ser humano",
@@ -580,7 +580,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 18 – Segurança e Saúde no Trabalho na Indústria da Construção",
     "categoria": "normativo",
     "resumo": "Capacitando profissionais para atuar com segurança, responsabilidade e conformidade nos ambientes da construção civil.",
-    "imagem": "assets/img/treinamentos/nr18-construcao.webp",
+    "imagem": "/assets/img/treinamentos/nr18-construcao.webp",
     "aprender": [
       "Fundamentos da NR 18",
       "Identificação de perigos e avaliação de riscos",
@@ -647,7 +647,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 20 – Segurança e Saúde no Trabalho com Inflamáveis e Combustíveis",
     "categoria": "normativo",
     "resumo": "Capacitando profissionais para atuar com segurança em atividades que envolvem inflamáveis e combustíveis, preservando vidas, instalações e o meio ambiente.",
-    "imagem": "assets/img/treinamentos/nr20-inflamaveis.webp",
+    "imagem": "/assets/img/treinamentos/nr20-inflamaveis.webp",
     "aprender": [
       "Conceitos fundamentais sobre inflamáveis e combustíveis",
       "Identificação de perigos e avaliação de riscos",
@@ -718,7 +718,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 26 – Sinalização de Segurança",
     "categoria": "normativo",
     "resumo": "Promovendo ambientes de trabalho mais seguros por meio da identificação, comunicação e prevenção de riscos.",
-    "imagem": "assets/img/treinamentos/nr26-sinalizacao.webp",
+    "imagem": "/assets/img/treinamentos/nr26-sinalizacao.webp",
     "aprender": [
       "Fundamentos da NR 26 – Sinalização de Segurança",
       "Objetivos e importância da sinalização de segurança",
@@ -761,7 +761,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 33 – Segurança e Saúde nos Trabalhos em Espaços Confinados",
     "categoria": "normativo",
     "resumo": "Capacitando profissionais para identificar riscos, prevenir acidentes e atuar com segurança em atividades realizadas em espaços confinados.",
-    "imagem": "assets/img/treinamentos/nr33-espacos-confinados.webp",
+    "imagem": "/assets/img/treinamentos/nr33-espacos-confinados.webp",
     "aprender": [
       "Conceitos e definições de espaço confinado",
       "Identificação de perigos e avaliação de riscos",
@@ -818,7 +818,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "NR 35 – Trabalho em Altura",
     "categoria": "normativo",
     "resumo": "Capacitando profissionais para atuar com segurança, planejamento e responsabilidade em atividades realizadas acima de dois metros de altura.",
-    "imagem": "assets/img/treinamentos/nr35-trabalho-altura.webp",
+    "imagem": "/assets/img/treinamentos/nr35-trabalho-altura.webp",
     "aprender": [
       "Fundamentos e requisitos da NR 35",
       "Conceitos de trabalho em altura",
@@ -865,7 +865,7 @@ window.LTS_TREINAMENTOS = [
     "titulo": "Brigada de Incêndio",
     "categoria": "emergencia",
     "resumo": "Capacitando pessoas para proteger vidas, preservar patrimônios e atuar com eficiência em situações de emergência.",
-    "imagem": "assets/img/treinamentos/brigada-incendio.webp",
+    "imagem": "/assets/img/treinamentos/brigada-incendio.webp",
     "aprender": [
       "Conceitos fundamentais de prevenção e combate a incêndios",
       "Teoria do fogo e seus elementos",

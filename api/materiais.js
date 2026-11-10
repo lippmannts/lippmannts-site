@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     if (error) throw error;
     const lista = (data || []).map((m) => ({
       ...m,
-      arquivo: m.arquivo ? (/^https?:\/\//.test(m.arquivo) || m.arquivo.startsWith("materiais/") ? m.arquivo : db().storage.from(BUCKET_MATERIAIS).getPublicUrl(m.arquivo).data.publicUrl) : "",
+      arquivo: m.arquivo ? (/^https?:\/\//.test(m.arquivo) || /^\/?materiais\//.test(m.arquivo) ? m.arquivo : db().storage.from(BUCKET_MATERIAIS).getPublicUrl(m.arquivo).data.publicUrl) : "",
     }));
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json; charset=utf-8");

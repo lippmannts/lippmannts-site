@@ -71,8 +71,8 @@ lippmannts/
 
 ### 2. GitHub
 1. Crie um repositório **privado** (por exemplo `lippmannts`).
-2. Clique em **Add file › Upload files** e arraste **todo o conteúdo** desta pasta, mantendo as subpastas. Depois clique em **Commit changes**.
-   O arquivo `.env.example` vai junto, mas não contém nenhuma senha.
+2. Envie os arquivos pelo **GitHub Desktop**: clone o repositório, copie para dentro dele todo o conteúdo desta pasta e clique em **Commit** e depois em **Push**.
+   Evite o envio pelo navegador: ele pode perder as subpastas e corromper imagens e PDFs.
 
 ### 3. Vercel
 1. Em vercel.com, clique em **Add New › Project**, escolha o repositório e, em *Framework Preset*, deixe **Other**. Não é preciso comando de build.
@@ -90,6 +90,15 @@ lippmannts/
 
 3. Clique em **Deploy**. Em cerca de 1 minuto o site estará em `seu-projeto.vercel.app`, o **endereço de teste**.
 4. Para usar o domínio: em **Settings › Domains**, adicione `www.lippmannts.com` e `lippmannts.com` e siga as instruções de DNS mostradas pela Vercel (no Registro.br ou onde o domínio estiver registrado).
+
+### Onde encontrar cada chave no Supabase
+- **SUPABASE_URL**: *Project Settings › Data API › Project URL*. O formato é `https://abcdefghijklmnop.supabase.co`, sem barra no final e sem `/rest/v1`. O botão **Connect**, no topo do projeto, também mostra esse endereço.
+- **SUPABASE_SERVICE_ROLE_KEY** (secreta): *Project Settings › API Keys*. Na aba **Legacy API Keys**, copie a chave **service_role** (clique em *Reveal*); ela começa com `eyJ`. A **Secret key** (`sb_secret_…`) da aba **API Keys** também serve.
+- **SUPABASE_ANON_KEY** (pública): na mesma tela, a chave **anon public** (`eyJ…`) ou a **Publishable key** (`sb_publishable_…`).
+- Depois de cadastrar ou alterar variáveis na Vercel, é obrigatório ir em **Deployments › ⋯ › Redeploy**. As funções só leem as variáveis em um novo deploy.
+
+### Verificação do site
+Abra **`/integra/diagnostico.html`**. A página mostra, item por item, se as variáveis, as tabelas, os buckets, o e-mail e todos os arquivos (imagens e PDFs) estão corretos, e o que fazer quando algo falha.
 
 ### 4. Primeiro acesso ao L³ INTEGRA
 - Acesse `/integra/` com **admin / PassaporteLTSAdmin**. Os usuários padrão são criados nesse primeiro login.

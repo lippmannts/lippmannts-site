@@ -13,7 +13,7 @@ window.LTS_CONTEUDOS = [
     "tipo": "Apresentação",
     "tema": "Portfólio",
     "resumo": "Exemplo de visualização integrada: o material abre na tela, página a página, sem botão de download.",
-    "arquivo": "materiais/exemplo-catalogo-treinamentos.pdf",
+    "arquivo": "/materiais/exemplo-catalogo-treinamentos.pdf",
     "youtube": "",
     "paginas": 24
   },
@@ -24,7 +24,7 @@ window.LTS_CONTEUDOS = [
     "tipo": "Vídeo-aula",
     "tema": "SSMA",
     "resumo": "Exemplo de material com vídeo do YouTube ao lado do PDF, para assistir e acompanhar o conteúdo ao mesmo tempo.",
-    "arquivo": "materiais/exemplo-catalogo-solucoes.pdf",
+    "arquivo": "/materiais/exemplo-catalogo-solucoes.pdf",
     "youtube": "EXEMPLO",
     "paginas": 5
   }

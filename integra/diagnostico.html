@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Verificação do site · L³ INTEGRA</title>
+<link rel="icon" href="/assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/integra/integra.css">
+<style>
+  .diag { max-width: 980px; margin: 0 auto; padding: calc(28px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 48px max(16px, env(safe-area-inset-left, 0px)); display: grid; gap: 22px; }
+  .diag h1 { font: 400 2.4rem/1 var(--f-titulo); color: var(--azul-lippmann); }
+  .diag .resumo { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .chk { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+  .chk li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--linha); }
+  .chk li:last-child { border-bottom: 0; }
+  .chk .st { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font: 700 .8rem/1 var(--f-rotulo); color: #fff; }
+  .chk .ok { background: var(--verde); } .chk .no { background: var(--vermelho); } .chk .wait { background: var(--azul-nevoa); }
+  .chk b { color: var(--azul-lippmann); font-weight: 600; }
+  .chk small { display: block; color: var(--cinza-medio); font-size: .82rem; margin-top: 2px; word-break: break-word; }
+  .chk .ajuda { color: var(--amarelo); }
+  .grupo-t { font: 700 .7rem/1 var(--f-rotulo); letter-spacing: .12em; text-transform: uppercase; color: var(--cinza-medio); margin: 10px 0 2px; }
+  .barra { height: 8px; border-radius: 4px; background: var(--fundo); overflow: hidden; } .barra i { display: block; height: 100%; width: 0; background: var(--azul-sinal); transition: width .2s; }
+</style>
+</head>
+<body>
+<main class="diag">
+  <div>
+    <a href="/integra/" style="font-size:.86rem">← Voltar ao L³ INTEGRA</a>
+    <h1 style="margin-top:10px">Verificação do site</h1>
+    <p class="desc" style="color:var(--cinza-medio)">Confere a configuração do servidor (Vercel + Supabase + e-mail) e se todos os arquivos do site chegaram intactos ao GitHub. Nenhuma senha é exibida.</p>
+  </div>
+
+  <section class="card">
+    <div class="card-cab"><div><h2>1. Servidor, banco de dados e e-mail</h2><p class="desc" id="srv-status">Verificando…</p></div><button class="btn btn-sec" type="button" id="bt-srv">Verificar de novo</button></div>
+    <div id="srv"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-cab"><div><h2>2. Arquivos do site (imagens, PDFs, estilos e scripts)</h2><p class="desc" id="arq-status">Clique em Verificar para comparar cada arquivo publicado com o original.</p></div><button class="btn btn-primario" type="button" id="bt-arq">Verificar arquivos</button></div>
+    <div class="barra" id="barra" hidden><i></i></div>
+    <ul class="chk" id="arq"></ul>
+  </section>
+</main>
+<script>
+(function () {
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const linha = (ok, nome, det, ajuda) => `<li><span class="st ${ok === null ? "wait" : ok ? "ok" : "no"}">${ok === null ? "…" : ok ? "✓" : "!"}</span><div><b>${esc(nome)}</b><small>${esc(det || "")}</small>${!ok && ajuda ? `<small class="ajuda">Como resolver: ${esc(ajuda)}</small>` : ""}</div></li>`;
+
+  async function servidor() {
+    $("srv-status").textContent = "Verificando…"; $("srv").innerHTML = "";
+    try {
+      const r = await fetch("/api/diagnostico", { cache: "no-store" });
+      if (r.status === 404) throw new Error("A pasta api/ não foi encontrada na Vercel. Confira se ela está no GitHub, na raiz do repositório.");
+      const j = await r.json();
+      let g = "", html = "";
+      j.itens.forEach(i => { if (i.grupo !== g) { g = i.grupo; html += `<p class="grupo-t">${esc(g)}</p>`; } html += `<ul class="chk">${linha(i.ok, i.nome, i.detalhe, i.ajuda)}</ul>`; });
+      $("srv").innerHTML = html;
+      const falhas = j.itens.filter(i => !i.ok).length;
+      $("srv-status").innerHTML = falhas ? `<span class="pill p-alerta">${falhas} item(ns) para corrigir</span> Ambiente: ${esc(j.ambiente)} · Node ${esc(j.node)}` : `<span class="pill p-ok">Tudo certo</span> Ambiente: ${esc(j.ambiente)} · Node ${esc(j.node)}`;
+    } catch (e) {
+      $("srv-status").innerHTML = `<span class="pill p-alerta">Falha</span> ${esc(e.message || "Não foi possível consultar o servidor.")}`;
+    }
+  }
+
+  async function sha256(buf) {
+    const h = await crypto.subtle.digest("SHA-256", buf);
+    return [...new Uint8Array(h)].map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+  async function arquivos() {
+    const bt = $("bt-arq"); bt.disabled = true; $("arq").innerHTML = ""; $("barra").hidden = false;
+    let lista;
+    try { lista = await (await fetch("/integra/manifesto.json", { cache: "no-store" })).json(); }
+    catch (e) { $("arq-status").innerHTML = `<span class="pill p-alerta">Falha</span> O arquivo integra/manifesto.json não foi encontrado.`; bt.disabled = false; return; }
+    const ruins = []; let feitos = 0;
+    const fila = lista.slice();
+    async function trabalhador() {
+      while (fila.length) {
+        const f = fila.shift();
+        let ok = false, det = "";
+        try {
+          const r = await fetch("/" + f.p, { cache: "no-store" });
+          if (!r.ok) det = `Não encontrado (erro ${r.status})`;
+          else {
+            const buf = await r.arrayBuffer();
+            if (buf.byteLength !== f.b) det = `Tamanho diferente: ${buf.byteLength} bytes (esperado ${f.b}). O arquivo foi alterado ou corrompido no envio.`;
+            else if (await sha256(buf) !== f.h) det = "Conteúdo diferente do original (arquivo corrompido no envio).";
+            else ok = true;
+          }
+        } catch (e) { det = "Falha ao baixar o arquivo."; }
+        if (!ok) ruins.push({ p: f.p, det });
+        feitos++; $("barra").firstElementChild.style.width = (feitos / lista.length * 100) + "%";
+        $("arq-status").textContent = `Verificando ${feitos} de ${lista.length} arquivos…`;
+      }
+    }
+    await Promise.all([1, 2, 3, 4].map(trabalhador));
+    $("arq").innerHTML = ruins.length ? ruins.map(r => linha(false, r.p, r.det, "envie de novo este arquivo para o GitHub, na mesma pasta, pelo GitHub Desktop (não pelo navegador).")).join("") : linha(true, "Todos os arquivos conferem com os originais", `${lista.length} arquivos verificados`);
+    $("arq-status").innerHTML = ruins.length ? `<span class="pill p-alerta">${ruins.length} arquivo(s) com problema</span> de ${lista.length}` : `<span class="pill p-ok">Tudo certo</span> ${lista.length} arquivos íntegros`;
+    bt.disabled = false;
+  }
+  $("bt-srv").onclick = servidor; $("bt-arq").onclick = arquivos;
+  servidor();
+})();
+</script>
+</body>
+</html>

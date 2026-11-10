@@ -1,1 +1,0 @@
-# lippmannts-site

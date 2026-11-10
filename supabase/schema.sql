@@ -129,9 +129,9 @@ on conflict (chave) do nothing;
 
 insert into public.materiais (id, titulo, area, tipo, tema, resumo, arquivo, youtube, paginas, ordem) values
   ('exemplo-catalogo-treinamentos', 'Catálogo de Treinamentos (material de exemplo)', 'treinamentos', 'Apresentação', 'Portfólio',
-   'Exemplo de visualização integrada: o material abre na tela, página a página, sem botão de download.', 'materiais/exemplo-catalogo-treinamentos.pdf', '', 24, 900),
+   'Exemplo de visualização integrada: o material abre na tela, página a página, sem botão de download.', '/materiais/exemplo-catalogo-treinamentos.pdf', '', 24, 900),
   ('exemplo-catalogo-solucoes', 'Catálogo de Soluções + vídeo (material de exemplo)', 'solucoes', 'Vídeo-aula', 'SSMA',
-   'Exemplo de material com vídeo do YouTube junto do PDF.', 'materiais/exemplo-catalogo-solucoes.pdf', 'EXEMPLO', 5, 901)
+   'Exemplo de material com vídeo do YouTube junto do PDF.', '/materiais/exemplo-catalogo-solucoes.pdf', 'EXEMPLO', 5, 901)
 on conflict (id) do nothing;
 
 -- Os usuários "admin" e "marketing" são criados automaticamente no primeiro login do painel.

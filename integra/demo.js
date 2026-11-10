@@ -184,7 +184,7 @@
         case "arquivos": return ok({ arquivos: ["index.html", "a-lippmann.html", "treinamentos.html", "solucoes.html", "conteudo.html", "fale-conosco.html", "trabalhe-conosco.html", "assets/css/style.css", "assets/js/config.js", "assets/js/layout.js", "assets/js/catalogo.js", "data/treinamentos.js", "data/solucoes.js", "data/conteudos.js"].map(c => ({ caminho: c })) });
         case "arquivo": {
           const caminho = decodeURIComponent((query.split("caminho=")[1] || ""));
-          try { const r = await fetch("../" + caminho); return ok({ conteudo: r.ok ? await r.text() : "Arquivo indisponível na demonstração." }); }
+          try { const r = await fetch("/" + caminho); return ok({ conteudo: r.ok ? await r.text() : "Arquivo indisponível na demonstração." }); }
           catch (e) { return ok({ conteudo: "Arquivo indisponível na demonstração." }); }
         }
       }

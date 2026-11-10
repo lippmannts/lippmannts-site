@@ -209,3 +209,13 @@ pre.codigo { margin: 0; max-height: 60vh; overflow: auto; background: #0F1726; c
 
 .toast { position: fixed; z-index: 100; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--grafite); color: #fff; padding: 12px 18px; border-radius: 8px; font-size: .88rem; box-shadow: 0 10px 30px rgba(0,0,0,.25); max-width: calc(100vw - 32px); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* Slogan do login: as três palavras entram em sequência */
+.slogan-l3 { margin: 22px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: .35em .5em; font: 400 clamp(1.6rem, 3.2vw, 2.4rem)/1.05 var(--f-titulo); letter-spacing: .04em; text-transform: uppercase; color: var(--branco); }
+.slogan-l3 i { font-style: normal; color: var(--azul-nevoa); }
+.slogan-l3 span { opacity: 0; transform: translateY(8px); animation: slogan .6s ease-out forwards; }
+.slogan-l3 span:nth-of-type(2) { animation-delay: .35s; }
+.slogan-l3 span:nth-of-type(3) { animation-delay: .7s; color: var(--azul-nevoa); }
+@keyframes slogan { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .slogan-l3 span { opacity: 1; transform: none; animation: none; } }
+#lg-diag { display: block; text-decoration: none; }

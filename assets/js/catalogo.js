@@ -78,9 +78,12 @@
           ${t.beneficios && t.beneficios.length ? `<div><span class="rot">Benefícios para a organização</span>${lista(t.beneficios)}</div>` : ""}
           ${extra}
           <div class="caixa-azul"><span class="rot">Por que investir nesse treinamento</span><p>${esc(t.porque)}</p></div>
+          <a class="doc-mini" href="${(window.LTS_CONFIG.downloads.pastaFichas || "/downloads/fichas/") + t.id}.pdf" download="Ficha-Tecnica-LIPPMANN-${t.id}.pdf" data-track="download:ficha-${t.id}">
+            <span class="doc-mini-capa"><img src="/assets/img/previews/fichas/${t.id}.webp" alt="" width="300" height="424" loading="lazy"><span class="doc-selo">PDF</span></span>
+            <span class="doc-mini-txt"><b>Ficha técnica · ${esc(t.nr || t.titulo)}</b><small>PDF pronto para enviar ao cliente, com WhatsApp e contatos</small><span class="doc-mini-acao">${I.download} Baixar ficha</span></span>
+          </a>
           <div class="ficha-acoes">
             <a class="btn btn-whats" href="${window.LTS_WA(msg)}" target="_blank" rel="noopener" data-track="whatsapp-proposta:${t.id}">${I.whatsapp} Solicitar proposta</a>
-            <a class="btn btn-contorno" href="${(window.LTS_CONFIG.downloads.pastaFichas || "downloads/fichas/") + t.id}.pdf" download="Ficha-Tecnica-LIPPMANN-${t.id}.pdf" data-track="download:ficha-${t.id}">${I.download} Baixar ficha em PDF</a>
             <a class="btn btn-contorno" href="fale-conosco.html?assunto=TREINAMENTOS&ref=${encodeURIComponent(t.titulo)}">Enviar mensagem</a>
           </div>
         </div>

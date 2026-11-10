@@ -9,13 +9,13 @@
 <meta property="og:description" content="Conheça a LIPPMANN Treinamentos e Soluções: nossa história, missão, visão, valores, linha do tempo e por que escolher a LIPPMANN em SSMA.">
 <meta property="og:image" content="assets/img/fotos/capa-2.webp">
 <meta name="theme-color" content="#0A3490">
-<link rel="icon" href="assets/img/marca/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/img/marca/favicon-32.png" sizes="32x32">
-<link rel="apple-touch-icon" href="assets/img/marca/apple-touch-icon.png">
+<link rel="icon" href="/assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body data-page="a-lippmann">
 <div id="site-header"></div>
@@ -26,7 +26,7 @@
       <p class="trilha"><a href="index.html">Início</a> / A LIPPMANN</p>
       <h1>A LIPPMANN</h1>
       <p class="lead">“Compromisso, Responsabilidade e Objetivo”</p>
-      <p><a class="btn btn-claro" data-download="apresentacao" href="#" target="_blank" rel="noopener" data-track="download:apresentacao-institucional"><i data-icon="download"></i> Baixar apresentação institucional</a></p>
+      <p><a class="btn btn-claro" href="#apresentacao"><i data-icon="file"></i> Apresentação institucional em PDF</a></p>
     </div>
   </section>
   <nav class="subnav" aria-label="Seções da página">
@@ -49,14 +49,25 @@
           <h2 id="hist-titulo">Nossa história</h2>
         </div>
         <div class="hist-fotos">
-          <div class="losango-foto"><img src="assets/img/fotos/historia-1.webp" alt="Instrutor da LIPPMANN conduzindo treinamento em sala" width="800" height="800" loading="lazy"></div>
-          <div class="losango-foto"><img src="assets/img/fotos/historia-2.webp" alt="Treinamento prático de operação de empilhadeira" width="800" height="800" loading="lazy"></div>
+          <div class="losango-foto"><img src="/assets/img/fotos/historia-1.webp" alt="Instrutor da LIPPMANN conduzindo treinamento em sala" width="800" height="800" loading="lazy"></div>
+          <div class="losango-foto"><img src="/assets/img/fotos/historia-2.webp" alt="Treinamento prático de operação de empilhadeira" width="800" height="800" loading="lazy"></div>
         </div>
-        <div class="dl-box">
-          <span class="ic"><i data-icon="file"></i></span>
-          <span><b>Apresentação Institucional</b><span>LTS-INS-001 · REV00 · PDF</span></span>
-          <a class="btn btn-primario" data-download="apresentacao" href="#" target="_blank" rel="noopener" data-track="download:apresentacao-institucional"><i data-icon="download"></i> Baixar</a>
-        </div>
+        <article class="doc" id="apresentacao">
+          <a class="doc-capa" data-download="apresentacao" href="#" target="_blank" rel="noopener" data-track="arquivo:apresentacao-institucional" aria-label="Visualizar Apresentação Institucional (PDF)">
+            <img src="/assets/img/previews/apresentacao.webp" alt="Capa: Apresentação Institucional" width="420" height="594" loading="lazy">
+            <span class="doc-selo">PDF</span>
+            <span class="doc-olho"><i data-icon="eye"></i></span>
+          </a>
+          <div class="doc-info">
+            <span class="doc-ref">LTS-INS-001 · REV00</span>
+            <h3>Apresentação Institucional</h3>
+            <p class="doc-meta"><span>9 páginas</span><span>1,2 MB</span><span>com links de WhatsApp</span></p>
+            <div class="doc-acoes">
+              <a class="doc-bt doc-bt-pri" data-download="apresentacao" href="#" download data-track="download:apresentacao-institucional"><i data-icon="download"></i> Baixar PDF</a>
+              <a class="doc-bt" data-download="apresentacao" href="#" target="_blank" rel="noopener" data-track="arquivo:apresentacao-institucional"><i data-icon="eye"></i> Visualizar</a>
+            </div>
+          </div>
+        </article>
       </div>
       <div class="texto-longo">
         <p>A LIPPMANN TREINAMENTOS E SOLUÇÕES LTDA nasceu da convicção de que pessoas bem capacitadas são o principal diferencial para a construção de organizações mais seguras, produtivas e sustentáveis.</p>
@@ -136,7 +147,7 @@
       <div class="dupla" style="align-items:start">
         <div style="display:grid;gap:28px">
           <div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Diferenciais</span><h2 id="pq-titulo">Por que escolher a LIPPMANN</h2></div>
-          <div class="losango-foto" style="max-width:420px"><img src="assets/img/fotos/por-que-escolher.webp" alt="Turma de participantes em treinamento da LIPPMANN em ambiente industrial" width="800" height="800" loading="lazy"></div>
+          <div class="losango-foto" style="max-width:420px"><img src="/assets/img/fotos/por-que-escolher.webp" alt="Turma de participantes em treinamento da LIPPMANN em ambiente industrial" width="800" height="800" loading="lazy"></div>
         </div>
         <div class="razoes"><div class="razao"><span class="n">1</span><div><h4>PORTFÓLIO COMPLETO DE CAPACITAÇÃO E DESENVOLVIMENTO</h4><p>Oferecemos treinamentos e soluções que abrangem desde requisitos normativos até programas estratégicos de desenvolvimento organizacional, contribuindo para a formação de profissionais mais preparados, conscientes e comprometidos com a segurança, a saúde e a excelência operacional.</p></div></div><div class="razao"><span class="n">2</span><div><h4>SOLUÇÕES PERSONALIZADAS PARA CADA REALIDADE</h4><p>Entendemos que cada organização possui desafios, riscos e objetivos únicos. Por isso, desenvolvemos treinamentos e soluções customizadas, alinhadas às características operacionais, culturais e estratégicas de cada cliente, garantindo maior efetividade na aplicação dos conhecimentos e resultados sustentáveis.</p></div></div><div class="razao"><span class="n">3</span><div><h4>SEGURANÇA COM RESPONSABILIDADE E CONFORMIDADE</h4><p>Atuamos com rigor técnico e constante atualização normativa, auxiliando organizações no atendimento aos requisitos legais e no fortalecimento de sistemas de gestão que promovam ambientes de trabalho mais seguros, saudáveis e em conformidade com a legislação vigente.</p></div></div><div class="razao"><span class="n">4</span><div><h4>INOVAÇÃO QUE GERA RESULTADOS</h4><p>Acreditamos que o aprendizado deve evoluir junto com os desafios do mercado. Por isso, buscamos continuamente novas metodologias, tecnologias e práticas de gestão que tornem nossos treinamentos e soluções mais eficientes, dinâmicos e aderentes às necessidades atuais das organizações.</p></div></div><div class="razao"><span class="n">5</span><div><h4>APRENDIZAGEM QUE TRANSFORMA COMPORTAMENTOS</h4><p>Mais do que transmitir conhecimento, buscamos gerar mudanças reais. Utilizamos metodologias ativas de ensino, estudos de caso, simulações e experiências práticas que estimulam o protagonismo dos participantes e fortalecem a retenção do aprendizado, contribuindo para a construção de uma Cultura de Segurança sólida e duradoura.</p></div></div></div>
       </div>
@@ -166,7 +177,7 @@
           <span class="eyebrow">Clientes</span>
           <h2 id="cli-titulo">Alguns de nossos clientes</h2>
         </div>
-        <div class="clientes-img"><img src="assets/img/fotos/clientes.webp" alt="Logotipos de clientes: Boa Supermercados, Empório Dom Olívio, Agrana, Comfrio, ID Logistics, Solpi, SuperFrio, Multilog e Messer" width="1273" height="821" loading="lazy"></div>
+        <div class="clientes-img"><img src="/assets/img/fotos/clientes.webp" alt="Logotipos de clientes: Boa Supermercados, Empório Dom Olívio, Agrana, Comfrio, ID Logistics, Solpi, SuperFrio, Multilog e Messer" width="1273" height="821" loading="lazy"></div>
       </div>
       <div class="depos">
         <figure class="depo" style="margin:0"><span class="aspas" aria-hidden="true">“</span>
@@ -188,8 +199,8 @@
 
 <div id="site-footer"></div>
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/layout.js"></script>
+<script src="/assets/js/config.js"></script>
+<script src="/assets/js/layout.js"></script>
 <script>document.getElementById("link-google").href = LTS_CONFIG.redes.google.url;</script>
 </body>
 </html>

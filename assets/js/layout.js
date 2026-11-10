@@ -43,7 +43,8 @@
     mini: s('<rect x="3" y="4" width="18" height="14" rx="2"/><rect x="12" y="11" width="7" height="5" rx="1" fill="currentColor"/>'),
     expand: s('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'),
     shrink: s('<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>'),
-    upload: s('<path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/>')
+    upload: s('<path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/>'),
+    eye: s('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>')
   };
   window.LTS_ICON = ICON;
 
@@ -71,13 +72,13 @@
     </div>
     <header class="site-header">
       <div class="wrap">
-        <a class="logo" href="index.html" aria-label="LIPPMANN Treinamentos e Soluções — página inicial">
-          <img src="assets/img/marca/LTS-LOGO-HOR-AZUL_REV01.svg" alt="LIPPMANN Treinamentos e Soluções" width="250" height="19">
+        <a class="logo" href="/index.html" aria-label="LIPPMANN Treinamentos e Soluções — página inicial">
+          <img src="/assets/img/marca/LTS-LOGO-HOR-AZUL_REV01.svg" alt="LIPPMANN Treinamentos e Soluções" width="250" height="19">
         </a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principal" aria-label="Abrir menu">${ICON.menu}</button>
         <nav class="nav" id="nav-principal" aria-label="Navegação principal">
           ${MENU.map(m => `<a href="${m.href}"${m.id === atual ? ' aria-current="page"' : ""}>${m.rotulo}</a>`).join("")}
-          <a class="nav-integra" href="integra/" title="Área restrita da equipe LIPPMANN">${ICON.lock}<span>L³ INTEGRA</span></a>
+          <a class="nav-integra" href="/integra/" title="Área restrita da equipe LIPPMANN">${ICON.lock}<span>L³ INTEGRA</span></a>
         </nav>
         <a class="btn btn-primario header-cta" href="fale-conosco.html">Solicitar proposta</a>
       </div>
@@ -100,7 +101,7 @@
       <div class="wrap">
         <div class="foot-grid">
           <div>
-            <img class="foot-logo" src="assets/img/marca/LTS-LOGO-EMP-BRANCO_REV01.svg" alt="LIPPMANN Treinamentos e Soluções" width="240" height="45">
+            <img class="foot-logo" src="/assets/img/marca/LTS-LOGO-EMP-BRANCO_REV01.svg" alt="LIPPMANN Treinamentos e Soluções" width="240" height="45">
             <p class="foot-slogan">“${C.empresa.slogan}”</p>
             <p>${C.empresa.manifesto}</p>
             <div class="foot-redes">
@@ -113,7 +114,7 @@
           <div>
             <h4>Navegação</h4>
             <ul>
-              <li><a href="index.html">Início</a></li>
+              <li><a href="/index.html">Início</a></li>
               ${MENU.map(m => `<li><a href="${m.href}">${m.rotulo}</a></li>`).join("")}
               <li><a href="trabalhe-conosco.html"><b>Trabalhe Conosco</b></a></li>
               <li><a href="politica-de-privacidade.html">Política de Privacidade</a></li>
@@ -133,9 +134,12 @@
             <ul class="foot-contato">
               <li>${ICON.whatsapp}<a href="${wa()}" target="_blank" rel="noopener" data-track="whatsapp">${C.contato.whatsappExibicao}</a></li>
               <li>${ICON.mail}<span><a href="mailto:${C.contato.emailComercial}" data-track="email">${C.contato.emailComercial}</a><br><small>Comercial</small></span></li>
-              <li>${ICON.globe}<a href="index.html">${C.contato.site}</a></li>
+              <li>${ICON.globe}<a href="/index.html">${C.contato.site}</a></li>
             </ul>
-            <p style="margin-top:18px"><a class="btn btn-contorno foot-dl" href="${C.downloads.apresentacao}" target="_blank" rel="noopener" data-track="download:apresentacao-institucional">${ICON.download} Apresentação institucional</a></p>
+            <a class="doc-mini doc-mini-escuro" href="${C.downloads.apresentacao}" target="_blank" rel="noopener" data-track="arquivo:apresentacao-institucional">
+              <span class="doc-mini-capa"><img src="/assets/img/previews/apresentacao.webp" alt="" width="420" height="594" loading="lazy"><span class="doc-selo">PDF</span></span>
+              <span class="doc-mini-txt"><b>Apresentação institucional</b><small>9 páginas · 1,2 MB</small><span class="doc-mini-acao">${ICON.eye} Visualizar</span></span>
+            </a>
           </div>
         </div>
         <div class="foot-base">

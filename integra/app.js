@@ -39,7 +39,7 @@
       if (form) opt.body = form; else { opt.headers["Content-Type"] = "application/json"; opt.body = JSON.stringify(corpo); }
     }
     try {
-      const r = await fetch(`../api/painel?acao=${acao}${query ? "&" + query : ""}`, opt);
+      const r = await fetch(`/api/painel?acao=${acao}${query ? "&" + query : ""}`, opt);
       const j = await r.json().catch(() => ({ ok: false, mensagem: "Resposta inválida do servidor." }));
       if (r.status === 401 && acao !== "login") { mostrarLogin("Sua sessão expirou. Entre novamente."); }
       return j;
@@ -84,7 +84,7 @@
     const bt = e.target.querySelector("button"); bt.disabled = true;
     const r = await api("login", { corpo: { usuario: $("lg-usuario").value.trim(), senha: $("lg-senha").value } });
     bt.disabled = false;
-    if (!r.ok) { $("lg-erro").hidden = false; $("lg-erro").textContent = r.mensagem || "Não foi possível entrar."; return; }
+    if (!r.ok) { $("lg-erro").hidden = false; $("lg-erro").textContent = r.mensagem || "Não foi possível entrar."; $("lg-diag").hidden = !r.diagnostico; return; }
     $("lg-senha").value = "";
     entrar(r.usuario, r.token, r.senha_padrao);
   });
@@ -453,7 +453,7 @@
       <div class="linha-acoes">
         ${tel ? `<a class="btn btn-whats" href="https://wa.me/${tel.length <= 11 ? "55" + tel : tel}?text=${encodeURIComponent(waMsg)}" target="_blank" rel="noopener">${IC.whats} WhatsApp</a>` : ""}
         ${r.email ? `<a class="btn btn-sec" href="mailto:${esc(r.email)}">${IC.mail} E-mail</a>` : ""}
-        ${r.tipo === "candidato" && r.tem_arquivo ? `<a class="btn btn-primario" ${DEMO ? `href="#" id="cv-demo"` : `href="../api/painel?acao=curriculo&id=${r.id}" target="_blank" rel="noopener"`}>Abrir currículo</a>` : ""}
+        ${r.tipo === "candidato" && r.tem_arquivo ? `<a class="btn btn-primario" ${DEMO ? `href="#" id="cv-demo"` : `href="/api/painel?acao=curriculo&id=${r.id}" target="_blank" rel="noopener"`}>Abrir currículo</a>` : ""}
         ${r.tipo !== "newsletter" ? `<button class="btn btn-sec" type="button" id="bt-agendar">${IC.cal} ${r.tipo === "candidato" ? "Agendar entrevista" : "Agendar reunião"}</button>` : ""}
       </div>
       <dl class="dados">${linhas.map(([k, v]) => `<dt>${k}</dt><dd>${k === "LinkedIn" ? `<a href="${esc(v)}" target="_blank" rel="noopener">${esc(v)}</a>` : esc(v)}</dd>`).join("")}</dl>
@@ -748,7 +748,8 @@
   async function abaSeguranca() {
     const r = await api("emails_log"); if (!r.ok) return msgAba(r);
     $("aba").innerHTML = `<div class="grade">
-      ${card("c4", "Cópia de segurança", "Todos os cadastros, agenda e configurações em um arquivo .json", `<p class="desc">Recomendado: baixe uma cópia por semana. Os currículos ficam guardados no Supabase Storage (bucket curriculos).</p><div class="linha-acoes">${DEMO ? `<button class="btn btn-primario" type="button" onclick="this.nextElementSibling.hidden=false">Baixar backup</button><span class="aviso info" hidden>Disponível no servidor definitivo.</span>` : `<a class="btn btn-primario" href="../api/painel?acao=backup">${IC.baixar} Baixar backup</a>`}</div>`)}
+      ${card("c12", "Verificação do site", "Confere variáveis da Vercel, tabelas e buckets do Supabase, e-mail e a integridade de todos os arquivos (imagens e PDFs)", `<div class="linha-acoes"><a class="btn btn-primario" href="/integra/diagnostico.html" target="_blank" rel="noopener">Abrir verificação</a></div>`)}
+      ${card("c4", "Cópia de segurança", "Todos os cadastros, agenda e configurações em um arquivo .json", `<p class="desc">Recomendado: baixe uma cópia por semana. Os currículos ficam guardados no Supabase Storage (bucket curriculos).</p><div class="linha-acoes">${DEMO ? `<button class="btn btn-primario" type="button" onclick="this.nextElementSibling.hidden=false">Baixar backup</button><span class="aviso info" hidden>Disponível no servidor definitivo.</span>` : `<a class="btn btn-primario" href="/api/painel?acao=backup">${IC.baixar} Baixar backup</a>`}</div>`)}
       ${card("c8", "E-mails enviados pelo sistema", "Últimos 200 envios (notificações, boas-vindas, convites)", r.log.length ? `<div class="tabela-box" style="max-height:340px"><table class="t"><thead><tr><th>Data</th><th>Para</th><th>Assunto</th><th>Resultado</th></tr></thead><tbody>${r.log.map(l => `<tr><td class="nw">${esc(dataBR(l.t))}</td><td>${esc(l.para)}</td><td>${esc(l.assunto)}</td><td>${+l.ok ? pill("enviado") : `<span class="pill p-alerta" title="${esc(l.erro)}">falhou</span><small>${esc(l.erro)}</small>`}</td></tr>`).join("")}</tbody></table></div>` : `<p class="vazio">Nenhum e-mail enviado ainda.</p>`)}
       ${card("c12", "Acessos ao painel", "Últimas 100 tentativas de login", r.acessos.length ? `<div class="tabela-box" style="max-height:300px"><table class="t"><thead><tr><th>Data</th><th>Usuário</th><th>Resultado</th></tr></thead><tbody>${r.acessos.map(a => `<tr><td class="nw">${esc(dataBR(a.t))}</td><td>${esc(a.usuario)}</td><td>${+a.ok ? pill("aprovado") : pill("reprovado")}</td></tr>`).join("")}</tbody></table></div>` : `<p class="vazio">Sem registros.</p>`)}
     </div>`;

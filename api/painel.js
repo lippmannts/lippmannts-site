@@ -3,7 +3,7 @@
    Perfis: admin (acesso total) · marketing (relatórios, métricas e leads)
    ===================================================================== */
 const crypto = require("crypto");
-const { db, todas, configGet, configSet, BUCKET_CURRICULOS, BUCKET_MATERIAIS } = require("./_lib/supabase");
+const { db, todas, configGet, configSet, credenciais, BUCKET_CURRICULOS, BUCKET_MATERIAIS } = require("./_lib/supabase");
 const U = require("./_lib/util");
 const E = require("./_lib/email");
 const S = require("./_lib/sessao");
@@ -231,7 +231,7 @@ module.exports = async (req, res) => {
         const caminho = `${slug(b.id || nome.replace(/\.pdf$/i, ""))}-${Date.now().toString(36)}.pdf`;
         const { data, error } = await db().storage.from(BUCKET_MATERIAIS).createSignedUploadUrl(caminho);
         if (error) throw error;
-        return U.ok(res, { caminho, url: data.signedUrl, apikey: process.env.SUPABASE_ANON_KEY || "" });
+        return U.ok(res, { caminho, url: data.signedUrl, apikey: credenciais().publica });
       }
       case "material_salvar": {
         if (!exigirAdmin()) return;
@@ -249,7 +249,7 @@ module.exports = async (req, res) => {
       case "material_excluir": {
         if (!exigirAdmin()) return;
         const { data: m } = await db().from("materiais").select("arquivo").eq("id", U.limpar(b.id, 80)).maybeSingle();
-        if (m && m.arquivo && !/^https?:|^materiais\//.test(m.arquivo)) await db().storage.from(BUCKET_MATERIAIS).remove([m.arquivo]);
+        if (m && m.arquivo && !/^https?:|^\/?materiais\//.test(m.arquivo)) await db().storage.from(BUCKET_MATERIAIS).remove([m.arquivo]);
         await db().from("materiais").delete().eq("id", U.limpar(b.id, 80));
         const { data } = await db().from("materiais").select("*").order("ordem").order("criado");
         return U.ok(res, { materiais: data || [] });
@@ -271,7 +271,10 @@ module.exports = async (req, res) => {
     }
   } catch (e) {
     console.error("painel:", acao, e);
-    return U.erro(res, "Erro no servidor: " + (e && e.message ? e.message : "tente novamente."), 500);
+    if (e && e.configuracao) return U.json(res, 500, { ok: false, mensagem: e.message, diagnostico: true });
+    const tabelaFaltando = e && (e.code === "42P01" || e.code === "PGRST205" || /relation .* does not exist|schema cache/i.test(e.message || ""));
+    if (tabelaFaltando) return U.json(res, 500, { ok: false, mensagem: "As tabelas do L³ INTEGRA não foram encontradas no Supabase. Rode o arquivo supabase/schema.sql no SQL Editor.", diagnostico: true });
+    return U.json(res, 500, { ok: false, mensagem: "Erro no servidor: " + (e && e.message ? e.message : "tente novamente."), diagnostico: true });
   }
 };
 

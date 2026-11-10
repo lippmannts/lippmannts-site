@@ -6,7 +6,7 @@ const crypto = require("crypto");
 
 function segredo() {
   const s = process.env.SESSAO_SEGREDO;
-  if (!s || s.length < 24) throw new Error("Configure SESSAO_SEGREDO (texto aleatório com 32+ caracteres) nas variáveis da Vercel.");
+  if (!s || s.length < 24) { const e = new Error("Variável SESSAO_SEGREDO ausente ou curta na Vercel: cadastre um texto aleatório com 32+ caracteres e faça Redeploy."); e.configuracao = true; throw e; }
   return s;
 }
 

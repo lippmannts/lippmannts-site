@@ -115,6 +115,7 @@ module.exports = async (req, res) => {
     return U.ok(res, { id });
   } catch (e) {
     console.error("registrar:", e);
+    if (e && e.configuracao) return U.erro(res, "O site ainda não está conectado ao banco de dados. Avise a equipe LIPPMANN pelo WhatsApp (11) 94013-8792.", 503);
     return U.erro(res, "Não foi possível registrar agora. Tente novamente em instantes.", 500);
   }
 };

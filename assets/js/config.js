@@ -43,13 +43,13 @@ window.LTS_CONFIG = {
     }
   },
   "downloads": {
-    "apresentacao": "downloads/LTS-INS-001_Apresentacao-Institucional_REV00.pdf",
-    "portfolioTreinamentos": "downloads/LTS-CAT-001_Catalogo-de-Treinamentos_REV00.pdf",
-    "portfolioSolucoes": "downloads/LTS-CAT-002_Catalogo-de-Solucoes_REV00.pdf",
-    "pastaFichas": "downloads/fichas/"
+    "apresentacao": "/downloads/LTS-INS-001_Apresentacao-Institucional_REV00.pdf",
+    "portfolioTreinamentos": "/downloads/LTS-CAT-001_Catalogo-de-Treinamentos_REV00.pdf",
+    "portfolioSolucoes": "/downloads/LTS-CAT-002_Catalogo-de-Solucoes_REV00.pdf",
+    "pastaFichas": "/downloads/fichas/"
   },
   "api": {
-    "base": "api/",
+    "base": "/api/",
     "modoDemonstracao": false
   },
   "comoConheceu": [

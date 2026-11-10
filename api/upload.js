@@ -4,7 +4,7 @@
    Assim o arquivo não passa pela Vercel (que limita envios a 4,5 MB).
    ===================================================================== */
 const crypto = require("crypto");
-const { db, BUCKET_CURRICULOS } = require("./_lib/supabase");
+const { db, credenciais, BUCKET_CURRICULOS } = require("./_lib/supabase");
 const U = require("./_lib/util");
 
 const MAX_MB = 5;
@@ -23,9 +23,10 @@ module.exports = async (req, res) => {
     const caminho = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}/${crypto.randomUUID()}.${ext}`;
     const { data, error } = await db().storage.from(BUCKET_CURRICULOS).createSignedUploadUrl(caminho);
     if (error) throw error;
-    return U.ok(res, { caminho, url: data.signedUrl, apikey: process.env.SUPABASE_ANON_KEY || "" });
+    return U.ok(res, { caminho, url: data.signedUrl, apikey: credenciais().publica });
   } catch (e) {
     console.error("upload:", e);
+    if (e && e.configuracao) return U.erro(res, "O site ainda não está conectado ao banco de dados. Avise a equipe LIPPMANN pelo WhatsApp (11) 94013-8792.", 503);
     return U.erro(res, "Não foi possível preparar o envio do arquivo. Tente novamente.", 500);
   }
 };
