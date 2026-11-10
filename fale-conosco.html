@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fale Conosco | LIPPMANN Treinamentos e Soluções</title>
+<meta name="description" content="Fale com a LIPPMANN: solicite propostas de treinamentos e soluções em SSMA, envie sugestões de melhoria, reclamações ou denúncias.">
+<meta property="og:title" content="Fale Conosco | LIPPMANN Treinamentos e Soluções">
+<meta property="og:description" content="Fale com a LIPPMANN: solicite propostas de treinamentos e soluções em SSMA, envie sugestões de melhoria, reclamações ou denúncias.">
+<meta property="og:image" content="assets/img/fotos/capa-2.webp">
+<meta name="theme-color" content="#0A3490">
+<link rel="icon" href="assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/marca/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/marca/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="fale-conosco">
+<div id="site-header"></div>
+
+<main id="conteudo-principal">
+  <section class="page-head sobre-azul">
+    <div class="wrap">
+      <p class="trilha"><a href="index.html">Início</a> / Fale Conosco</p>
+      <h1>Fale Conosco</h1>
+      <p class="lead">Nosso canal direto de comunicação com clientes, parceiros, participantes e demais partes interessadas.</p>
+    </div>
+  </section>
+
+  <section class="secao secao-off">
+    <div class="wrap contato-grid">
+      <aside style="display:grid;gap:22px">
+        <div class="sec-head" style="margin-bottom:0">
+          <span class="eyebrow">Canais oficiais</span>
+          <h2 style="font-size:2.4rem">Atendimento LIPPMANN</h2>
+        </div>
+        <div class="canais">
+          <a class="canal" data-wa href="#"><span class="ic"><i data-icon="whatsapp"></i></span><span><small>WhatsApp / Telefone</small><b id="c-whats"></b></span></a>
+          <div class="canal"><span class="ic"><i data-icon="mail"></i></span><span><small>E-mail comercial</small><b id="c-com"></b></span></div>
+          <a class="canal" id="c-insta" href="#" target="_blank" rel="noopener"><span class="ic"><i data-icon="instagram"></i></span><span><small>Instagram</small><b>@lippmannts</b></span></a>
+          <a class="canal" id="c-yt" href="#" target="_blank" rel="noopener"><span class="ic"><i data-icon="youtube"></i></span><span><small>YouTube</small><b>Canal LIPPMANN</b></span></a>
+          <a class="canal" id="c-in" href="#" target="_blank" rel="noopener"><span class="ic"><i data-icon="linkedin"></i></span><span><small>LinkedIn</small><b>LIPPMANN</b></span></a>
+        </div>
+      </aside>
+
+      <div class="form-card">
+        <form class="form" id="form-contato" novalidate>
+          <div class="form-grid">
+            <div class="campo full">
+              <label for="f-assunto">Assunto</label>
+              <select id="f-assunto" name="Assunto" required>
+                <option value="">Selecione o assunto</option>
+                <option>TREINAMENTOS</option>
+                <option>SOLUÇÕES</option>
+                <option>SUGESTÕES DE MELHORIA</option>
+                <option>RECLAMAÇÕES</option>
+                <option>DENÚNCIAS</option>
+              </select>
+              <span class="msg-erro">Selecione o assunto para direcionarmos o atendimento.</span>
+            </div>
+            <p class="assunto-nota full" id="nota-denuncia" hidden>Denúncias podem ser feitas de forma anônima: nome, e-mail e telefone tornam-se opcionais. Se quiser receber retorno, informe ao menos um contato. As informações são tratadas com sigilo pela Direção da LIPPMANN.</p>
+            <div class="campo"><label for="f-nome">Nome completo <span class="opc" data-opc hidden>(opcional)</span></label><input id="f-nome" name="Nome" type="text" autocomplete="name" required><span class="msg-erro">Informe seu nome.</span></div>
+            <div class="campo"><label for="f-empresa">Empresa <span class="opc">(opcional)</span></label><input id="f-empresa" name="Empresa" type="text" autocomplete="organization"></div>
+            <div class="campo"><label for="f-cargo">Cargo <span class="opc">(opcional)</span></label><input id="f-cargo" name="Cargo" type="text" autocomplete="organization-title"></div>
+            <div class="campo"><label for="f-cidade">Cidade / UF <span class="opc">(opcional)</span></label><input id="f-cidade" name="Cidade" type="text" autocomplete="address-level2" placeholder="Ex.: Jundiaí / SP"></div>
+            <div class="campo"><label for="f-email">E-mail <span class="opc" data-opc hidden>(opcional)</span></label><input id="f-email" name="E-mail" type="email" autocomplete="email" required><span class="msg-erro">Informe um e-mail válido.</span></div>
+            <div class="campo"><label for="f-tel">Telefone / WhatsApp <span class="opc">(opcional)</span></label><input id="f-tel" name="Telefone" type="tel" autocomplete="tel" data-tipo="tel-opc" inputmode="tel" placeholder="(11) 90000-0000"></div>
+            <div class="campo full"><label for="f-msg">Mensagem</label><textarea id="f-msg" name="Mensagem" required></textarea><span class="msg-erro">Escreva sua mensagem.</span></div>
+          </div>
+          <label class="consent"><input id="f-consent" name="Consentimento LGPD" type="checkbox" value="Sim" required><span>Concordo com o uso dos meus dados para responder a esta solicitação, conforme a <a href="politica-de-privacidade.html">Política de Privacidade</a>.</span></label>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form-aviso" role="status" hidden></p>
+          <div><button class="btn btn-primario" type="submit">Enviar mensagem</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/fale-conosco.js"></script>
+
+</body>
+</html>

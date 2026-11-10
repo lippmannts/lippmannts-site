@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trabalhe Conosco | LIPPMANN Treinamentos e Soluções</title>
+<meta name="description" content="Faça parte da LIPPMANN Treinamentos e Soluções: envie seu currículo para Instrutor, Técnico de Segurança, Bombeiro Profissional Civil, Engenheiro de Segurança, Consultor Técnico e Vendedor.">
+<meta property="og:title" content="Trabalhe Conosco | LIPPMANN Treinamentos e Soluções">
+<meta property="og:description" content="Faça parte da LIPPMANN Treinamentos e Soluções: envie seu currículo para Instrutor, Técnico de Segurança, Bombeiro Profissional Civil, Engenheiro de Segurança, Consultor Técnico e Vendedor.">
+<meta property="og:image" content="assets/img/fotos/capa-2.webp">
+<meta name="theme-color" content="#0A3490">
+<link rel="icon" href="assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/marca/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/marca/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="trabalhe-conosco">
+<div id="site-header"></div>
+
+<main id="conteudo-principal">
+  <section class="page-head sobre-azul">
+    <div class="wrap">
+      <p class="trilha"><a href="index.html">Início</a> / Trabalhe Conosco</p>
+      <h1>Trabalhe Conosco</h1>
+      <p class="lead">Profissionais que tratam a segurança como valor encontram aqui espaço para ensinar, orientar e transformar comportamentos.</p>
+    </div>
+  </section>
+
+  <section class="secao secao-off">
+    <div class="wrap contato-grid">
+      <aside style="display:grid;gap:22px;align-content:start">
+        <div class="sec-head" style="margin-bottom:0">
+          <span class="eyebrow">Banco de talentos</span>
+          <h2 style="font-size:2.4rem">Faça parte da LIPPMANN</h2>
+          <p>Envie seu currículo sem precisar criar login ou senha. Ele fica no nosso banco de talentos e, havendo uma oportunidade compatível, entraremos em contato para agendar uma entrevista online.</p>
+        </div>
+        <div class="caixa">
+          <span class="rot">Áreas de interesse</span>
+          <div class="cargos-lista" id="cargos-lista"></div>
+        </div>
+        <img src="assets/img/marca/lipp-joia.webp" alt="Lipp, mascote resgatista da LIPPMANN, fazendo sinal de positivo" width="600" height="803" style="width:170px" loading="lazy">
+      </aside>
+
+      <div class="form-card">
+        <form class="form" id="form-trabalhe" novalidate>
+          <div class="form-grid">
+            <div class="campo full"><label for="t-nome">Nome completo</label><input id="t-nome" name="Nome" type="text" autocomplete="name" required><span class="msg-erro">Informe seu nome completo.</span></div>
+            <div class="campo"><label for="t-email">E-mail</label><input id="t-email" name="E-mail" type="email" autocomplete="email" required><span class="msg-erro">Informe um e-mail válido.</span></div>
+            <div class="campo"><label for="t-tel">Celular / WhatsApp</label><input id="t-tel" name="Telefone" type="tel" autocomplete="tel" inputmode="tel" data-tipo="tel" placeholder="(11) 90000-0000" required><span class="msg-erro">Informe um celular com DDD.</span></div>
+            <div class="campo"><label for="t-cidade">Cidade</label><input id="t-cidade" name="Cidade" type="text" autocomplete="address-level2" required><span class="msg-erro">Informe a cidade.</span></div>
+            <div class="campo"><label for="t-uf">Estado</label><select id="t-uf" name="Estado" autocomplete="address-level1" required><option value="">Selecione</option><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option></select><span class="msg-erro">Selecione o estado.</span></div>
+            <div class="campo full"><label for="t-cargo">Área de interesse / cargo pretendido</label><select id="t-cargo" name="Cargo pretendido" required><option value="">Selecione</option></select><span class="msg-erro">Selecione a área de interesse.</span></div>
+            <div class="campo full"><label for="t-linkedin">LinkedIn <span class="opc">(opcional)</span></label><input id="t-linkedin" name="LinkedIn" type="url" placeholder="https://www.linkedin.com/in/seu-perfil"></div>
+            <div class="campo full"><label for="t-msg">Apresentação <span class="opc">(opcional)</span></label><textarea id="t-msg" name="Mensagem" placeholder="Conte brevemente sua experiência, certificações (NRs, CBMESP, CREA) e disponibilidade."></textarea></div>
+            <div class="campo full">
+              <label for="t-cv">Currículo</label>
+              <label class="upload" id="upload">
+                <i data-icon="upload"></i>
+                <b id="cv-nome">Clique ou arraste o arquivo aqui</b>
+                <span>PDF, DOC ou DOCX · até 5 MB</span>
+                <input id="t-cv" name="curriculo" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+              </label>
+              <span class="msg-erro">Anexe o seu currículo.</span>
+            </div>
+          </div>
+          <label class="consent"><input id="t-consent" name="Consentimento LGPD" type="checkbox" value="Sim" required><span>Autorizo a LIPPMANN a armazenar meus dados e currículo no banco de talentos para processos seletivos, conforme a <a href="politica-de-privacidade.html">Política de Privacidade</a>.</span></label>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <p class="form-aviso" role="status" hidden></p>
+          <div><button class="btn btn-primario" type="submit">Enviar currículo</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/trabalhe-conosco.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treinamentos | LIPPMANN Treinamentos e Soluções</title>
+<meta name="description" content="Catálogo de treinamentos em SSMA: NR 01, NR 05, NR 06, NR 10, NR 11, NR 12, NR 13, NR 17, NR 18, NR 20, NR 26, NR 33, NR 35, Brigada de Incêndio e desenvolvimento de lideranças.">
+<meta property="og:title" content="Treinamentos | LIPPMANN Treinamentos e Soluções">
+<meta property="og:description" content="Catálogo de treinamentos em SSMA: NR 01, NR 05, NR 06, NR 10, NR 11, NR 12, NR 13, NR 17, NR 18, NR 20, NR 26, NR 33, NR 35, Brigada de Incêndio e desenvolvimento de lideranças.">
+<meta property="og:image" content="assets/img/fotos/capa-2.webp">
+<meta name="theme-color" content="#0A3490">
+<link rel="icon" href="assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/marca/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/marca/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="treinamentos">
+<div id="site-header"></div>
+
+<main id="conteudo-principal">
+  <section class="page-head sobre-azul">
+    <div class="wrap">
+      <p class="trilha"><a href="index.html">Início</a> / Treinamentos</p>
+      <h1>Treinamentos</h1>
+      <p class="lead">Capacitação e desenvolvimento normativo e estratégico em Saúde, Segurança e Meio Ambiente. Selecione um treinamento para ver a ficha técnica completa.</p>
+      <div class="dl-box" style="max-width:760px;margin-top:10px">
+        <span class="ic"><i data-icon="file"></i></span>
+        <span><b>Portfólio completo de Treinamentos</b><span>LTS-CAT-001 · REV00 · PDF com links diretos para o WhatsApp da LIPPMANN</span></span>
+        <span style="display:flex;gap:8px;flex-wrap:wrap"><a class="btn btn-claro" data-download="portfolioTreinamentos" href="#" target="_blank" rel="noopener" data-track="arquivo:portfolio-treinamentos">Visualizar</a><a class="btn btn-contorno" data-download="portfolioTreinamentos" href="#" download data-track="download:portfolio-treinamentos"><i data-icon="download"></i> Baixar</a></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao secao-off" aria-labelledby="cat-titulo" style="padding-top:48px">
+    <div class="wrap">
+      <h2 id="cat-titulo" class="sr-only">Catálogo de treinamentos</h2>
+      <div class="filtros">
+        <div id="filtros-tr" style="display:flex;flex-wrap:wrap;gap:10px" role="group" aria-label="Filtrar por categoria"></div>
+        <label class="busca"><span class="sr-only">Buscar treinamento</span><i data-icon="search"></i><input id="busca-tr" type="search" placeholder="Buscar: NR 35, empilhadeira, CIPA…" autocomplete="off"></label>
+      </div>
+      <p id="contador-tr" class="rot" aria-live="polite" style="color:var(--cinza-medio)"></p>
+      <div class="grid-cards" id="lista-treinamentos"></div>
+    </div>
+  </section>
+
+  <section class="secao sobre-azul" aria-labelledby="geral-titulo">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Em todos os treinamentos</span>
+        <h2 id="geral-titulo">O que está incluído</h2>
+      </div>
+      <div class="info-geral" id="info-geral"></div>
+    </div>
+  </section>
+
+  <section class="faixa-lipp" aria-labelledby="lipp-titulo" style="background:var(--off-white)">
+    <div class="wrap">
+      <img class="lipp" src="assets/img/marca/lipp-instrucao.webp" alt="Lipp, mascote resgatista da LIPPMANN, apontando para a prancheta" width="600" height="803" loading="lazy">
+      <div class="txt">
+        <span class="eyebrow">Solicite uma proposta</span>
+        <h2 id="lipp-titulo">Precisa de um treinamento sob medida?</h2>
+        <p class="lead">Fale com a nossa equipe e receba um orçamento para o seu treinamento.</p>
+      </div>
+      <div class="acoes">
+        <a class="btn btn-whats" data-wa="Olá! Vim pelo site oficial da LIPPMANN e gostaria de um orçamento de treinamento." href="#"><i data-icon="whatsapp"></i> Falar no WhatsApp</a>
+        <a class="btn btn-contorno" href="fale-conosco.html?assunto=TREINAMENTOS">Enviar mensagem</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/config.js"></script>
+<script src="data/treinamentos.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/catalogo.js"></script>
+<script>LTS_CATALOGO.paginaTreinamentos();</script>
+</body>
+</html>

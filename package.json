@@ -1,0 +1,11 @@
+{
+  "name": "lippmann-site-l3-integra",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Site institucional LIPPMANN Treinamentos e Soluções + painel L³ INTEGRA (Vercel + Supabase)",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@supabase/supabase-js": "2.45.4",
+    "nodemailer": "6.9.15"
+  }
+}
