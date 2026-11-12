@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/assets/js/i18n.js"></script>
+<title>Validar certificado UniLTS | LIPPMANN Treinamentos e Soluções</title>
+<meta name="description" content="Confira a autenticidade de um certificado emitido pela UniLTS, o ambiente de ensino a distância da LIPPMANN.">
+<meta property="og:title" content="Validar certificado UniLTS | LIPPMANN Treinamentos e Soluções">
+<meta property="og:description" content="Confira a autenticidade de um certificado emitido pela UniLTS, o ambiente de ensino a distância da LIPPMANN.">
+<meta property="og:image" content="https://lippmannts.com/assets/img/fotos/capa-2.webp">
+<meta name="theme-color" content="#0A3490">
+<link rel="canonical" href="https://lippmannts.com/validar.html">
+<meta property="og:url" content="https://lippmannts.com/validar.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LIPPMANN Treinamentos e Soluções">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="/assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="unilts">
+<div id="site-header"></div>
+<main id="conteudo-principal">
+  <section class="page-head sobre-azul">
+    <div class="wrap">
+      <p class="trilha"><a href="/index.html">Início</a> / <a href="/unilts.html">UniLTS</a> / Validar certificado</p>
+      <h1>Validar certificado</h1>
+      <p class="lead">Confira a autenticidade de certificados emitidos pela UniLTS.</p>
+    </div>
+  </section>
+  <section class="secao secao-off">
+    <div class="wrap val-wrap">
+      <form class="form-card val-form" id="val-form">
+        <label for="val-codigo">Código do certificado</label>
+        <div class="val-linha"><input id="val-codigo" name="c" placeholder="Ex.: T00033-E2026-001-A7F2" autocomplete="off" required><button class="btn btn-primario" type="submit">Validar</button></div>
+        <small>O código está impresso no rodapé do certificado, ao lado do QR Code.</small>
+      </form>
+      <div id="val-resultado" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+
+<script src="/assets/js/config.js"></script>
+<script src="/assets/js/layout.js"></script>
+<script src="/assets/js/acessibilidade.js"></script>
+<script src="/assets/js/uni-demo.js"></script>
+<script src="/data/unilts-modelo.js"></script>
+<script src="/data/unilts-trilha-instrutor.js"></script>
+<script src="/assets/js/validar.js"></script>
+</body>
+</html>

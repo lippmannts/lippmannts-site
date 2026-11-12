@@ -22,7 +22,8 @@ window.LTS_CONFIG = {
     "whatsappMensagem": "Olá! Tenho interesse em serviços ou soluções de SSMA da LIPPMANN e vim pelo site oficial.",
     "emailComercial": "comercial@lippmannts.com",
     "emailAtendimento": "atendimento@lippmannts.com",
-    "site": "www.lippmannts.com"
+    "site": "lippmannts.com",
+    "urlOficial": "https://lippmannts.com"
   },
   "redes": {
     "instagram": {
@@ -39,7 +40,9 @@ window.LTS_CONFIG = {
     },
     "google": {
       "url": "https://www.google.com/search?q=lippmann+treinamentos+e+solu%C3%A7%C3%B5es+google",
-      "exibicao": "Avaliações no Google"
+      "exibicao": "Avaliações no Google",
+      "notaReserva": "4,9",
+      "avaliarUrl": ""
     }
   },
   "downloads": {

@@ -18,6 +18,7 @@
   function modoDenuncia() {
     const d = sel.value === "DENÚNCIAS";
     $("nota-denuncia").hidden = !d;
+    $("nota-protocolo").hidden = !["DENÚNCIAS", "RECLAMAÇÕES", "SUGESTÕES DE MELHORIA"].includes(sel.value);
     nome.required = !d; email.required = !d;
     form.querySelectorAll("[data-opc]").forEach(s => s.hidden = !d);
     if (d) form.querySelectorAll(".campo.erro").forEach(c => { if (c.contains(nome) || c.contains(email)) c.classList.remove("erro"); });
@@ -34,8 +35,18 @@
     const r = await window.LTS_API.registrar("contato", form);
     bt.disabled = false; bt.textContent = "Enviar mensagem";
     if (r.ok) {
+      const comEmail = !!email.value.trim();
       form.reset(); modoDenuncia();
-      window.LTS_AVISO(aviso, "ok", "Mensagem enviada. A equipe LIPPMANN responderá pelo contato informado.");
+      if (r.protocolo) {
+        aviso.hidden = true;
+        const box = document.createElement("div"); box.className = "protocolo-box"; box.setAttribute("role", "status");
+        box.innerHTML = `<p class="eyebrow">Ouvidoria LIPPMANN</p><h3>Registro recebido</h3>
+          <div class="protocolo-dados"><div><small>Protocolo</small><b translate="no">${r.protocolo}</b></div><div><small>Código de acesso</small><b translate="no">${r.chave}</b></div></div>
+          <p>${comEmail ? "Enviamos estes dados para o seu e-mail. " : "Anote o protocolo e o código de acesso: eles não serão exibidos novamente. "}Acompanhe o andamento e as respostas da LIPPMANN na página <a href="protocolo.html?p=${encodeURIComponent(r.protocolo)}">Consultar protocolo</a>.</p>
+          <div class="protocolo-acoes"><a class="btn btn-primario" href="protocolo.html?p=${encodeURIComponent(r.protocolo)}">Consultar protocolo</a><button class="btn btn-contorno" type="button" data-copiar>Copiar dados</button></div>`;
+        form.parentNode.insertBefore(box, form); box.scrollIntoView({ behavior: "smooth", block: "center" });
+        box.querySelector("[data-copiar]").onclick = async e2 => { try { await navigator.clipboard.writeText(`Protocolo: ${r.protocolo}\nCódigo de acesso: ${r.chave}`); e2.target.textContent = "Copiado"; } catch (x) {} };
+      } else window.LTS_AVISO(aviso, "ok", "Mensagem enviada. A equipe LIPPMANN responderá pelo contato informado.");
     } else {
       window.LTS_AVISO(aviso, "falha", `Não foi possível enviar agora. Tente novamente ou fale pelo WhatsApp <b>${C.contato.whatsappExibicao}</b>.`);
     }

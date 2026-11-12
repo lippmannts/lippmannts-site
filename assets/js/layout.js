@@ -16,6 +16,8 @@
     { id: "treinamentos", rotulo: "Treinamentos", href: "treinamentos.html" },
     { id: "solucoes",     rotulo: "Soluções",     href: "solucoes.html" },
     { id: "conteudo",     rotulo: "Conteúdo",     href: "conteudo.html" },
+    { id: "hub",          rotulo: "HUB",          href: "hub.html" },
+    { id: "unilts",       rotulo: '<span class="nav-uni">Uni<b>LTS</b></span>', href: "unilts.html" },
     { id: "fale-conosco", rotulo: "Fale Conosco", href: "fale-conosco.html" }
   ];
 
@@ -44,7 +46,13 @@
     expand: s('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'),
     shrink: s('<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>'),
     upload: s('<path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/>'),
-    eye: s('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>')
+    eye: s('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>'),
+    relogio: s('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+    compartilhar: s('<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>'),
+    building: s('<path d="M4 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16M16 9h2a2 2 0 0 1 2 2v10M3 21h18M8 7h4M8 11h4M8 15h4"/>'),
+    user: s('<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>'),
+    check: s('<path d="m5 12 5 5 9-10"/>'),
+    escudo: s('<path d="M12 3 4 6v6c0 5 3.4 8.4 8 9 4.6-.6 8-4 8-9V6l-8-3Z"/>')
   };
   window.LTS_ICON = ICON;
 
@@ -118,6 +126,9 @@
               ${MENU.map(m => `<li><a href="${m.href}">${m.rotulo}</a></li>`).join("")}
               <li><a href="trabalhe-conosco.html"><b>Trabalhe Conosco</b></a></li>
               <li><a href="politica-de-privacidade.html">Política de Privacidade</a></li>
+              <li><a href="ajuda.html">Central de Ajuda</a></li>
+              <li><a href="protocolo.html">Consultar protocolo</a></li>
+              <li><a href="pedido.html">Consultar compra</a></li>
             </ul>
           </div>
           <div>
@@ -246,7 +257,8 @@
       fd.forEach((v, k) => { item.dados[k] = v instanceof File ? (v.name || "") : v; });
       (db.registros = db.registros || []).push(item);
       demoDB.gravar(db);
-      return { ok: true, demonstracao: true };
+      const pr = tipo === "contato" && window.LTS_OUV_DEMO ? window.LTS_OUV_DEMO.criar({ assunto: item.dados.Assunto, nome: item.dados.Nome, email: item.dados["E-mail"], telefone: item.dados.Telefone, mensagem: item.dados.Mensagem }) : null;
+      return { ok: true, demonstracao: true, ...(pr || {}) };
     }
     // envia em JSON para a função /api/registrar (arquivos vão antes, direto ao Supabase Storage)
     const dados = {};
@@ -254,7 +266,7 @@
     try {
       const r = await fetch(C.api.base + "registrar", { method: "POST", body: JSON.stringify(dados), headers: { "Content-Type": "application/json" }, credentials: "same-origin" });
       const j = await r.json().catch(() => ({}));
-      return { ok: r.ok && j.ok !== false, mensagem: j.mensagem };
+      return { ok: r.ok && j.ok !== false, mensagem: j.mensagem, protocolo: j.protocolo, chave: j.chave };
     } catch (e) {
       return { ok: false };
     }
@@ -350,5 +362,12 @@
       if (r.ok) { news.reset(); window.LTS_AVISO(aviso, "ok", "Cadastro confirmado. Enviamos um e-mail de boas-vindas para o endereço informado."); }
       else window.LTS_AVISO(aviso, "falha", `Não foi possível concluir agora. Tente novamente ou escreva para <b>${C.contato.emailComercial}</b>.`);
     });
+  }
+
+  /* ---------- LIPP · assistente virtual (acima do botão do WhatsApp, nas páginas públicas) ---------- */
+  if (document.querySelector(".whats-float") && C.lipp !== false) {
+    const js = (src) => new Promise((ok) => { const s = document.createElement("script"); s.src = src; s.defer = true; s.onload = ok; s.onerror = ok; document.body.appendChild(s); });
+    const carregar = () => (DEMO ? js("/assets/js/lipp-motor.js?v=7") : Promise.resolve()).then(() => js("/assets/js/lipp.js?v=7"));
+    "requestIdleCallback" in window ? requestIdleCallback(carregar, { timeout: 2500 }) : setTimeout(carregar, 1200);
   }
 })();

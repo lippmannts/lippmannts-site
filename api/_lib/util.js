@@ -1,6 +1,10 @@
 /* L³ INTEGRA · utilidades comuns das funções da Vercel
    (pastas e arquivos que começam com "_" não viram endereços públicos) */
 const crypto = require("crypto");
+
+/* Domínio corporativo oficial: todos os links de e-mails, convites e metadados usam este endereço.
+   (URL_SITE só deve ser definida para testes em outro endereço.) */
+const URL_OFICIAL = (process.env.URL_SITE || "https://lippmannts.com").replace(/\/$/, "");
 const { db } = require("./supabase");
 
 /* ---------- respostas ---------- */
@@ -77,4 +81,4 @@ function apenasMetodo(req, res, metodo) {
   return true;
 }
 
-module.exports = { json, ok, erro, corpo, limpar, emailValido, esc, ip, ipHash, geo, dispositivo, limite, apenasMetodo };
+module.exports = { URL_OFICIAL, json, ok, erro, corpo, limpar, emailValido, esc, ip, ipHash, geo, dispositivo, limite, apenasMetodo };

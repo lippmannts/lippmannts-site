@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/assets/js/i18n.js"></script>
 <title>LIPPMANN Treinamentos e Soluções</title>
 <meta name="description" content="Treinamentos normativos, desenvolvimento de lideranças e soluções técnicas em Saúde, Segurança e Meio Ambiente (SSMA). Segurança não é prioridade. Segurança é valor.">
 <meta property="og:title" content="LIPPMANN Treinamentos e Soluções">
 <meta property="og:description" content="Treinamentos e soluções em SSMA. Segurança não é prioridade. Segurança é valor.">
-<meta property="og:image" content="assets/img/fotos/capa-2.webp">
+<meta property="og:image" content="https://lippmannts.com/assets/img/fotos/capa-2.webp">
 <meta name="theme-color" content="#0A3490">
+<link rel="canonical" href="https://lippmannts.com/">
+<meta property="og:url" content="https://lippmannts.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LIPPMANN Treinamentos e Soluções">
+<meta property="og:locale" content="pt_BR">
 <link rel="icon" href="/assets/img/marca/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
@@ -141,38 +147,27 @@
         </div>
         <div class="clientes-img"><img src="/assets/img/fotos/clientes.webp" alt="Logotipos de clientes: Boa Supermercados, Empório Dom Olívio, Agrana, Comfrio, ID Logistics, Solpi, SuperFrio, Multilog e Messer" width="1273" height="821" loading="lazy"></div>
       </div>
-      <div class="depos">
-        <figure class="depo" style="margin:0">
-          <span class="aspas" aria-hidden="true">“</span>
-          <blockquote>
-            <p>Gostaria de destacar a excelência da LIPPMANN Treinamentos e Soluções, uma empresa verdadeiramente comprometida com a qualidade, a dedicação e os resultados de seus treinamentos.</p>
-            <p>Um dos grandes diferenciais é que os treinamentos são ministrados por profissionais que possuem não apenas sólido conhecimento teórico, mas também ampla experiência prática. Essa combinação torna o aprendizado muito mais enriquecedor, dinâmico e aplicável à realidade dos participantes.</p>
-            <p>A LIPPMANN transmite confiança, profissionalismo e compromisso em tudo o que faz. Por isso, não apenas recomendo seus serviços, como também confio plenamente na qualidade do trabalho que realiza.</p>
-          </blockquote>
-          <footer><b>Cicero Luiz da Silva Lira</b><span>Instrutor de Empilhadeira · SENAI de Campo Limpo Paulista</span></footer>
-        </figure>
-        <figure class="depo" style="margin:0">
-          <span class="aspas" aria-hidden="true">“</span>
-          <blockquote>
-            <p>Empresas prestando serviços têm por toda parte.</p>
-            <p>Mas empresas prestando um bom serviço com profissionais qualificados e preparados para lidar com serviços e pessoas não é fácil de encontrar.</p>
-            <p>Na Lippmann Treinamentos encontrei treinamentos personalizados de qualidade, prestados por profissionais que entendem do assunto e atendem de acordo com a necessidade de cada empresa com preço justo.</p>
-            <p>Já tive boas experiências, recomendo.</p>
-          </blockquote>
-          <footer><b>Cristino Macedo</b><span>Coordenador de produção · Melitta South America</span></footer>
-        </figure>
-        <div style="display:grid;gap:22px">
-          <figure class="depo" style="margin:0">
-            <span class="aspas" aria-hidden="true">“</span>
-            <blockquote><p>Empresa com alto potencial de treinamentos, indico. Super competente e organizada quanto aos trabalhos e profissional.</p></blockquote>
-            <footer><b>Rogério Pitori</b><span>Técnico em segurança do trabalho · Harald Indústria e Comércio de Alimentos S.A.</span></footer>
-          </figure>
-          <div class="caixa-azul" style="display:grid;gap:12px">
-            <span class="rot">Avaliações no Google</span>
-            <p>Leia as avaliações publicadas no perfil oficial da empresa e avalie você também.</p>
-            <p><a class="btn btn-claro" id="link-google" href="#" target="_blank" rel="noopener">Ver avaliações no Google</a></p>
-          </div>
+      <div class="aval" id="avaliacoes" aria-labelledby="aval-titulo">
+        <div class="aval-cab">
+          <div><span class="eyebrow">Prova social</span><h2 id="aval-titulo">O que dizem sobre a LIPPMANN</h2></div>
+          <div class="aval-nota" id="aval-nota" hidden></div>
+          <a class="btn btn-primario aval-cta" id="aval-avaliar" href="#" target="_blank" rel="noopener" data-track="google-avaliar">Avalie-nos no Google</a>
         </div>
+        <div class="aval-trilho" id="aval-trilho" tabindex="0" aria-roledescription="carrossel" aria-label="Avaliações de clientes">
+          <!-- depoimentos de reserva (exibidos quando a API do Google não está configurada) -->
+          <figure class="aval-card" data-reserva><div class="aval-autor"><span class="aval-avatar">CL</span><div><b>Cicero Luiz da Silva Lira</b><small>Instrutor de Empilhadeira · SENAI de Campo Limpo Paulista</small></div></div>
+            <blockquote><p>Gostaria de destacar a excelência da LIPPMANN Treinamentos e Soluções, uma empresa verdadeiramente comprometida com a qualidade, a dedicação e os resultados de seus treinamentos.</p><p>Um dos grandes diferenciais é que os treinamentos são ministrados por profissionais que possuem não apenas sólido conhecimento teórico, mas também ampla experiência prática. Essa combinação torna o aprendizado muito mais enriquecedor, dinâmico e aplicável à realidade dos participantes.</p><p>A LIPPMANN transmite confiança, profissionalismo e compromisso em tudo o que faz. Por isso, não apenas recomendo seus serviços, como também confio plenamente na qualidade do trabalho que realiza.</p></blockquote></figure>
+          <figure class="aval-card" data-reserva><div class="aval-autor"><span class="aval-avatar">CM</span><div><b>Cristino Macedo</b><small>Coordenador de produção · Melitta South America</small></div></div>
+            <blockquote><p>Empresas prestando serviços têm por toda parte.</p><p>Mas empresas prestando um bom serviço com profissionais qualificados e preparados para lidar com serviços e pessoas não é fácil de encontrar.</p><p>Na Lippmann Treinamentos encontrei treinamentos personalizados de qualidade, prestados por profissionais que entendem do assunto e atendem de acordo com a necessidade de cada empresa com preço justo.</p><p>Já tive boas experiências, recomendo.</p></blockquote></figure>
+          <figure class="aval-card" data-reserva><div class="aval-autor"><span class="aval-avatar">RP</span><div><b>Rogério Pitori</b><small>Técnico em segurança do trabalho · Harald Indústria e Comércio de Alimentos S.A.</small></div></div>
+            <blockquote><p>Empresa com alto potencial de treinamentos, indico. Super competente e organizada quanto aos trabalhos e profissional.</p></blockquote></figure>
+        </div>
+        <div class="aval-controles">
+          <button class="aval-seta" type="button" id="aval-ant" aria-label="Avaliação anterior">‹</button>
+          <div class="aval-pontos" id="aval-pontos" role="tablist" aria-label="Escolher avaliação"></div>
+          <button class="aval-seta" type="button" id="aval-prox" aria-label="Próxima avaliação">›</button>
+        </div>
+        <p class="aval-fonte" id="aval-fonte">Depoimentos de clientes da LIPPMANN.</p>
       </div>
     </div>
   </section>
@@ -201,9 +196,10 @@
 <script src="/data/treinamentos.js"></script>
 <script src="/data/solucoes.js"></script>
 <script src="/assets/js/layout.js"></script>
+<script src="/assets/js/acessibilidade.js"></script>
+<script src="/assets/js/avaliacoes.js"></script>
 <script src="/assets/js/catalogo.js"></script>
 <script>
-  document.getElementById("link-google").href = LTS_CONFIG.redes.google.url;
   LTS_CATALOGO.destaquesTreinamentos(document.getElementById("destaques"));
   LTS_CATALOGO.destaquesSolucoes(document.getElementById("sol-destaques"));
 </script>

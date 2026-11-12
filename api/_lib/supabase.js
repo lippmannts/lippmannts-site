@@ -65,6 +65,8 @@ function papelDaChave(chave) {
 /* Buckets do Supabase Storage (criados pelo supabase/schema.sql) */
 const BUCKET_CURRICULOS = "curriculos";   // privado
 const BUCKET_MATERIAIS = "materiais";     // público (PDFs da Biblioteca Técnica)
+const BUCKET_PUBLICO = "publico";         // público (imagens do HUB, capas e PDFs de políticas)
+const BUCKET_EVIDENCIAS = "evidencias";   // privado (documentos e fotos das turmas UniLTS)
 
 /* Busca todas as linhas de uma consulta, de 1.000 em 1.000 */
 async function todas(montarConsulta, limiteTotal = 20000) {
@@ -88,4 +90,4 @@ async function configSet(chave, valor) {
   if (error) throw error;
 }
 
-module.exports = { db, todas, configGet, configSet, credenciais, papelDaChave, normalizarUrl, BUCKET_CURRICULOS, BUCKET_MATERIAIS };
+module.exports = { db, todas, configGet, configSet, credenciais, papelDaChave, normalizarUrl, BUCKET_CURRICULOS, BUCKET_MATERIAIS, BUCKET_PUBLICO, BUCKET_EVIDENCIAS };

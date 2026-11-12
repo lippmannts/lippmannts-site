@@ -1,0 +1,152 @@
+/* UniLTS · Área do Aluno (AVA) */
+body.ava { background: var(--off-white); min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; }
+.ava-topo { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: calc(10px + env(safe-area-inset-top, 0px)) var(--gutter, 24px) 10px; background: var(--azul-inst); color: var(--branco); }
+.ava-marca { display: grid; text-decoration: none; color: var(--branco); line-height: 1; }
+.ava-marca span { font: 400 2rem/1 var(--f-titulo); letter-spacing: .03em; }
+.ava-marca b { font-weight: 400; color: var(--azul-nevoa); }
+.ava-marca small { font: 600 .62rem/1.2 var(--f-rotulo); letter-spacing: .14em; text-transform: uppercase; color: var(--azul-gelo); }
+.ava-usuario { display: flex; align-items: center; gap: 12px; font: 600 .86rem var(--f-texto); min-width: 0; }
+.ava-usuario span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 40vw; }
+.ava-sair { min-height: 38px; padding: 0 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,.5); background: transparent; color: var(--branco); font: 700 .74rem var(--f-rotulo); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.ava-sair:hover { background: var(--branco); color: var(--azul-inst); }
+.ava-main { min-width: 0; }
+.ava-rodape { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; padding: 16px var(--gutter, 24px) calc(16px + env(safe-area-inset-bottom, 0px)); font-size: .8rem; color: var(--cinza-medio); border-top: 1px solid var(--cinza-neblina); background: var(--branco); }
+.ava-rodape a { color: var(--azul-sinal); }
+
+/* acesso */
+.ava-acesso { min-height: calc(100vh - 140px); display: grid; grid-template-columns: 1fr minmax(320px, 440px); gap: clamp(24px, 5vw, 72px); align-items: center; max-width: 1120px; margin: 0 auto; padding: 40px var(--gutter, 24px); }
+.ava-acesso-unico { grid-template-columns: minmax(0, 460px); justify-content: center; }
+.ava-acesso-marca { font: 400 clamp(3.5rem, 8vw, 5.5rem)/.9 var(--f-titulo); color: var(--azul-inst); }
+.ava-acesso-marca b { font-weight: 400; color: var(--azul-sinal); }
+.ava-acesso-lado h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); color: var(--azul-lippmann); margin: 6px 0 10px; }
+.ava-acesso-lado p { color: var(--cinza-aco); max-width: 46ch; }
+.ava-acesso-lado ul { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
+.ava-acesso-lado li { display: flex; gap: 10px; align-items: center; font-weight: 600; color: var(--grafite); }
+.ava-acesso-lado li svg { width: 22px; height: 22px; color: var(--azul-sinal); flex: none; }
+.ava-cartao { background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 14px; padding: clamp(22px, 4vw, 34px); box-shadow: var(--sombra); display: grid; gap: 8px; }
+.ava-cartao h2 { font-size: 2rem; color: var(--azul-lippmann); margin-bottom: 6px; }
+.ava-cartao label { font: 700 .72rem/1.2 var(--f-rotulo); letter-spacing: .08em; text-transform: uppercase; color: var(--azul-lippmann); margin-top: 6px; }
+.ava-cartao input { width: 100%; min-height: 48px; border: 1px solid var(--cinza-neblina); border-radius: 8px; padding: 0 14px; font: 500 1rem var(--f-texto); background: var(--branco); }
+.ava-cartao input:focus { outline: 3px solid var(--azul-gelo); border-color: var(--azul-sinal); }
+.ava-cartao .btn { margin-top: 10px; width: 100%; }
+.ava-senha { position: relative; }
+.ava-senha input { padding-right: 52px; }
+.ava-olho { position: absolute; right: 4px; top: 4px; width: 42px; height: 40px; border: 0; background: transparent; color: var(--cinza-medio); cursor: pointer; display: grid; place-items: center; border-radius: 6px; }
+.ava-olho svg { width: 20px; height: 20px; }
+.ava-olho[aria-pressed="true"] { color: var(--azul-sinal); }
+.ava-link { justify-self: center; border: 0; background: none; color: var(--azul-sinal); font: 600 .88rem var(--f-texto); text-decoration: underline; cursor: pointer; padding: 8px; }
+.ava-demo { font-size: .84rem; background: #FFF4D6; color: #6b4a00; border-radius: 8px; padding: 10px 12px; margin-top: 6px; }
+.ava-icone { width: 54px; height: 54px; border-radius: 50%; background: var(--azul-gelo); color: var(--azul-inst); display: grid; place-items: center; }
+.ava-icone svg { width: 26px; height: 26px; }
+.ava-sub { color: var(--cinza-aco); font-size: .92rem; }
+.ava-dica { color: var(--cinza-medio); font-size: .8rem; }
+.ava-aviso { border-radius: 8px; padding: 10px 12px; font-size: .9rem; }
+.ava-aviso.erro { background: #F8E7E6; color: #8c1d17; }
+.ava-aviso.ok { background: #E6F3EC; color: #145c37; }
+.ava-aviso.info { background: var(--azul-gelo); color: var(--azul-lippmann); }
+@media (max-width: 820px) { .ava-acesso { grid-template-columns: 1fr; min-height: 0; } .ava-acesso-lado ul { display: none; } }
+
+/* meus cursos */
+.ava-wrap { max-width: 1120px; margin: 0 auto; padding: 32px var(--gutter, 24px) 48px; display: grid; gap: 24px; }
+.ava-eyebrow { font: 700 .72rem/1.2 var(--f-rotulo); letter-spacing: .14em; text-transform: uppercase; color: var(--azul-sinal); }
+.ava-boas h1 { font-size: clamp(2rem, 5vw, 3rem); color: var(--azul-lippmann); }
+.ava-boas p { color: var(--cinza-aco); }
+.ava-cursos { display: grid; gap: 16px; }
+.ava-curso { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 20px; align-items: center; background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 14px; padding: 20px; }
+.ava-curso-img img { width: 96px; height: 96px; object-fit: contain; }
+.ava-curso-txt { display: grid; gap: 8px; min-width: 0; }
+.ava-curso h2 { font: 700 1.12rem/1.3 var(--f-rotulo); text-transform: none; letter-spacing: 0; color: var(--azul-lippmann); }
+.ava-curso-acao { display: grid; gap: 8px; }
+.ava-chips { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font: 600 .74rem/1 var(--f-rotulo); color: var(--cinza-medio); }
+.ava-sit { padding: 5px 9px; border-radius: 999px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: .66rem; }
+.ava-sit.and { background: var(--azul-gelo); color: var(--azul-inst); }
+.ava-sit.ok { background: #E6F3EC; color: #1B7F4C; }
+.ava-sit.erro { background: #F8E7E6; color: #B3261E; }
+.ava-barra { height: 8px; border-radius: 999px; background: var(--azul-gelo); overflow: hidden; }
+.ava-barra span { display: block; height: 100%; background: linear-gradient(90deg, var(--azul-sinal), var(--azul-inst)); border-radius: inherit; transition: width .4s; }
+.ava-mini { font-size: .8rem; color: var(--cinza-medio); }
+@media (max-width: 760px) { .ava-curso { grid-template-columns: 64px minmax(0, 1fr); } .ava-curso-img img { width: 64px; height: 64px; } .ava-curso-acao { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; } .ava-curso-acao .btn:only-child { grid-column: 1 / -1; } }
+
+/* curso */
+.ava-curso-tela { display: grid; grid-template-columns: 320px minmax(0, 1fr); min-height: calc(100vh - 120px); }
+.ava-lateral { background: var(--branco); border-right: 1px solid var(--cinza-neblina); padding: 20px 16px 32px; display: grid; gap: 8px; align-content: start; position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; }
+.ava-lateral h2 { font: 700 1.02rem/1.3 var(--f-rotulo); text-transform: none; letter-spacing: 0; color: var(--azul-lippmann); }
+.ava-voltar { display: inline-flex; align-items: center; gap: 6px; font: 700 .74rem var(--f-rotulo); letter-spacing: .06em; text-transform: uppercase; color: var(--azul-sinal); text-decoration: none; margin-bottom: 6px; }
+.ava-voltar svg { width: 16px; height: 16px; }
+.ava-lateral nav { display: grid; gap: 2px; margin-top: 10px; }
+.ava-mod { font: 700 .66rem/1.3 var(--f-rotulo); letter-spacing: .12em; text-transform: uppercase; color: var(--cinza-medio); margin: 14px 8px 4px; }
+.ava-nav-item { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 10px; border-radius: 8px; color: var(--grafite); text-decoration: none; font-size: .88rem; line-height: 1.3; }
+.ava-nav-item:hover { background: var(--off-white); color: var(--azul-inst); }
+.ava-nav-item.ativo { background: var(--azul-gelo); color: var(--azul-lippmann); font-weight: 600; }
+.ava-nav-item > svg, .ava-check svg { width: 20px; height: 20px; color: var(--azul-sinal); }
+.ava-check { display: grid; color: var(--cinza-medio); }
+.ava-check svg { color: var(--azul-nevoa); }
+.ava-check.feito svg { color: #1B7F4C; }
+.ava-nav-item small { font-size: .72rem; color: var(--cinza-medio); white-space: nowrap; }
+.ava-nav-item small.ok { color: #1B7F4C; font-weight: 700; }
+.ava-conteudo { padding: clamp(22px, 4vw, 44px); display: grid; gap: 16px; align-content: start; max-width: 960px; width: 100%; outline: none; }
+.ava-conteudo h1 { font-size: clamp(1.9rem, 4.4vw, 2.8rem); line-height: 1.02; color: var(--azul-lippmann); }
+.ava-lead { font-size: 1.05rem; color: var(--cinza-aco); }
+.ava-h2 { font-size: 1.6rem; color: var(--azul-lippmann); margin-top: 14px; }
+.ava-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.ava-kpis div { background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 10px; padding: 14px; display: grid; gap: 4px; }
+.ava-kpis b { font: 400 2rem/1 var(--f-titulo); color: var(--azul-inst); }
+.ava-kpis span { font-size: .76rem; color: var(--cinza-medio); }
+.ava-acoes { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 4px 0; }
+.ava-titulo-acoes { display: flex; flex-wrap: wrap; gap: 12px 20px; justify-content: space-between; align-items: end; }
+.ava-texto { background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 12px; padding: clamp(18px, 3vw, 30px); }
+.ava-video { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: var(--azul-lippmann); }
+.ava-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.ava-video-vazio { display: grid; place-items: center; text-align: center; color: var(--azul-gelo); padding: 24px; align-content: center; gap: 10px; }
+.ava-video-vazio svg { width: 64px; height: 64px; color: var(--azul-nevoa); }
+.ava-aula-pe { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; align-items: center; padding-top: 8px; }
+.ava-feita { display: inline-flex; align-items: center; gap: 8px; font: 700 .86rem var(--f-rotulo); color: #1B7F4C; }
+.ava-feita svg { width: 22px; height: 22px; }
+.ava-mapa { width: 100%; height: min(80vh, 900px); border: 1px solid var(--cinza-neblina); border-radius: 12px; background: var(--branco); }
+.ava-mapa-img { width: 100%; border-radius: 12px; border: 1px solid var(--cinza-neblina); }
+.ava-regras { display: flex; flex-wrap: wrap; gap: 8px; }
+.ava-regras span { background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 999px; padding: 7px 12px; font-size: .84rem; }
+.ava-prova { display: grid; gap: 14px; }
+.ava-questao { border: 1px solid var(--cinza-neblina); border-radius: 12px; background: var(--branco); padding: 18px; margin: 0; display: grid; gap: 8px; min-width: 0; }
+.ava-questao legend { display: flex; gap: 10px; font-weight: 600; color: var(--grafite); padding: 0; margin-bottom: 6px; float: left; width: 100%; }
+.ava-questao legend span { flex: none; width: 28px; height: 28px; border-radius: 50%; background: var(--azul-inst); color: var(--branco); display: grid; place-items: center; font: 700 .8rem var(--f-rotulo); }
+.ava-alt { display: grid; grid-template-columns: auto 28px minmax(0, 1fr); gap: 10px; align-items: center; padding: 10px 12px; border: 1px solid var(--cinza-neblina); border-radius: 8px; cursor: pointer; clear: both; }
+.ava-alt:hover { border-color: var(--azul-nevoa); }
+.ava-alt:has(input:checked) { border-color: var(--azul-sinal); background: var(--azul-gelo); }
+.ava-alt input { width: 18px; height: 18px; accent-color: var(--azul-sinal); }
+.ava-letra { width: 28px; height: 28px; border-radius: 6px; background: var(--off-white); display: grid; place-items: center; font: 700 .8rem var(--f-rotulo); color: var(--azul-inst); }
+.ava-tabela { width: 100%; border-collapse: collapse; background: var(--branco); border-radius: 10px; overflow: hidden; font-size: .9rem; }
+.ava-tabela th, .ava-tabela td { padding: 10px 12px; border-bottom: 1px solid var(--cinza-neblina); text-align: left; }
+.ava-tabela th { font: 700 .7rem var(--f-rotulo); letter-spacing: .08em; text-transform: uppercase; color: var(--cinza-medio); background: var(--off-white); }
+.ok { color: #1B7F4C; } .erro { color: #B3261E; }
+.ava-resultado { text-align: center; background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 16px; padding: clamp(24px, 5vw, 48px); display: grid; gap: 10px; justify-items: center; }
+.ava-nota { width: 140px; height: 140px; border-radius: 50%; display: grid; place-items: center; font: 400 3.4rem/1 var(--f-titulo); border: 8px solid currentColor; }
+.ava-resultado.ok .ava-nota { color: #1B7F4C; } .ava-resultado.erro .ava-nota { color: #B3261E; }
+.ava-cert-cartao { display: flex; gap: 16px; align-items: center; background: var(--branco); border: 1px solid var(--cinza-neblina); border-left: 6px solid #1B7F4C; border-radius: 12px; padding: 18px; }
+.ava-cert-cartao > svg { width: 44px; height: 44px; color: #1B7F4C; flex: none; }
+.ava-cert-cartao div { display: grid; gap: 4px; min-width: 0; }
+.ava-cert-cartao span { font-size: .86rem; color: var(--cinza-aco); word-break: break-all; }
+@media (max-width: 960px) {
+  .ava-curso-tela { grid-template-columns: 1fr; }
+  .ava-lateral { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--cinza-neblina); }
+  .ava-kpis { grid-template-columns: 1fr 1fr; }
+}
+/* Blindagem dos materiais didáticos: impressão e "Salvar como PDF" bloqueados no AVA */
+@media print {
+  body.ava:not(.portal) > * { display: none !important; }
+  body.ava:not(.portal) { background: #fff !important; display: block !important; }
+  body.ava:not(.portal)::before { content: "Impressão e salvamento em PDF desativados. Os materiais didáticos da UniLTS são de uso exclusivo do aluno, para leitura na tela (propriedade intelectual da LIPPMANN Treinamentos e Soluções). O certificado pode ser impresso pela página do certificado."; display: block; padding: 40mm 20mm; font: 600 14pt/1.5 Arial, sans-serif; color: #0A3490; text-align: center; }
+}
+.ava-protegido { position: relative; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.ava-protegido::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: var(--wm); background-repeat: repeat; z-index: 2; }
+.ava-protegido img, .ava-protegido canvas { -webkit-user-drag: none; pointer-events: none; }
+.ava-pdf { display: grid; gap: 14px; background: #E9EEF7; border-radius: 12px; padding: 14px; min-height: 200px; }
+.ava-pdf-pag { background: #fff; box-shadow: 0 4px 14px rgba(0,30,80,.12); line-height: 0; }
+body.ava { grid-template-columns: minmax(0, 1fr); }
+.ava-topo > * { min-width: 0; }
+@media (max-width: 480px) { .ava-marca small { display: none; } .ava-usuario span { max-width: 38vw; } .ava-sair { padding: 0 10px; } }
+/* barra de acessibilidade à direita no AVA, para não cobrir o menu do curso */
+body.ava .a11y { left: auto; right: 0; }
+body.ava .a11y-abrir { border-radius: 10px 0 0 10px; padding-left: 8px; padding-right: max(8px, env(safe-area-inset-right, 0px)); }
+body.ava .a11y-painel { left: auto; right: calc(100% + 8px); }
+.ava-prazo { font: 600 .78rem/1.3 var(--f-rotulo); color: var(--azul-inst); } .ava-prazo.urgente { color: #B3261E; }

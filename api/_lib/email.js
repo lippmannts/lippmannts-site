@@ -52,7 +52,7 @@ async function enviar(para, assunto, html, op = {}) {
 }
 
 function layout(titulo, conteudo) {
-  const url = process.env.URL_SITE || "https://www.lippmannts.com";
+  const url = require("./util").URL_OFICIAL;
   return `<!doctype html><html lang="pt-BR"><body style="margin:0;background:#F4F6FA;font-family:Arial,Helvetica,sans-serif;color:#1B2433">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F4F6FA;padding:24px 0"><tr><td align="center">
   <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:10px;overflow:hidden">
@@ -63,7 +63,7 @@ function layout(titulo, conteudo) {
     <tr><td style="padding:28px"><h1 style="margin:0 0 16px;font-size:20px;color:#003376">${esc(titulo)}</h1>${conteudo}</td></tr>
     <tr><td style="background:#003376;padding:18px 28px;color:#D6DFF2;font-size:12px;line-height:1.6">
       <b style="color:#ffffff">Segurança não é prioridade. Segurança é valor.</b><br>
-      WhatsApp (11) 94013-8792 · comercial@lippmannts.com · <a href="${esc(url)}" style="color:#ffffff">www.lippmannts.com</a>
+      WhatsApp (11) 94013-8792 · comercial@lippmannts.com · <a href="${esc(url)}" style="color:#ffffff">lippmannts.com</a>
     </td></tr>
   </table></td></tr></table></body></html>`;
 }

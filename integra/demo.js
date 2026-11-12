@@ -11,11 +11,19 @@
   if (!C || !C.api || !C.api.modoDemonstracao) return;
 
   const HASH = { admin: "c7739851cbbdddc92769949444ac79bd6b8ef22c8536a2e1e501693e0a434c95", marketing: "917406553d234053acde849dbf45a27ce55e0b9c3e1961d0676158c25eff4d6e" };
-  const USU = { admin: { usuario: "admin", nome: "Administrador", perfil: "admin" }, marketing: { usuario: "marketing", nome: "Marketing", perfil: "marketing" } };
+  const ABAS = { visao: "Visão geral", inteligencia: "Inteligência comercial", leads: "Leads e contatos", denuncias: "Denúncias e reclamações", lipp: "LIPP · Assistente IA (conversas, leads e reuniões)", newsletter: "Newsletter", talentos: "Banco de talentos", agenda: "Agenda", exportar: "Exportar dados", hub: "HUB e publicações", catalogo: "Treinamentos (catálogo)", solucoes: "Soluções (catálogo)", traducoes: "Traduções (multi-idiomas)", politicas: "Políticas e Termo", unilts: "UniLTS (AVA, turmas e certificados)", financeiro: "Financeiro e BI (vendas, despesas e provisão social)", materiais: "Materiais da Biblioteca", notificacoes: "Notificações e e-mail", usuarios: "Usuários e acessos", seguranca: "Segurança e backup" };
+  const USU = { admin: { usuario: "admin", nome: "Administrador", perfil: "admin", permissoes: Object.keys(ABAS) }, marketing: { usuario: "marketing", nome: "Marketing", perfil: "personalizado", permissoes: ["visao", "inteligencia", "leads", "lipp", "newsletter", "agenda", "exportar"] } };
   const ls = {
     get(k, p) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : p; } catch (e) { return p; } },
     set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   };
+  const slug = t => String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70) || "item";
+  const idYt = u => { const m = String(u || "").match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/) || String(u || "").match(/^([\w-]{11})$/); return m ? m[1] : ""; };
+  const listaHub = () => ls.get("l3_demo_hub", null) || (window.LTS_HUB || []).map((x, i) => ({ ...x, id: i + 1, publicado: true, criado: x.publicado_em }));
+  const listaSol = () => ls.get("l3_demo_sol", null) || (window.LTS_SOLUCOES || []).map((x, i) => ({ ...x, ordem: (i + 1) * 10, ativo: true }));
+  const gruposSol = () => ls.get("l3_demo_sol_grupos", null) || window.LTS_SOLUCOES_GRUPOS || {};
+  const listaCat = () => ls.get("l3_demo_cat", null) || (window.LTS_TREINAMENTOS || []).map((x, i) => ({ ...x, ordem: (i + 1) * 10, ativo: true }));
+  const listaPol = () => ls.get("l3_demo_pol", null) || (window.LTS_POLITICAS || []).map((x, i) => ({ ...x, corpo_html: x.protegido ? x.corpo : "", ordem: (i + 1) * 10, ativo: true }));
   let sessao = null;
   try { sessao = JSON.parse(sessionStorage.getItem("l3_demo_sessao") || "null"); } catch (e) {}
 
@@ -94,7 +102,7 @@
 
   function base() {
     let b = ls.get("l3_demo_base", null);
-    if (!b || b.versao !== 3) { b = { versao: 3, ...semente(), extra: {}, usuarios: [{ id: 1, ...USU.admin, ativo: 1, ultimo_acesso: "" }, { id: 2, ...USU.marketing, ativo: 1, ultimo_acesso: "" }], config: { emails_notificacao: "atendimento@lippmannts.com, comercial@lippmannts.com, lippmannts@gmail.com", boas_vindas_assunto: "Bem-vindo(a) à Newsletter LIPPMANN", boas_vindas_texto: "Obrigado por se cadastrar na Newsletter LIPPMANN.\n\nA partir de agora você receberá conteúdos técnicos sobre Saúde, Segurança e Meio Ambiente, novidades sobre Normas Regulamentadoras e lançamentos de treinamentos e materiais.\n\nSegurança não é prioridade. Segurança é valor." }, emails: [], acessos: [] }; ls.set("l3_demo_base", b); }
+    if (!b || b.versao !== 4) { b = { versao: 4, ...semente(), extra: {}, usuarios: [{ id: 1, ...USU.admin, ativo: 1, ultimo_acesso: "" }, { id: 2, ...USU.marketing, ativo: 1, ultimo_acesso: "" }], config: { emails_notificacao: "atendimento@lippmannts.com, comercial@lippmannts.com, lippmannts@gmail.com", boas_vindas_assunto: "Bem-vindo(a) à Newsletter LIPPMANN", boas_vindas_texto: "Obrigado por se cadastrar na Newsletter LIPPMANN.\n\nA partir de agora você receberá conteúdos técnicos sobre Saúde, Segurança e Meio Ambiente, novidades sobre Normas Regulamentadoras e lançamentos de treinamentos e materiais.\n\nSegurança não é prioridade. Segurança é valor." }, emails: [], acessos: [] }; ls.set("l3_demo_base", b); }
     return b;
   }
   const salvar = b => ls.set("l3_demo_base", b);
@@ -111,6 +119,28 @@
   }
 
   const ok = (x = {}) => Promise.resolve({ ok: true, ...x });
+  /* LIPP (assistente virtual): conversas guardadas neste navegador pelo widget do site; exemplos fictícios na primeira abertura */
+  function lippDemo() {
+    const d = ls.get("l3_demo_lipp", null) || {};
+    if (!d.semeado) {
+      const h = (dd, hh) => { const x = new Date(); x.setDate(x.getDate() - dd); x.setHours(hh, 12, 0, 0); return x.toISOString(); };
+      const prox = () => { const x = new Date(); x.setDate(x.getDate() + ((8 - x.getDay()) % 7 || 7)); x.setUTCHours(13, 0, 0, 0); return x.toISOString(); };
+      const ex = [
+        { id: "demo-c1", criado: h(1, 10), pagina: "treinamentos.html", geo_cidade: "Campinas", geo_uf: "SP", temas: ["Trabalho em altura (NR 35)", "Preço / orçamento", "Agendamento de reunião"], modo: "base", status: "agendada", lead: true, agendou: true, lead_nome: "Mariana Exemplo", lead_email: "mariana@empresa-exemplo.com.br", lead_telefone: "(19) 90000-0000", lead_empresa: "Metalúrgica Exemplo", necessidade: "NR 35 para 25 colaboradores em Campinas, em junho.",
+          msgs: [{ papel: "usuario", texto: "Preciso de treinamento de NR 35 para 25 pessoas", criado: h(1, 10) }, { papel: "lipp", modo: "base", texto: "Encontrei estas opções no nosso portfólio: NR 35 · Trabalho em Altura… Para indicar o formato ideal, me conte: quantos colaboradores, em qual cidade e para quando você precisa?", criado: h(1, 10) }, { papel: "usuario", texto: "Campinas, em junho. Quanto custa?", criado: h(1, 10) }, { papel: "lipp", modo: "base", texto: "Para treinamentos presenciais e in company, o investimento depende do número de participantes, da cidade e da carga horária. Quer agendar uma conversa rápida com um consultor?", criado: h(1, 10) }] },
+        { id: "demo-c2", criado: h(3, 15), pagina: "solucoes.html", geo_cidade: "São Paulo", geo_uf: "SP", temas: ["PGR / GRO / inventário", "Laudos (LTCAT, insalubridade, periculosidade)"], modo: "base", status: "lead", lead: true, lead_nome: "Carlos Exemplo", lead_email: "carlos@exemplo.com.br", lead_empresa: "Logística Exemplo", necessidade: "Atualização do PGR e LTCAT de um centro de distribuição.",
+          msgs: [{ papel: "usuario", texto: "Vocês fazem PGR e LTCAT?", criado: h(3, 15) }, { papel: "lipp", modo: "base", texto: "Sim! Elaboramos o PGR e laudos técnicos como LTCAT, insalubridade e periculosidade. Quer receber uma proposta?", criado: h(3, 15) }] },
+        { id: "demo-c3", criado: h(5, 9), pagina: "unilts.html", temas: ["Cursos EaD UniLTS", "Certificado"], modo: "base", status: "aberta",
+          msgs: [{ papel: "usuario", texto: "O curso on-line dá certificado?", criado: h(5, 9) }, { papel: "lipp", modo: "base", texto: "Os certificados da UniLTS têm QR Code e podem ser validados por qualquer pessoa em lippmannts.com/validar.html.", criado: h(5, 9) }] },
+      ].map(c => ({ ...c, atualizado: c.criado, mensagens: c.msgs.length, idioma: "pt-BR" }));
+      const ini = prox();
+      d.conversas = [...(d.conversas || []), ...ex];
+      d.agendamentos = [...(d.agendamentos || []), { id: 1, conversa_id: "demo-c1", nome: "Mariana Exemplo", email: "mariana@empresa-exemplo.com.br", telefone: "(19) 90000-0000", empresa: "Metalúrgica Exemplo", necessidade: "NR 35 para 25 colaboradores em Campinas.", inicio: ini, fim: new Date(new Date(ini).getTime() + 1800000).toISOString(), status: "solicitado", meet_url: null, criado: h(1, 10) }];
+      d.semeado = true; ls.set("l3_demo_lipp", d);
+    }
+    return d;
+  }
+
   const nao = (m, extra = {}) => Promise.resolve({ ok: false, mensagem: m, ...extra });
 
   window.L3_DEMO = {
@@ -129,8 +159,20 @@
       if (acao === "sessao") return sessao ? ok({ usuario: sessao, token: "demo" }) : nao("");
       if (!sessao) return nao("Sessão expirada.");
       const adm = sessao.perfil === "admin";
-      const somenteAdmin = ["config", "config_salvar", "email_teste", "emails_log", "site_salvar", "usuarios", "usuario_salvar", "materiais", "material_salvar", "material_excluir", "arquivos", "arquivo", "registro_excluir"];
-      if (somenteAdmin.includes(acao) && !adm) return nao("Seu perfil não tem permissão para esta ação.");
+      const exige = { config: ["notificacoes", "materiais"], config_salvar: ["notificacoes"], email_teste: ["notificacoes"], emails_log: ["seguranca"], usuarios: ["usuarios"], usuario_salvar: ["usuarios"], usuario_excluir: ["usuarios"], materiais: ["materiais"], material_salvar: ["materiais"], material_excluir: ["materiais"], agenda_salvar: ["agenda"], agenda_excluir: ["agenda"], agenda_convite: ["agenda"], hub_listar: ["hub"], hub_salvar: ["hub"], hub_excluir: ["hub"], catalogo_listar: ["catalogo"], catalogo_salvar: ["catalogo"], catalogo_excluir: ["catalogo"], solucoes_listar: ["solucoes"], solucoes_salvar: ["solucoes"], solucoes_excluir: ["solucoes"], solucoes_grupos: ["solucoes"], ouv_listar: ["denuncias"], ouv_detalhe: ["denuncias"], ouv_responder: ["denuncias"], lipp_resumo: ["lipp"], lipp_conversa: ["lipp"], lipp_agendamento_salvar: ["lipp"], i18n_listar: ["traducoes"], i18n_salvar: ["traducoes"], i18n_fontes: ["traducoes"], politicas_listar: ["politicas"], politicas_salvar: ["politicas"], politicas_excluir: ["politicas"] }[acao];
+      const perms = adm ? Object.keys(ABAS) : (sessao.permissoes || []);
+      if (/^fin_/.test(acao)) {   // Financeiro e BI: simulado por assets/js/uni-demo.js
+        if (!perms.includes("financeiro")) return nao("Acesso negado (Unauthorized): seu usuário não tem permissão para «Financeiro e BI».");
+        const r = window.UNI_DEMO && await window.UNI_DEMO.painel(acao, corpo || {}, Object.fromEntries(new URLSearchParams(query || "")));
+        return r || nao("Ação indisponível na demonstração.");
+      }
+      if (/^uni_/.test(acao)) {   // UniLTS: simulado por assets/js/uni-demo.js
+        if (!perms.includes("unilts")) return nao("Acesso negado (Unauthorized): seu usuário não tem permissão para «UniLTS».");
+        if (acao === "uni_ajustar_numero" && !adm) return nao("Somente o superadministrador pode ajustar a numeração das turmas.");
+        const r = window.UNI_DEMO && await window.UNI_DEMO.painel(acao, corpo || {}, Object.fromEntries(new URLSearchParams(query || "")));
+        return r || nao("Ação indisponível na demonstração.");
+      }
+      if (exige && !exige.some(x => perms.includes(x))) return nao("Acesso negado (Unauthorized): seu usuário não tem permissão para esta aba.");
 
       switch (acao) {
         case "dados": {
@@ -162,12 +204,17 @@
         case "email_teste": return ok({ mensagem: "Demonstração: no servidor, um e-mail de teste seria enviado agora." });
         case "emails_log": return ok({ log: b.emails, acessos: b.acessos.slice(0, 100) });
         case "site_salvar": return ok({ mensagem: "Demonstração: no servidor, o arquivo assets/js/config.js seria atualizado." });
-        case "usuarios": return ok({ usuarios: b.usuarios });
+        case "usuarios": return ok({ abas: ABAS, usuarios: b.usuarios });
+        case "usuario_excluir": {
+          const alvo = b.usuarios.find(u => String(u.id) === String(corpo.id));
+          if (alvo && alvo.usuario === sessao.usuario) return nao("Você não pode excluir o seu próprio usuário.");
+          b.usuarios = b.usuarios.filter(u => String(u.id) !== String(corpo.id)); salvar(b); return ok();
+        }
         case "usuario_salvar": {
           if (!/^[a-z0-9._-]{3,40}$/.test(String(corpo.usuario || ""))) return nao("Usuário: use de 3 a 40 letras minúsculas, números, ponto ou hífen.");
           if (!corpo.id && String(corpo.senha || "").length < 10) return nao("A senha deve ter ao menos 10 caracteres.");
           if (corpo.id) b.usuarios = b.usuarios.map(u => String(u.id) === String(corpo.id) ? { ...u, ...corpo, senha: undefined } : u);
-          else b.usuarios.push({ id: Math.max(...b.usuarios.map(u => u.id)) + 1, usuario: corpo.usuario, nome: corpo.nome, email: corpo.email, perfil: corpo.perfil, ativo: corpo.ativo, ultimo_acesso: "" });
+          else b.usuarios.push({ id: Math.max(...b.usuarios.map(u => u.id)) + 1, usuario: corpo.usuario, nome: corpo.nome, email: corpo.email, perfil: corpo.perfil, permissoes: corpo.permissoes || [], ativo: corpo.ativo, ultimo_acesso: "" });
           salvar(b); return ok();
         }
         case "minha_senha": return String(corpo.nova || "").length < 10 ? nao("A nova senha deve ter ao menos 10 caracteres.") : ok({ mensagem: "Demonstração: no servidor, a senha seria alterada." });
@@ -181,6 +228,80 @@
           ls.set("l3_demo_mat", lista); return ok({ materiais: lista });
         }
         case "material_excluir": { const lista = ls.get("l3_demo_mat", window.LTS_CONTEUDOS || []).filter(m => m.id !== corpo.id); ls.set("l3_demo_mat", lista); return ok({ materiais: lista }); }
+        /* ---------- Site e conteúdo (gravado neste navegador; o site em modo demonstração lê daqui) ---------- */
+        case "hub_listar": return ok({ itens: listaHub() });
+        case "hub_salvar": {
+          const l = listaHub(), d = { ...corpo, tags: String(corpo.tags || "").split(/[,\n]/).map(x => x.trim()).filter(Boolean), youtube: idYt(corpo.youtube) };
+          if (d.id) { const i = l.findIndex(x => String(x.id) === String(d.id)); if (d.publicado && !l[i].publicado_em) d.publicado_em = new Date().toISOString(); l[i] = { ...l[i], ...d }; }
+          else { d.id = Math.max(0, ...l.map(x => +x.id || 0)) + 1; d.slug = slug(d.titulo); d.criado = new Date().toISOString(); if (d.publicado) d.publicado_em = d.criado; l.unshift(d); }
+          ls.set("l3_demo_hub", l); return ok({ id: d.id });
+        }
+        case "hub_excluir": ls.set("l3_demo_hub", listaHub().filter(x => String(x.id) !== String(corpo.id))); return ok();
+        case "catalogo_listar": return ok({ treinamentos: listaCat() });
+        case "catalogo_salvar": {
+          const l = listaCat(), linhas = v => String(v || "").split("\n").map(x => x.trim()).filter(Boolean);
+          const d = { ...corpo, id: corpo.id || slug(corpo.titulo), tags: String(corpo.tags || "").split(",").map(x => x.trim()).filter(Boolean), youtube: idYt(corpo.youtube), aprender: linhas(corpo.aprender), publico: linhas(corpo.publico), beneficios: linhas(corpo.beneficios), ordem: +corpo.ordem || 100, ativo: !!+corpo.ativo };
+          const i = l.findIndex(x => x.id === d.id); if (i >= 0) l[i] = { ...l[i], ...d }; else l.push(d);
+          ls.set("l3_demo_cat", l); return ok({ id: d.id });
+        }
+        case "catalogo_excluir": ls.set("l3_demo_cat", listaCat().filter(x => x.id !== corpo.id)); return ok();
+        case "solucoes_listar": return ok({ solucoes: listaSol(), grupos: gruposSol() });
+        case "solucoes_salvar": {
+          if (!String(corpo.titulo || "").trim()) return nao("Informe o título da solução."); if (!String(corpo.texto || "").trim()) return nao("Escreva a descrição da solução.");
+          const l = listaSol(), d = { ...corpo, id: corpo.id || slug(corpo.titulo), ordem: +corpo.ordem || 100, ativo: !!+corpo.ativo };
+          const i = l.findIndex(x => x.id === d.id); if (i >= 0) l[i] = { ...l[i], ...d }; else l.push(d);
+          l.sort((a, c) => a.ordem - c.ordem); ls.set("l3_demo_sol", l); return ok({ id: d.id });
+        }
+        case "solucoes_excluir": ls.set("l3_demo_sol", listaSol().filter(x => x.id !== corpo.id)); return ok();
+        case "solucoes_grupos": { const g = {}; (corpo.grupos || []).forEach(x => { const k = x.id || slug(x.nome); if (k && x.nome) g[k] = x.nome; }); if (!Object.keys(g).length) return nao("Mantenha pelo menos um grupo."); ls.set("l3_demo_sol_grupos", g); return ok({ grupos: g }); }
+        case "i18n_listar": { const t = ls.get("l3_demo_i18n", {})[query && new URLSearchParams(query).get("l") || ""] || {}; return ok({ textos: Object.entries(t).map(([pt, traducao]) => ({ pt, traducao, atualizado: null, atualizado_por: "admin" })) }); }
+        case "i18n_salvar": {
+          const tudo = ls.get("l3_demo_i18n", {}), l = corpo.idioma; if (!["pt-PT", "en-US", "en-GB", "es-ES"].includes(l)) return nao("Idioma inválido.");
+          tudo[l] = tudo[l] || {}; const pt = String(corpo.pt || "").replace(/\s+/g, " ").trim(); if (!pt) return nao("Texto original vazio.");
+          if (String(corpo.traducao || "").trim()) tudo[l][pt] = String(corpo.traducao).replace(/\s+/g, " ").trim(); else delete tudo[l][pt];
+          ls.set("l3_demo_i18n", tudo); return ok();
+        }
+        case "i18n_fontes": return ok({ catalogo: listaCat(), solucoes: listaSol(), grupos: gruposSol(), hub: listaHub(), politicas: listaPol(), cursos: (window.UNI_DEMO && window.UNI_DEMO.cursosDemo ? window.UNI_DEMO.cursosDemo() : []) });
+        case "ouv_listar": {
+          const O = window.LTS_OUV_DEMO; if (!O) return ok({ protocolos: [] });
+          if (!ls.get("l3_demo_ouv_semeado", false) && !O.listar().length) {   // exemplos fictícios na primeira abertura
+            O.criar({ assunto: "SUGESTÕES DE MELHORIA", nome: "Paulo Exemplo", email: "paulo@exemplo.com.br", mensagem: "Sugiro disponibilizar o certificado também em inglês para colaboradores estrangeiros." });
+            O.criar({ assunto: "RECLAMAÇÕES", nome: "Carla Exemplo", email: "carla@exemplo.com.br", mensagem: "O e-mail com a senha provisória foi para a caixa de spam." });
+            O.criar({ assunto: "DENÚNCIAS", mensagem: "Relato anônimo de exemplo: instrutor sem EPI durante a aula prática." });
+            const l = O.listar(); const rec = l.find(x => x.tipo === "reclamacao"); if (rec) O.responder(rec.id, "Olá, Carla! Ajustamos o remetente e o domínio para evitar o spam. Obrigado pelo aviso.", "respondido", true);
+            ls.set("l3_demo_ouv_semeado", true);
+          }
+          return ok({ protocolos: O.listar() });
+        }
+        case "ouv_detalhe": { const p = window.LTS_OUV_DEMO && window.LTS_OUV_DEMO.detalhe(new URLSearchParams(query || "").get("id")); return p ? ok({ protocolo: p, historico: p.historico }) : nao("Protocolo não encontrado."); }
+        case "ouv_responder": return window.LTS_OUV_DEMO ? window.LTS_OUV_DEMO.responder(corpo.id, corpo.texto, corpo.status, corpo.publico !== "0") : nao("Indisponível.");
+        case "lipp_resumo": {
+          const d = lippDemo(), dias = +new URLSearchParams(query || "").get("dias") || 30, desde = Date.now() - dias * 86400000;
+          const cv = (d.conversas || []).filter(c => new Date(c.criado).getTime() >= desde);
+          const temas = {}; cv.forEach(c => (c.temas || []).forEach(x => { temas[x] = (temas[x] || 0) + 1; }));
+          const pg = {}; cv.forEach(c => { const m = (c.msgs || []).find(x => x.papel === "usuario"); if (m) { const k = m.texto.toLowerCase().slice(0, 90); pg[k] = pg[k] || { texto: m.texto, n: 0 }; pg[k].n++; } });
+          const fh = v => new Date(v).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+          return ok({ ia: false, google: false, dias, conversas: cv.map(c => ({ ...c, msgs: undefined, criado: fh(c.criado), atualizado: fh(c.atualizado) })), agendamentos: (d.agendamentos || []).map(a => ({ ...a, quando: new Date(a.inicio).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo", weekday: "short", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }), criado: fh(a.criado) })), temas: Object.entries(temas).sort((a, z) => z[1] - a[1]).slice(0, 15), perguntas: Object.values(pg).sort((a, z) => z.n - a.n).slice(0, 15) });
+        }
+        case "lipp_conversa": {
+          const c = (lippDemo().conversas || []).find(x => x.id === new URLSearchParams(query || "").get("id")); if (!c) return nao("Conversa não encontrada.");
+          const fh = v => new Date(v).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+          return ok({ conversa: { ...c, criado: fh(c.criado) }, mensagens: (c.msgs || []).map(m => ({ ...m, criado: m.criado ? fh(m.criado) : "" })) });
+        }
+        case "lipp_agendamento_salvar": {
+          const d = lippDemo(), a = (d.agendamentos || []).find(x => x.id == corpo.id); if (!a) return nao("Agendamento não encontrado.");
+          if (corpo.meet_url && !/^https:\/\//.test(corpo.meet_url)) return nao("O link da reunião deve começar com https://");
+          Object.assign(a, { status: corpo.status || a.status, meet_url: corpo.meet_url || null, observacao: corpo.observacao || null });
+          ls.set("l3_demo_lipp", d); return ok({ mensagem: corpo.avisar ? "Agendamento atualizado. (Demonstração: no site oficial o e-mail de confirmação é enviado ao visitante.)" : "Agendamento atualizado." });
+        }
+        case "politicas_listar": return ok({ politicas: listaPol() });
+        case "politicas_salvar": {
+          const l = listaPol(), d = { ...corpo, id: corpo.id || slug(corpo.titulo), ordem: +corpo.ordem || 100, ativo: !!+corpo.ativo };
+          const i = l.findIndex(x => x.id === d.id); if (i >= 0) l[i] = { ...l[i], ...d }; else l.push(d);
+          l.sort((a, c) => a.ordem - c.ordem); ls.set("l3_demo_pol", l); return ok({ id: d.id });
+        }
+        case "politicas_excluir": ls.set("l3_demo_pol", listaPol().filter(x => x.id !== corpo.id)); return ok();
+        case "arquivo_upload": return nao("Na demonstração os arquivos ficam no próprio navegador.");
         case "arquivos": return ok({ arquivos: ["index.html", "a-lippmann.html", "treinamentos.html", "solucoes.html", "conteudo.html", "fale-conosco.html", "trabalhe-conosco.html", "assets/css/style.css", "assets/js/config.js", "assets/js/layout.js", "assets/js/catalogo.js", "data/treinamentos.js", "data/solucoes.js", "data/conteudos.js"].map(c => ({ caminho: c })) });
         case "arquivo": {
           const caminho = decodeURIComponent((query.split("caminho=")[1] || ""));

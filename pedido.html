@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/assets/js/i18n.js"></script>
+<title>Consultar compra | UniLTS · LIPPMANN</title>
+<meta name="description" content="Acompanhe a situação da sua compra na UniLTS pelo código de rastreio e veja como solicitar o cancelamento.">
+<meta property="og:title" content="Consultar compra | UniLTS · LIPPMANN">
+<meta property="og:description" content="Acompanhe a situação da sua compra na UniLTS pelo código de rastreio e veja como solicitar o cancelamento.">
+<meta property="og:image" content="https://lippmannts.com/assets/img/fotos/capa-2.webp">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A3490">
+<link rel="canonical" href="https://lippmannts.com/pedido.html">
+<meta property="og:url" content="https://lippmannts.com/pedido.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LIPPMANN Treinamentos e Soluções">
+<meta property="og:locale" content="pt_BR">
+<link rel="icon" href="/assets/img/marca/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body data-page="pedido">
+<div id="site-header"></div>
+<main id="conteudo-principal">
+  <section class="page-head sobre-azul">
+    <div class="wrap">
+      <p class="trilha"><a href="/index.html">Início</a> / <a href="/unilts.html">UniLTS</a> / Consultar compra</p>
+      <h1>Consultar compra</h1>
+      <p class="lead">Acompanhe a sua compra na UniLTS pelo código de rastreio e veja como solicitar o cancelamento dentro do prazo legal.</p>
+    </div>
+  </section>
+  <section class="secao secao-off">
+    <div class="wrap val-wrap">
+      <form class="form-card val-form" id="pd-form" novalidate>
+        <div class="form-grid">
+          <div class="campo"><label for="pd-codigo">Código da compra</label><input id="pd-codigo" placeholder="Ex.: PED-20261111-4F7A2C" autocomplete="off" required translate="no"></div>
+          <div class="campo"><label for="pd-email">E-mail usado na compra</label><input id="pd-email" type="email" autocomplete="email" required></div>
+        </div>
+        <button class="btn btn-primario" type="submit">Consultar</button>
+        <small>O código de rastreio está na tela de confirmação e no e-mail do pedido. Regras completas na <a href="/a-lippmann.html#politicas">Política de Reembolso e Cancelamento</a>.</small>
+        <p class="form-aviso" id="pd-aviso" role="status" hidden></p>
+      </form>
+      <div id="pd-resultado" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<div id="site-footer"></div>
+
+<script src="/assets/js/config.js"></script>
+<script src="/assets/js/layout.js"></script>
+<script src="/assets/js/acessibilidade.js"></script>
+<script src="/data/unilts-modelo.js"></script>
+<script src="/data/unilts-trilha-instrutor.js"></script>
+<script src="/assets/js/uni-demo.js"></script>
+<script src="/assets/js/cancelamento.js"></script>
+<script src="/assets/js/pedido.js"></script>
+</body>
+</html>

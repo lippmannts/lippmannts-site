@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /integra/
+Disallow: /api/
+Disallow: /unilts/
+Disallow: /empresa/
+Disallow: /parceiro/
+
+Sitemap: https://lippmannts.com/sitemap.xml

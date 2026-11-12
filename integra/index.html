@@ -28,7 +28,7 @@
       <div><h1>Entrar</h1></div>
       <p class="sub">Use o usuário e a senha do seu perfil.</p>
       <div class="campo"><label for="lg-usuario">Usuário</label><input id="lg-usuario" name="usuario" autocomplete="username" required></div>
-      <div class="campo"><label for="lg-senha">Senha</label><input id="lg-senha" name="senha" type="password" autocomplete="current-password" required></div>
+      <div class="campo"><label for="lg-senha">Senha</label><div class="senha-box"><input id="lg-senha" name="senha" type="password" autocomplete="current-password" required><button type="button" class="olho" data-olho="lg-senha" aria-label="Mostrar senha" aria-pressed="false"></button></div></div>
       <p class="aviso erro" id="lg-erro" role="alert" hidden></p>
       <button class="btn btn-primario btn-grande" type="submit">Acessar o painel</button>
       <p id="lg-demo" class="aviso atencao" hidden></p>
@@ -66,6 +66,12 @@
 <script src="/data/treinamentos.js"></script>
 <script src="/data/solucoes.js"></script>
 <script src="/data/conteudos.js"></script>
+<script src="/data/hub.js"></script>
+<script src="/data/politicas.js"></script>
+<script src="/data/unilts-modelo.js"></script>
+<script src="/data/unilts-trilha-instrutor.js"></script>
+<script src="/assets/js/uni-demo.js"></script>
+<script src="/assets/js/ouv-demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.mini.min.js"></script>
 <script src="demo.js"></script>

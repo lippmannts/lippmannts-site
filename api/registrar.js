@@ -74,11 +74,18 @@ module.exports = async (req, res) => {
     if (error) throw error;
     const id = novo.id;
 
+    /* Ouvidoria: denúncias, reclamações e sugestões geram protocolo rastreável */
+    let protocolo = null;
+    if (tipo === "contato" && require("./_lib/ouvidoria").TIPOS[r.assunto]) {
+      protocolo = await require("./_lib/ouvidoria").criar(id, r);
+      if (protocolo) await db().from("registros").update({ extras: { ...extras, Protocolo: protocolo.protocolo } }).eq("id", id);
+    }
+
     /* ---------- e-mails ---------- */
     const rotulo = tipo === "contato" ? `Fale Conosco — ${r.assunto}` : tipo === "candidato" ? `Trabalhe Conosco — ${r.cargo_pretendido}` : ROTULOS[tipo];
-    const site = (process.env.URL_SITE || "https://www.lippmannts.com").replace(/\/$/, "");
+    const site = U.URL_OFICIAL;
     const resumo = E.tabela({
-      "Tipo": rotulo, "Nome": r.nome || (denuncia ? "Anônimo" : ""), "Empresa": r.empresa, "Cargo": r.cargo, "Cargo pretendido": r.cargo_pretendido,
+      "Tipo": rotulo, "Protocolo": protocolo ? protocolo.protocolo : "", "Nome": r.nome || (denuncia ? "Anônimo" : ""), "Empresa": r.empresa, "Cargo": r.cargo, "Cargo pretendido": r.cargo_pretendido,
       "E-mail": r.email, "Telefone / WhatsApp": r.telefone, "Cidade / UF": [r.cidade, r.uf].filter(Boolean).join(" / "),
       "Como conheceu": r.origem, "LinkedIn": r.linkedin, "Mensagem": r.mensagem,
       "Localização aproximada (IP)": [g.cidade, g.uf].filter(Boolean).join(" / "),
@@ -107,12 +114,12 @@ module.exports = async (req, res) => {
       envios.push(E.enviar(r.email, "Recebemos o seu currículo · LIPPMANN", E.layout("Currículo recebido",
         `<p style="margin:0 0 14px">Olá, ${U.esc(primeiro)}!</p><p style="margin:0 0 14px;line-height:1.6">Recebemos o seu currículo para a área <b>${U.esc(r.cargo_pretendido)}</b>. Ele ficará no nosso banco de talentos e, havendo uma oportunidade compatível, entraremos em contato para agendar uma entrevista.</p><p style="margin:0">Obrigado pelo interesse em fazer parte da LIPPMANN.</p>`)));
     }
-    if (tipo === "contato" && r.email && !denuncia) {
+    if (tipo === "contato" && r.email && !protocolo) {
       envios.push(E.enviar(r.email, "Recebemos a sua mensagem · LIPPMANN", E.layout("Mensagem recebida",
         `<p style="margin:0 0 14px">Olá, ${U.esc(primeiro)}!</p><p style="margin:0 0 14px;line-height:1.6">Recebemos a sua mensagem sobre <b>${U.esc(r.assunto)}</b>. A equipe LIPPMANN responderá em breve pelo contato informado.</p>${E.botao("Falar agora pelo WhatsApp", "https://wa.me/5511940138792?text=" + encodeURIComponent("Olá! Vim pelo site oficial da LIPPMANN."), "#1FA855")}`)));
     }
     await Promise.allSettled(envios);
-    return U.ok(res, { id });
+    return U.ok(res, protocolo ? { id, protocolo: protocolo.protocolo, chave: protocolo.chave } : { id });
   } catch (e) {
     console.error("registrar:", e);
     if (e && e.configuracao) return U.erro(res, "O site ainda não está conectado ao banco de dados. Avise a equipe LIPPMANN pelo WhatsApp (11) 94013-8792.", 503);

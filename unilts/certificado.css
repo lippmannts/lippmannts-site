@@ -1,0 +1,60 @@
+.folha, body.pg-cert, .rel-certs { --a1: #003376; --a2: #0A3490; --a3: #1F55C9; --a4: #9DB8F2; --a5: #D6DFF2; --g: #1B2433; --c: #49505C; }
+.folha, .folha * { box-sizing: border-box; }
+body.pg-cert * { box-sizing: border-box; }
+body.pg-cert { margin: 0; background: #E9EDF5; color: var(--g); font: 400 14px/1.5 Inter, Arial, sans-serif; }
+.folha, .folha * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.barra-acoes { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: center; padding: 10px 16px; background: var(--a2); color: #fff; font: 600 .9rem Montserrat, Arial, sans-serif; }
+.barra-acoes button { min-height: 42px; padding: 0 18px; border: 0; border-radius: 6px; background: #fff; color: var(--a2); font: 700 .8rem Montserrat, Arial, sans-serif; letter-spacing: .05em; text-transform: uppercase; cursor: pointer; }
+.barra-acoes button:disabled { opacity: .5; cursor: not-allowed; }
+#cert { padding: 24px 16px 48px; display: grid; gap: 24px; justify-content: center; }
+.nao { background: #fff; padding: 24px; border-radius: 10px; }
+.folha { page: cert; font: 400 14px/1.5 Inter, Arial, sans-serif; color: var(--g); box-sizing: border-box; width: 297mm; height: 210mm; background: #fff; box-shadow: 0 8px 30px rgba(0,30,80,.18); position: relative; overflow: hidden; padding: 9mm; }
+.folha .moldura { position: relative; height: 100%; border: 2px solid var(--a2); outline: 1px solid var(--a4); outline-offset: -6px; padding: 12mm 16mm 9mm; display: flex; flex-direction: column; }
+.folha .losangos { position: absolute; right: -22mm; top: -22mm; width: 90mm; height: 90mm; pointer-events: none; transform: scale(.62); transform-origin: top right; }
+.folha .losangos i { position: absolute; width: 46mm; height: 46mm; transform: rotate(45deg); border-radius: 6mm; }
+.folha .losangos i:nth-child(1) { right: 22mm; top: 22mm; background: var(--a2); }
+.folha .losangos i:nth-child(2) { right: 8mm; top: 46mm; background: var(--a3); width: 26mm; height: 26mm; }
+.folha .losangos i:nth-child(3) { right: 50mm; top: 8mm; background: var(--a5); width: 20mm; height: 20mm; }
+.folha .cab { display: flex; align-items: center; gap: 14mm; }
+.folha .logo { height: 10.5mm; width: auto; }
+.folha .uni { font: 400 30px/1 "Bebas Neue", Arial, sans-serif; color: var(--a2); display: grid; border-left: 1px solid var(--a4); padding-left: 6mm; }
+.folha .uni b { font-weight: 400; color: var(--a3); }
+.folha .uni small { font: 600 8px/1.3 Montserrat, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--c); }
+.folha h1 { font: 400 64px/1 "Bebas Neue", Arial, sans-serif; letter-spacing: .06em; color: var(--a1); margin: 9mm 0 0; }
+.folha .sub { font: 600 11px/1 Montserrat, Arial, sans-serif; letter-spacing: .3em; text-transform: uppercase; color: var(--a3); margin: 2mm 0 7mm; }
+.folha .texto { font-size: 15.5px; line-height: 1.75; max-width: 225mm; margin: 0; color: var(--g); }
+.folha .nome { font: 700 26px/1.25 Montserrat, Arial, sans-serif; color: var(--a1); margin: 1.5mm 0 2mm; }
+.folha .assinaturas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12mm; margin-top: auto; padding-top: 6mm; }
+.folha .ass { display: grid; justify-items: center; text-align: center; gap: 1px; }
+.folha .ass-img { height: 14mm; display: flex; align-items: flex-end; }
+.folha .ass-img img { max-height: 14mm; max-width: 60mm; }
+.folha .ass-linha { width: 100%; border-top: 1px solid var(--g); margin-bottom: 2mm; }
+.folha .ass b { font: 700 11.5px/1.3 Montserrat, Arial, sans-serif; color: var(--g); }
+.folha .ass span { font-size: 9.5px; color: var(--c); line-height: 1.3; }
+.folha .ass small { font: 700 8.5px/1.4 Montserrat, Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--a3); }
+.folha .pe { display: flex; gap: 6mm; align-items: center; margin-top: 7mm; padding-top: 4mm; border-top: 1px solid var(--a5); }
+.folha .qr { width: 24mm; height: 24mm; flex: none; }
+.folha .qr svg { width: 100%; height: 100%; display: block; }
+.folha .pe-txt { display: grid; gap: 1px; font-size: 9.5px; color: var(--c); }
+.folha .pe-txt b { font: 700 11px Montserrat, Arial, sans-serif; color: var(--a1); letter-spacing: .02em; }
+.folha .verso-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 12mm; margin-top: 8mm; flex: 1; }
+.folha h2 { font: 400 26px/1 "Bebas Neue", Arial, sans-serif; letter-spacing: .04em; color: var(--a1); margin: 0 0 4mm; }
+.folha .cp { margin: 0; padding-left: 5mm; display: grid; gap: 2.2mm; font-size: 11.5px; }
+.folha .dados { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+.folha .dados th, .folha .dados td { text-align: left; padding: 1.8mm 2mm; border-bottom: 1px solid var(--a5); vertical-align: top; }
+.folha .dados th { width: 36%; font: 700 8.5px/1.4 Montserrat, Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--a2); }
+.folha .nota-legal { font-size: 9.5px; color: var(--c); margin-top: 4mm; line-height: 1.5; }
+.folha .pe-verso { justify-content: space-between; font-size: 9px; color: var(--c); }
+.invalido .folha::after { content: "SEM VALIDADE"; position: absolute; inset: 0; display: grid; place-items: center; font: 400 120px "Bebas Neue", Arial; color: rgba(179,38,30,.18); transform: rotate(-18deg); pointer-events: none; }
+@media screen and (max-width: 1180px) { #cert { padding: 12px; } }
+@page cert { size: A4 landscape; margin: 0; }
+@page { size: A4 landscape; margin: 0; }
+@media print {
+  body.pg-cert { background: #fff; }
+  .barra-acoes { display: none; }
+  #cert { padding: 0; gap: 0; display: block; }
+  .folha { box-shadow: none; page-break-after: always; break-after: page; }
+}
+
+.revogado .folha::after { content: "REVOGADO"; color: rgba(185,28,28,.30); font-size: 150px; }
+.cert-status.revogado, #cert-status.revogado { background: #B91C1C !important; color: #fff !important; font-weight: 700; }

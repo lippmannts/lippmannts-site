@@ -3,12 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/assets/js/i18n.js"></script>
 <title>Fale Conosco | LIPPMANN Treinamentos e Soluções</title>
 <meta name="description" content="Fale com a LIPPMANN: solicite propostas de treinamentos e soluções em SSMA, envie sugestões de melhoria, reclamações ou denúncias.">
 <meta property="og:title" content="Fale Conosco | LIPPMANN Treinamentos e Soluções">
 <meta property="og:description" content="Fale com a LIPPMANN: solicite propostas de treinamentos e soluções em SSMA, envie sugestões de melhoria, reclamações ou denúncias.">
-<meta property="og:image" content="assets/img/fotos/capa-2.webp">
+<meta property="og:image" content="https://lippmannts.com/assets/img/fotos/capa-2.webp">
 <meta name="theme-color" content="#0A3490">
+<link rel="canonical" href="https://lippmannts.com/fale-conosco.html">
+<meta property="og:url" content="https://lippmannts.com/fale-conosco.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LIPPMANN Treinamentos e Soluções">
+<meta property="og:locale" content="pt_BR">
 <link rel="icon" href="/assets/img/marca/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/assets/img/marca/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="/assets/img/marca/apple-touch-icon.png">
@@ -42,6 +48,7 @@
           <a class="canal" id="c-insta" href="#" target="_blank" rel="noopener"><span class="ic"><i data-icon="instagram"></i></span><span><small>Instagram</small><b>@lippmannts</b></span></a>
           <a class="canal" id="c-yt" href="#" target="_blank" rel="noopener"><span class="ic"><i data-icon="youtube"></i></span><span><small>YouTube</small><b>Canal LIPPMANN</b></span></a>
           <a class="canal" id="c-in" href="#" target="_blank" rel="noopener"><span class="ic"><i data-icon="linkedin"></i></span><span><small>LinkedIn</small><b>LIPPMANN</b></span></a>
+          <a class="canal" href="protocolo.html"><span class="ic"><i data-icon="escudo"></i></span><span><small>Ouvidoria</small><b>Consultar protocolo</b></span></a>
         </div>
       </aside>
 
@@ -60,6 +67,7 @@
               </select>
               <span class="msg-erro">Selecione o assunto para direcionarmos o atendimento.</span>
             </div>
+            <p class="assunto-nota full" id="nota-protocolo" hidden>Denúncias, reclamações e sugestões de melhoria recebem um <b>número de protocolo</b> e um código de acesso para você acompanhar o andamento em <a href="protocolo.html">Consultar protocolo</a>.</p>
             <p class="assunto-nota full" id="nota-denuncia" hidden>Denúncias podem ser feitas de forma anônima: nome, e-mail e telefone tornam-se opcionais. Se quiser receber retorno, informe ao menos um contato. As informações são tratadas com sigilo pela Direção da LIPPMANN.</p>
             <div class="campo"><label for="f-nome">Nome completo <span class="opc" data-opc hidden>(opcional)</span></label><input id="f-nome" name="Nome" type="text" autocomplete="name" required><span class="msg-erro">Informe seu nome.</span></div>
             <div class="campo"><label for="f-empresa">Empresa <span class="opc">(opcional)</span></label><input id="f-empresa" name="Empresa" type="text" autocomplete="organization"></div>
@@ -82,7 +90,9 @@
 <div id="site-footer"></div>
 
 <script src="/assets/js/config.js"></script>
+<script src="/assets/js/ouv-demo.js"></script>
 <script src="/assets/js/layout.js"></script>
+<script src="/assets/js/acessibilidade.js"></script>
 <script src="/assets/js/fale-conosco.js"></script>
 
 </body>

@@ -1,16 +1,26 @@
 /* =====================================================================
    LIPPMANN · CATÁLOGO (Treinamentos e Soluções)
-   Lê os dados de data/treinamentos.js e data/solucoes.js e monta os
-   cartões, os filtros e a ficha técnica. Não é preciso editar aqui
-   para mudar textos: edite os arquivos da pasta data/.
+   Treinamentos: lidos do L³ INTEGRA (/api/catalogo); se o servidor não
+   responder, usa a lista reserva em data/treinamentos.js.
+   Soluções: data/solucoes.js.
    ===================================================================== */
 (function () {
   "use strict";
   const I = window.LTS_ICON;
-  const TR = window.LTS_TREINAMENTOS || [];
+  let TR = window.LTS_TREINAMENTOS || [];
   const GERAL = window.LTS_TREINAMENTOS_GERAL || {};
-  const SOL = window.LTS_SOLUCOES || [];
-  const GRUPOS = window.LTS_SOLUCOES_GRUPOS || {};
+  let SOL = window.LTS_SOLUCOES || [];
+  let GRUPOS = window.LTS_SOLUCOES_GRUPOS || {};
+  function carregarSolucoes() {   // soluções editadas no L³ INTEGRA; mantém a lista reserva se o servidor não responder
+    const C = window.LTS_CONFIG || {};
+    if (C.api && C.api.modoDemonstracao) {
+      try { const d = JSON.parse(localStorage.getItem("l3_demo_sol") || "null"), g = JSON.parse(localStorage.getItem("l3_demo_sol_grupos") || "null"); if (d) SOL = d.filter(s => s.ativo !== false).sort((a, b) => (a.ordem || 0) - (b.ordem || 0)); if (g) GRUPOS = g; } catch (e) {}
+      return Promise.resolve();
+    }
+    return fetch((C.api && C.api.base || "/api/") + "catalogo?tipo=solucoes").then(r => r.ok ? r.json() : null).then(j => {
+      if (j && j.ok && Array.isArray(j.solucoes) && j.solucoes.length) { SOL = j.solucoes; if (j.grupos && Object.keys(j.grupos).length) GRUPOS = j.grupos; }
+    }).catch(() => {});
+  }
   const CATS = { normativo: "Normas Regulamentadoras", desenvolvimento: "Desenvolvimento e Cultura", emergencia: "Emergências" };
   const esc = t => String(t ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const semAcento = t => String(t).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
@@ -19,17 +29,35 @@
     const tag = comoLink ? "a" : "button";
     const attr = comoLink ? `href="treinamentos.html#${t.id}"` : `type="button" data-ficha="${t.id}"`;
     const chips = [t.nr ? `<span class="chip">${esc(t.nr)}</span>` : "", t.categoria === "emergencia" ? `<span class="chip chip-claro">Emergência</span>` : "", t.categoria === "desenvolvimento" ? `<span class="chip chip-claro">Desenvolvimento</span>` : ""].join("");
+    const ch = t.carga_horaria && !/conforme/i.test(t.carga_horaria) ? `<span class="card-ch">${I.relogio || ""}${esc(t.carga_horaria)}</span>` : "";
     return `<${tag} class="card-tr" ${attr} style="text-decoration:none">
       <span class="chips">${chips}</span>
-      <span class="foto"><img src="${esc(t.imagem)}" alt="" width="640" height="640" loading="lazy"></span>
+      <span class="foto"><img src="${esc(t.imagem || "/assets/img/marca/lipp-instrucao.webp")}" alt="" width="640" height="640" loading="lazy"></span>
       <h3>${esc(t.titulo)}</h3>
       <p>${esc(t.resumo)}</p>
-      <span class="mais">Ficha técnica ${I.arrow}</span>
+      ${ch}
+      <span class="mais">Saiba mais ${I.arrow}</span>
     </${tag}>`;
   }
 
+  /* Carrega o catálogo editado no L³ INTEGRA; mantém a lista reserva se falhar */
+  let carregado = null;
+  function carregarCatalogo() {
+    if (carregado) return carregado;
+    const C = window.LTS_CONFIG || {};
+    if (C.api && C.api.modoDemonstracao) {   // demonstração: usa o que foi editado no painel deste navegador
+      try { const d = JSON.parse(localStorage.getItem("l3_demo_cat") || "null"); if (d) TR = d.filter(t => t.ativo !== false).sort((a, b) => (a.ordem || 0) - (b.ordem || 0)); } catch (e) {}
+      return (carregado = Promise.resolve(TR));
+    }
+    carregado = fetch((C.api && C.api.base || "/api/") + "catalogo").then(r => r.ok ? r.json() : null).then(j => {
+      if (j && j.ok && Array.isArray(j.treinamentos) && j.treinamentos.length) TR = j.treinamentos;
+      return TR;
+    }).catch(() => TR);
+    return carregado;
+  }
+
   function cardSolucao(s, n) {
-    return `<article class="sol" id="${s.id}">
+    return `<article class="sol" id="${esc(s.id)}">
       <span class="num">${String(n).padStart(2, "0")}</span>
       <h3>${esc(s.titulo)}</h3>
       <p>${esc(s.texto)}</p>
@@ -50,10 +78,13 @@
     let extra = "";
     if (t.extra) {
       const e = t.extra;
-      if (e.cursos) extra = `<div><span class="rot">${esc(e.titulo)}</span><p style="margin-bottom:16px;color:var(--cinza-aco)">${esc(e.intro)}</p><div class="cursos">${e.cursos.map(c => `<div class="curso"><h4>${esc(c[0])}</h4><p>${esc(c[1])}</p></div>`).join("")}</div></div>`;
-      if (e.grupos) extra = `<div><span class="rot">${esc(e.titulo)}</span><p style="margin-bottom:16px;color:var(--cinza-aco)">${esc(e.intro)}</p><div class="grupos-eq">${e.grupos.map(g => `<div class="caixa"><h4 style="margin-bottom:10px">${esc(g.nome)}</h4>${lista(g.itens)}</div>`).join("")}</div></div>`;
+      if (e.cursos) extra = `<div><p style="margin-bottom:16px;color:var(--cinza-aco)">${esc(e.intro)}</p><div class="cursos">${e.cursos.map(c => `<div class="curso"><h4>${esc(c[0])}</h4><p>${esc(c[1])}</p></div>`).join("")}</div></div>`;
+      if (e.grupos) extra = `<div><p style="margin-bottom:16px;color:var(--cinza-aco)">${esc(e.intro)}</p><div class="grupos-eq">${e.grupos.map(g => `<div class="caixa"><h4 style="margin-bottom:10px">${esc(g.nome)}</h4>${lista(g.itens)}</div>`).join("")}</div></div>`;
     }
     const msg = `Olá! Vim pelo site oficial da LIPPMANN e gostaria de uma proposta para o treinamento: ${t.titulo}.`;
+    const yt = (() => { const m = String(t.youtube || "").match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(t.youtube || "") ? t.youtube : ""); })();
+    const pdf = t.ficha_pdf !== undefined ? t.ficha_pdf : ((window.LTS_CONFIG.downloads.pastaFichas || "/downloads/fichas/") + t.id + ".pdf");
+    const secao = (titulo, corpo, aberto) => `<details class="ac-item"${aberto ? " open" : ""}><summary><span>${esc(titulo)}</span><i aria-hidden="true"></i></summary><div class="ac-corpo">${corpo}</div></details>`;
     const el = document.createElement("div");
     el.className = "ficha-fundo";
     el.innerHTML = `
@@ -67,21 +98,25 @@
           <button class="fechar" type="button" aria-label="Fechar ficha técnica">${I.close}</button>
         </div>
         <div class="ficha-corpo">
-          <div class="ficha-cols">
-            <div><span class="rot">O que você irá aprender</span>${lista(t.aprender)}</div>
-            <div style="display:grid;gap:24px;align-content:start">
-              <div><span class="rot">Público-alvo</span>${lista(t.publico)}</div>
-              <div class="caixa"><span class="rot">Pré-requisito</span><p style="font-size:.93rem">${esc(t.prerequisito)}</p></div>
-              ${t.atestado ? `<div class="caixa"><span class="rot">Atestado</span><p style="font-size:.93rem">${esc(t.atestado)}</p></div>` : ""}
-            </div>
+          <div class="ficha-resumo">
+            ${t.carga_horaria ? `<span><small>Carga horária</small><b>${esc(t.carga_horaria)}</b></span>` : ""}
+            ${t.modalidade ? `<span><small>Modalidade</small><b>${esc(t.modalidade)}</b></span>` : ""}
+            <span><small>Certificado</small><b>Incluso</b></span>
           </div>
-          ${t.beneficios && t.beneficios.length ? `<div><span class="rot">Benefícios para a organização</span>${lista(t.beneficios)}</div>` : ""}
-          ${extra}
+          ${yt ? `<div class="ficha-video"><iframe src="https://www.youtube.com/embed/${yt}?rel=0" title="Vídeo: ${esc(t.titulo)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></div>` : ""}
+          <div class="acordeao">
+            ${secao("O que você irá aprender", lista(t.aprender || []), true)}
+            ${secao("Público-alvo", lista(t.publico || []))}
+            ${secao("Pré-requisito", `<p>${esc(t.prerequisito)}</p>`)}
+            ${t.atestado ? secao("Atestado", `<p>${esc(t.atestado)}</p>`) : ""}
+            ${t.beneficios && t.beneficios.length ? secao("Benefícios para a organização", lista(t.beneficios)) : ""}
+            ${extra ? secao(t.extra.titulo || "Cursos disponíveis", extra) : ""}
+          </div>
           <div class="caixa-azul"><span class="rot">Por que investir nesse treinamento</span><p>${esc(t.porque)}</p></div>
-          <a class="doc-mini" href="${(window.LTS_CONFIG.downloads.pastaFichas || "/downloads/fichas/") + t.id}.pdf" download="Ficha-Tecnica-LIPPMANN-${t.id}.pdf" data-track="download:ficha-${t.id}">
-            <span class="doc-mini-capa"><img src="/assets/img/previews/fichas/${t.id}.webp" alt="" width="300" height="424" loading="lazy"><span class="doc-selo">PDF</span></span>
+          ${pdf ? `<a class="doc-mini" href="${esc(pdf)}" download="Ficha-Tecnica-LIPPMANN-${t.id}.pdf" data-track="download:ficha-${t.id}">
+            <span class="doc-mini-capa"><img src="/assets/img/previews/fichas/${t.id}.webp" alt="" width="300" height="424" loading="lazy" onerror="this.src='/assets/img/previews/portfolio-treinamentos.webp'"><span class="doc-selo">PDF</span></span>
             <span class="doc-mini-txt"><b>Ficha técnica · ${esc(t.nr || t.titulo)}</b><small>PDF pronto para enviar ao cliente, com WhatsApp e contatos</small><span class="doc-mini-acao">${I.download} Baixar ficha</span></span>
-          </a>
+          </a>` : ""}
           <div class="ficha-acoes">
             <a class="btn btn-whats" href="${window.LTS_WA(msg)}" target="_blank" rel="noopener" data-track="whatsapp-proposta:${t.id}">${I.whatsapp} Solicitar proposta</a>
             <a class="btn btn-contorno" href="fale-conosco.html?assunto=TREINAMENTOS&ref=${encodeURIComponent(t.titulo)}">Enviar mensagem</a>
@@ -144,7 +179,9 @@
 
     const doHash = () => { const id = location.hash.slice(1); if (id && TR.some(t => t.id === id)) abrirFicha(id, false); else fecharFicha(false); };
     window.addEventListener("hashchange", doHash);
-    doHash();
+    // troca pela versão do L³ INTEGRA assim que o servidor responder e só então abre a ficha do endereço (#id)
+    const antes = TR;
+    carregarCatalogo().then(() => { if (TR !== antes) render(); doHash(); });
   }
 
   /* ---------- Página de soluções ---------- */
@@ -152,8 +189,12 @@
     const grid = document.getElementById("lista-solucoes");
     const filtros = document.getElementById("filtros-sol");
     let g = "todos";
-    filtros.innerHTML = [["todos", "Todas"], ...Object.entries(GRUPOS)].map(([k, v]) =>
-      `<button class="filtro" type="button" data-g="${k}" aria-pressed="${k === g}">${v}</button>`).join("");
+    const desenharFiltros = () => {
+      const usados = new Set(SOL.map(s => s.grupo)); if (g !== "todos" && !usados.has(g)) g = "todos";
+      filtros.innerHTML = [["todos", "Todas"], ...Object.entries(GRUPOS).filter(([k]) => usados.has(k))].map(([k, v]) =>
+        `<button class="filtro" type="button" data-g="${esc(k)}" aria-pressed="${k === g}">${esc(v)}</button>`).join("");
+    };
+    desenharFiltros();
     function render() {
       grid.innerHTML = SOL.map((s, i) => ({ s, n: i + 1 })).filter(x => g === "todos" || x.s.grupo === g).map(x => cardSolucao(x.s, x.n)).join("");
     }
@@ -164,13 +205,17 @@
       render();
     });
     render();
+    const antes = SOL;
+    carregarSolucoes().then(() => { if (SOL !== antes) { desenharFiltros(); render(); } const id = location.hash.slice(1), el = id && document.getElementById(id); if (el) el.scrollIntoView({ block: "center" }); });
   }
 
   window.LTS_CATALOGO = {
     abrirFicha, paginaTreinamentos, paginaSolucoes,
     destaquesTreinamentos(el) {
       const ids = (el.dataset.ids || "").split(",");
-      el.innerHTML = ids.map(id => TR.find(t => t.id === id)).filter(Boolean).map(t => cardTreinamento(t, true)).join("");
+      const desenhar = () => { el.innerHTML = ids.map(id => TR.find(t => t.id === id)).filter(Boolean).map(t => cardTreinamento(t, true)).join(""); };
+      desenhar();
+      carregarCatalogo().then(desenhar);
     },
     destaquesSolucoes(el) {
       const ids = (el.dataset.ids || "").split(",");

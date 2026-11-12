@@ -1,8 +1,8 @@
 /* GET /api/diagnostico · verifica a configuração do servidor (sem mostrar senhas)
    Abra /integra/diagnostico.html para ver o resultado em formato de checklist. */
-const { credenciais, papelDaChave, db, BUCKET_CURRICULOS, BUCKET_MATERIAIS } = require("./_lib/supabase");
+const { credenciais, papelDaChave, db, BUCKET_CURRICULOS, BUCKET_MATERIAIS, BUCKET_PUBLICO } = require("./_lib/supabase");
 
-const TABELAS = ["usuarios", "registros", "eventos", "agenda", "materiais", "config", "emails_log", "acessos", "limites"];
+const TABELAS = ["usuarios", "registros", "eventos", "agenda", "materiais", "conteudos_hub", "catalogo_treinamentos", "catalogo_solucoes", "i18n_textos", "ouv_protocolos", "ouv_mensagens", "lipp_conversas", "lipp_mensagens", "lipp_agendamentos", "politicas_documentos", "uni_cursos", "uni_turmas", "uni_alunos", "uni_matriculas", "uni_registros", "uni_contador", "uni_empresas", "uni_empresa_usuarios", "uni_parceiros", "uni_colaboradores", "uni_turma_arquivos", "uni_pedidos", "fin_lancamentos", "config", "emails_log", "acessos", "limites"];
 
 module.exports = async (req, res) => {
   const itens = [];
@@ -28,6 +28,12 @@ module.exports = async (req, res) => {
   add("Variáveis da Vercel", "SMTP (e-mails)", !!process.env.SMTP_HOST && !!process.env.SMTP_PASS,
     process.env.SMTP_HOST ? `Servidor ${process.env.SMTP_HOST}:${process.env.SMTP_PORT || "465"} · usuário ${process.env.SMTP_USER || "—"}` : "SMTP_HOST não encontrado",
     "Sem SMTP o site grava os dados normalmente, mas não envia e-mails.");
+  { const t = process.env.MP_ACCESS_TOKEN || "", amb = !t ? "simulação (sem cobrança)" : /^TEST-/i.test(t) ? "sandbox (teste)" : "produção";
+    add("Variáveis da Vercel", "Mercado Pago", !!t && !!process.env.MP_PUBLIC_KEY, `Ambiente: ${amb}${process.env.MP_WEBHOOK_SECRET ? " · webhook assinado" : " · sem MP_WEBHOOK_SECRET"}`, "Cadastre MP_ACCESS_TOKEN, MP_PUBLIC_KEY e MP_WEBHOOK_SECRET (Mercado Pago › Suas integrações). Sem elas, o checkout funciona em simulação.");
+    add("Variáveis da Vercel", "CRON_SECRET", (process.env.CRON_SECRET || "").length >= 16, process.env.CRON_SECRET ? "Configurada" : "Não encontrada", "Protege a tarefa diária (prazos de 30 dias e revogação de 12 meses)."); }
+  add("Variáveis da Vercel", "LIPP · IA (Claude)", !!process.env.ANTHROPIC_API_KEY, process.env.ANTHROPIC_API_KEY ? `Configurada · modelo ${process.env.LIPP_MODELO || "claude-haiku-5-5"}` : "Sem chave: o LIPP responde pela base de conhecimento do site", "Opcional. Cadastre ANTHROPIC_API_KEY (console.anthropic.com).");
+  add("Variáveis da Vercel", "Google Agenda + Meet", !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN), process.env.GOOGLE_REFRESH_TOKEN ? `Agenda: ${process.env.GOOGLE_CALENDAR_ID || "primary"}` : "Não conectada: reuniões ficam a confirmar pela equipe", "Opcional. Veja o passo a passo no LEIA-ME (OAuth Playground).");
+  add("Variáveis da Vercel", "Avaliações do Google", !!(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID), process.env.GOOGLE_PLACE_ID ? "Configurada" : "Não configurada: o carrossel mostra os depoimentos fixos", "Opcional. Cadastre GOOGLE_PLACES_API_KEY e GOOGLE_PLACE_ID.");
 
   /* 2. Banco de dados */
   if (url && secreta) {
@@ -37,10 +43,17 @@ module.exports = async (req, res) => {
         const { error, count } = await c.from(t).select("*", { count: "exact", head: true });
         add("Banco de dados (Supabase)", `Tabela ${t}`, !error, error ? (error.message || error.code) : `OK · ${count ?? 0} registro(s)`, error ? "Rode supabase/schema.sql no SQL Editor do Supabase." : "");
       }
+      const { data: us, error: eUs } = await c.from("usuarios").select("usuario, perfil, ativo");
+      if (!eUs) {
+        const adm = (us || []).find((x) => x.usuario === "admin");
+        add("Banco de dados (Supabase)", "Usuários do painel", true,
+          !us.length ? "Nenhum usuário ainda: admin e marketing serão criados no primeiro login, com as senhas iniciais." :
+          `${us.length} usuário(s): ${us.map((x) => `${x.usuario} (${x.perfil}${x.ativo ? "" : ", inativo"})`).join(", ")}${adm ? "" : " — atenção: não existe o usuário admin"}`);
+      }
       const { error: eRpc } = await c.rpc("l3_eventos", { desde: new Date().toISOString() });
       add("Banco de dados (Supabase)", "Função l3_eventos (relatórios)", !eRpc, eRpc ? eRpc.message : "OK", eRpc ? "Rode supabase/schema.sql no SQL Editor." : "");
       const { data: buckets, error: eB } = await c.storage.listBuckets();
-      for (const [b, pub] of [[BUCKET_CURRICULOS, false], [BUCKET_MATERIAIS, true]]) {
+      for (const [b, pub] of [[BUCKET_CURRICULOS, false], [BUCKET_MATERIAIS, true], [BUCKET_PUBLICO, true], ["evidencias", false]]) {
         const achou = (buckets || []).find((x) => x.id === b || x.name === b);
         add("Armazenamento de arquivos", `Bucket ${b}`, !!achou && !!achou.public === pub,
           eB ? eB.message : !achou ? "Não encontrado" : `OK · ${achou.public ? "público" : "privado"}${!!achou.public !== pub ? ` (deveria ser ${pub ? "público" : "privado"})` : ""}`,
