@@ -17,7 +17,7 @@
       try { const d = JSON.parse(localStorage.getItem("l3_demo_sol") || "null"), g = JSON.parse(localStorage.getItem("l3_demo_sol_grupos") || "null"); if (d) SOL = d.filter(s => s.ativo !== false).sort((a, b) => (a.ordem || 0) - (b.ordem || 0)); if (g) GRUPOS = g; } catch (e) {}
       return Promise.resolve();
     }
-    return fetch((C.api && C.api.base || "/api/") + "catalogo?tipo=solucoes").then(r => r.ok ? r.json() : null).then(j => {
+    return fetch((C.api && C.api.base || "/api/") + "site?modulo=catalogo&tipo=solucoes").then(r => r.ok ? r.json() : null).then(j => {
       if (j && j.ok && Array.isArray(j.solucoes) && j.solucoes.length) { SOL = j.solucoes; if (j.grupos && Object.keys(j.grupos).length) GRUPOS = j.grupos; }
     }).catch(() => {});
   }
@@ -49,7 +49,7 @@
       try { const d = JSON.parse(localStorage.getItem("l3_demo_cat") || "null"); if (d) TR = d.filter(t => t.ativo !== false).sort((a, b) => (a.ordem || 0) - (b.ordem || 0)); } catch (e) {}
       return (carregado = Promise.resolve(TR));
     }
-    carregado = fetch((C.api && C.api.base || "/api/") + "catalogo").then(r => r.ok ? r.json() : null).then(j => {
+    carregado = fetch((C.api && C.api.base || "/api/") + "site?modulo=catalogo").then(r => r.ok ? r.json() : null).then(j => {
       if (j && j.ok && Array.isArray(j.treinamentos) && j.treinamentos.length) TR = j.treinamentos;
       return TR;
     }).catch(() => TR);

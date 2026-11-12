@@ -1,7 +1,7 @@
 /* GET /api/hub            · lista de publicações (artigos e notícias) publicadas
    GET /api/hub?slug=xxx   · uma publicação completa */
-const { db } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db } = require("../_lib/supabase");
+const U = require("../_lib/util");
 
 module.exports = async (req, res) => {
   if (!U.apenasMetodo(req, res, "GET")) return;

@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/**/*.js": {
+    "api/*.js": {
       "maxDuration": 30
     }
   },
@@ -59,6 +59,64 @@
     {
       "path": "/api/cron",
       "schedule": "0 9 * * *"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/catalogo",
+      "destination": "/api/site?modulo=catalogo"
+    },
+    {
+      "source": "/api/hub",
+      "destination": "/api/site?modulo=hub"
+    },
+    {
+      "source": "/api/politicas",
+      "destination": "/api/site?modulo=politicas"
+    },
+    {
+      "source": "/api/materiais",
+      "destination": "/api/site?modulo=materiais"
+    },
+    {
+      "source": "/api/i18n",
+      "destination": "/api/site?modulo=i18n"
+    },
+    {
+      "source": "/api/avaliacoes",
+      "destination": "/api/site?modulo=avaliacoes"
+    },
+    {
+      "source": "/api/evento",
+      "destination": "/api/site?modulo=evento"
+    },
+    {
+      "source": "/api/registrar",
+      "destination": "/api/site?modulo=registrar"
+    },
+    {
+      "source": "/api/upload",
+      "destination": "/api/site?modulo=upload"
+    },
+    {
+      "source": "/api/protocolo",
+      "destination": "/api/site?modulo=protocolo"
+    },
+    {
+      "source": "/api/certificado",
+      "destination": "/api/site?modulo=certificado"
+    },
+    {
+      "source": "/api/diagnostico",
+      "destination": "/api/site?modulo=diagnostico"
+    },
+    {
+      "source": "/api/empresa",
+      "destination": "/api/portal?modulo=empresa"
+    },
+    {
+      "source": "/api/parceiro",
+      "destination": "/api/portal?modulo=parceiro"
     }
   ]
 }

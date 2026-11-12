@@ -4,12 +4,12 @@
    entrada/saída, documentos legais e evidências fotográficas (4 legendas fixas).
    O parceiro só enxerga as turmas em que é o instrutor responsável.
    ===================================================================== */
-const { db, todas, BUCKET_EVIDENCIAS } = require("./_lib/supabase");
-const U = require("./_lib/util");
-const S = require("./_lib/sessao");
-const N = require("./_lib/uni");
-const K = require("./_lib/conteudo");
-const { criarPortal } = require("./_lib/portal");
+const { db, todas, BUCKET_EVIDENCIAS } = require("../_lib/supabase");
+const U = require("../_lib/util");
+const S = require("../_lib/sessao");
+const N = require("../_lib/uni");
+const K = require("../_lib/conteudo");
+const { criarPortal } = require("../_lib/portal");
 
 const portal = criarPortal({ tabela: "uni_parceiros", cookie: "par_sessao", tipo: "parceiro", campos: "id, nome, email, cpf, telefone, qualificacao, registro, trocar_senha, ativo, senha_hash, aluno_id, trilha_aprovada_em, trilha_dispensada" });
 const TRAVA = "Conclua a Trilha de Capacitação do Instrutor Parceiro (curso obrigatório na UniLTS) para criar e concluir turmas.";
@@ -158,7 +158,7 @@ module.exports = async (req, res) => {
         const caminho = `turmas/${t.codigo}/${cat}/${tipo}-${Date.now().toString(36)}.${ext === "jpeg" ? "jpg" : ext}`;
         const { data, error } = await db().storage.from(BUCKET_EVIDENCIAS).createSignedUploadUrl(caminho);
         if (error) throw error;
-        const { credenciais } = require("./_lib/supabase");
+        const { credenciais } = require("../_lib/supabase");
         return U.ok(res, { url: data.signedUrl, caminho, apikey: credenciais().publica });
       }
       case "arquivo_registrar": {

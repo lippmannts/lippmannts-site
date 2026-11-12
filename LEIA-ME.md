@@ -1,5 +1,17 @@
 # Site LIPPMANN + L³ INTEGRA · GitHub + Vercel + Supabase · v7 DEFINITIVO (Fases 1 a 7)
 
+## Ajuste da v7 para o plano gratuito da Vercel (Hobby)
+
+- A Vercel gratuita aceita no máximo **12 funções** por publicação. A pasta `api/` agora tem **7**: os módulos públicos foram reunidos em `api/site.js` e as áreas da Empresa e do Parceiro em `api/portal.js` (o código de cada módulo fica em `api/_rotas/`, que a Vercel não conta como função).
+- Os endereços antigos (`/api/catalogo`, `/api/hub`, `/api/empresa`...) continuam funcionando: o `vercel.json` redireciona cada um para a função nova. Nada muda para quem já tem links salvos.
+- **Ao substituir a pasta no GitHub Desktop, apague os arquivos antigos da pasta `api/`** (catalogo.js, hub.js, empresa.js...). O jeito mais seguro: apague a pasta `api/` inteira do repositório e cole a nova. Se os antigos ficarem lá, a Vercel volta a contar 19 funções.
+
+### Avaliações do Google (perfil oficial · ficha CdmducEbhRvCEAE)
+- O carrossel busca as avaliações reais da "Lippmann Treinamentos & Soluções". O site descobre sozinho o Place ID a partir do identificador oficial da ficha e guarda no banco; **só precisa da variável `GOOGLE_PLACES_API_KEY`** (`GOOGLE_PLACE_ID` é opcional).
+- **Cache de 24 horas:** o Google é consultado no máximo 1 vez por dia (cerca de 30 consultas por mês). A cópia fica na tabela `config` do Supabase e a Vercel ainda guarda a resposta por 1 hora. Se o Google falhar, o site continua mostrando a última cópia boa.
+- O botão "Avalie-nos no Google" e o QR Code apontam sempre para o link oficial `https://g.page/r/CdmducEbhRvCEAE/review`. O QR Code aparece na seção de avaliações, no rodapé de todas as páginas e na tela de conclusão de curso do AVA.
+- Para criar a chave: Google Cloud Console › projeto › *APIs e serviços › Biblioteca* › ative **Places API (New)** › *Credenciais › Criar credenciais › Chave de API* › em *Restrições da API*, deixe só a Places API (New). Configure também um alerta de orçamento (Faturamento › Orçamentos e alertas) de R$ 1 para ter certeza de que nada é cobrado.
+
 ## Novidades da v7 · Fase 7 (Expansão Enterprise, IA e Blindagem)
 
 **Antes de publicar:** rode o `supabase/schema.sql` inteiro de novo no SQL Editor (ele só acrescenta o que falta; não apaga nada).
@@ -36,7 +48,7 @@ Todas são **opcionais**: sem elas o site funciona, com as alternativas indicada
 **c) Avaliações do Google** · sem ela, aparecem os depoimentos fixos com a nota 4,9.
 1. No mesmo projeto do Google Cloud, ative a **Places API (New)** e crie uma *Chave de API* (restrinja-a à Places API).
 2. Descubra o Place ID da LIPPMANN em developers.google.com/maps/documentation/places/web-service/place-id (busque "Lippmann Treinamentos & Soluções").
-3. Na Vercel: `GOOGLE_PLACES_API_KEY` e `GOOGLE_PLACE_ID`. A API devolve até 5 avaliações (as mais relevantes) e o site guarda por 6 horas.
+3. Na Vercel: `GOOGLE_PLACES_API_KEY` (o `GOOGLE_PLACE_ID` é opcional: o site o descobre sozinho pela ficha oficial). A API devolve até 5 avaliações (as mais relevantes) e o site consulta o Google no máximo 1 vez a cada 24 horas.
 
 Depois de criar as variáveis, faça *Redeploy*. O diagnóstico (`/integra/diagnostico.html`) mostra as novas tabelas.
 
@@ -154,17 +166,17 @@ lippmannts/
 │   ├── integra.css
 │   └── demo.js                 ← só usado no modo demonstração
 │
-├── api/                        ← funções da Vercel (Node.js) = "back-end"
-│   ├── registrar.js            ← POST /api/registrar  · formulários do site
-│   ├── upload.js               ← POST /api/upload     · endereço temporário para enviar currículo ao Supabase
-│   ├── evento.js               ← POST /api/evento     · estatísticas de navegação
-│   ├── materiais.js            ← GET  /api/materiais  · lista pública da Biblioteca
-│   ├── painel.js               ← /api/painel?acao=... · tudo do L³ INTEGRA (login, dados, agenda...)
-│   └── _lib/                   ← código compartilhado (não vira endereço público)
-│       ├── supabase.js         ← conexão com o Supabase
-│       ├── email.js            ← envio de e-mails (Nodemailer + SMTP)
-│       ├── sessao.js           ← senhas e login do painel
-│       └── util.js             ← validações, cidade do visitante, anti-spam
+├── api/                        ← funções da Vercel (Node.js) = "back-end" · 7 funções (plano Hobby: máximo 12)
+│   ├── site.js                 ← /api/site?modulo=...   · APIs públicas: catalogo, hub, politicas, materiais, i18n,
+│   │                              avaliacoes (Google), evento, registrar, upload, protocolo, certificado, diagnostico
+│   ├── portal.js               ← /api/portal?modulo=empresa|parceiro&acao=... · Área da Empresa e Painel do Parceiro
+│   ├── uni.js                  ← /api/uni?acao=...      · Área do Aluno (AVA UniLTS)
+│   ├── pagamento.js            ← /api/pagamento?acao=... · checkout Mercado Pago (webhook incluído)
+│   ├── lipp.js                 ← /api/lipp?acao=...     · assistente virtual LIPP
+│   ├── painel.js               ← /api/painel?acao=...   · tudo do L³ INTEGRA (login, dados, agenda...)
+│   ├── cron.js                 ← /api/cron              · tarefa diária automática
+│   ├── _rotas/                 ← o código de cada módulo (não vira função; é chamado por site.js e portal.js)
+│   └── _lib/                   ← código compartilhado (não vira função nem endereço público)
 │
 ├── supabase/
 │   └── schema.sql              ← cole no SQL Editor do Supabase (cria tabelas e pastas de arquivos)

@@ -1076,3 +1076,21 @@ html.a11y-contraste .a11y-op[aria-pressed="true"] { outline: 3px solid #FFE600; 
 @media print { .lipp { display: none !important; } }
 @media (max-width: 720px) { body:has(> .cookies) .lipp-float { display: none; } }
 @media (hover: none) { .lipp-rotulo { display: none; } }
+
+/* QR Code oficial "Avalie-nos no Google" (seção de avaliações, rodapé e conclusão de curso no AVA) */
+.qr-google { display: flex; align-items: center; gap: 14px; text-decoration: none; color: inherit; background: var(--branco); border: 1px solid var(--cinza-neblina); border-radius: 14px; padding: 10px 16px 10px 10px; max-width: 460px; box-shadow: 0 6px 18px rgba(0,40,110,.08); transition: transform .2s, box-shadow .2s; }
+.qr-google:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,40,110,.16); }
+.qr-google img { flex: none; width: 104px; height: 104px; background: #fff; border-radius: 6px; }
+.qr-google span { display: grid; gap: 4px; min-width: 0; }
+.qr-google b { font: 700 .95rem/1.25 var(--f-rotulo); color: var(--azul-lippmann); }
+.qr-google small { font-size: .8rem; line-height: 1.4; color: var(--cinza-aco); }
+.qr-google em { font-style: normal; font: 700 .8rem/1 var(--f-rotulo); color: #B7860B; letter-spacing: .02em; }
+.aval-rodape { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin-top: 18px; }
+.aval-rodape .aval-fonte { margin: 0; flex: 1 1 260px; }
+.qr-google-rodape { margin-top: 16px; background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18); box-shadow: none; padding: 8px 12px 8px 8px; }
+.qr-google-rodape img { width: 84px; height: 84px; padding: 4px; }
+.qr-google-rodape b { color: #fff; font-size: .86rem; }
+.qr-google-rodape small { color: var(--azul-nevoa); font-size: .74rem; }
+.ava-resultado .qr-google, .ava-cert-cartao ~ .qr-google { margin: 22px auto 0; text-align: left; }
+@media (max-width: 520px) { .qr-google { padding: 8px; gap: 10px; } .qr-google img { width: 88px; height: 88px; } }
+@media print { .qr-google { display: none !important; } }

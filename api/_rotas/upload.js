@@ -4,8 +4,8 @@
    Assim o arquivo não passa pela Vercel (que limita envios a 4,5 MB).
    ===================================================================== */
 const crypto = require("crypto");
-const { db, credenciais, BUCKET_CURRICULOS } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db, credenciais, BUCKET_CURRICULOS } = require("../_lib/supabase");
+const U = require("../_lib/util");
 
 const MAX_MB = 5;
 

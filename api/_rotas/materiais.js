@@ -1,7 +1,7 @@
 /* GET /api/materiais · lista pública dos materiais da Biblioteca Técnica (aba Conteúdo)
    Os PDFs ficam no bucket público "materiais" do Supabase Storage. */
-const { db, BUCKET_MATERIAIS } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db, BUCKET_MATERIAIS } = require("../_lib/supabase");
+const U = require("../_lib/util");
 
 module.exports = async (req, res) => {
   if (!U.apenasMetodo(req, res, "GET")) return;

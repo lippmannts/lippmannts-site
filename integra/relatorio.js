@@ -16,7 +16,7 @@
     acesso_revogado: "Acesso revogado (12 meses)", acesso_reabilitado: "Acesso reabilitado", login_bloqueado: "Login bloqueado" };
   async function carregar() {
     if (DEMO) return window.UNI_DEMO.painel("uni_turma", {}, { id });
-    for (const u of [`painel?acao=uni_turma&id=`, `empresa?acao=relatorio&id=`, `parceiro?acao=relatorio&id=`]) {
+    for (const u of [`painel?acao=uni_turma&id=`, `portal?modulo=empresa&acao=relatorio&id=`, `portal?modulo=parceiro&acao=relatorio&id=`]) {
       try { const r = await fetch(C.api.base + u + encodeURIComponent(id), { credentials: "same-origin" }); if (r.ok) { const j = await r.json(); if (j.ok) return j; } } catch (e) {}
     }
     return { ok: false, mensagem: "Relatório indisponível ou sem permissão." };

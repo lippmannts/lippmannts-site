@@ -112,7 +112,7 @@ body{transition:opacity .12s}`;
     const C = window.LTS_CONFIG || {};
     const demo = (C.api && C.api.modoDemonstracao) || /claude\.ai|claudeusercontent|localhost:89/.test(location.host);
     if (demo) { try { return Promise.resolve((JSON.parse(ls.get("l3_demo_i18n") || "{}") || {})[idioma] || {}); } catch (e) { return Promise.resolve({}); } }
-    return fetch((C.api && C.api.base || "/api/") + "i18n?l=" + idioma).then((r) => (r.ok ? r.json() : null)).then((j) => (j && j.ok && j.textos) || {}).catch(() => ({}));
+    return fetch((C.api && C.api.base || "/api/") + "site?modulo=i18n&l=" + idioma).then((r) => (r.ok ? r.json() : null)).then((j) => (j && j.ok && j.textos) || {}).catch(() => ({}));
   }
   const dom = new Promise((ok) => (document.readyState !== "loading" ? ok() : document.addEventListener("DOMContentLoaded", ok)));
   API.pronto = Promise.all([carregarScript(base + "data/i18n/" + INFO.arquivo + ".js?v=" + VERSAO), dom.then(extras)]).then(([, ext]) => {

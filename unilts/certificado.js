@@ -18,7 +18,7 @@
       if (p && p.ok && sessionStorage.getItem("l3_demo_sessao")) return p.certificado;
       const v = window.UNI_DEMO.validar(codigo); return v.ok ? v.certificado : null;
     }
-    for (const u of [`uni?acao=certificado&c=`, `painel?acao=uni_certificado&c=`, `empresa?acao=certificado&c=`, `parceiro?acao=certificado&c=`, `certificado?c=`]) {
+    for (const u of [`uni?acao=certificado&c=`, `painel?acao=uni_certificado&c=`, `portal?modulo=empresa&acao=certificado&c=`, `portal?modulo=parceiro&acao=certificado&c=`, `site?modulo=certificado&c=`]) {
       try { const r = await fetch(C.api.base + u + encodeURIComponent(codigo), { credentials: "same-origin" }); if (r.ok) { const j = await r.json(); if (j.ok) return j.certificado; } } catch (e) {}
     }
     return null;

@@ -45,7 +45,7 @@
 
   desenhar(reserva());
   if (!(C.api && C.api.modoDemonstracao)) {
-    fetch(C.api.base + "politicas").then(r => r.json()).then(j => {
+    fetch(C.api.base + "site?modulo=politicas").then(r => r.json()).then(j => {
       if (j && j.ok && j.politicas && j.politicas.length) desenhar(j.politicas);
     }).catch(() => {});
   }

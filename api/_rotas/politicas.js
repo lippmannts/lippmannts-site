@@ -1,6 +1,6 @@
 /* GET /api/politicas · políticas corporativas e Termo de Compromisso Social (aba A LIPPMANN) */
-const { db } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db } = require("../_lib/supabase");
+const U = require("../_lib/util");
 
 module.exports = async (req, res) => {
   if (!U.apenasMetodo(req, res, "GET")) return;

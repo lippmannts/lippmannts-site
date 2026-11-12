@@ -1,7 +1,7 @@
 /* GET /api/i18n?l=en-US · traduções editadas no L³ INTEGRA (Site e conteúdo › Traduções).
    O navegador aplica estas edições por cima dos dicionários de /data/i18n/. */
-const { db } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db } = require("../_lib/supabase");
+const U = require("../_lib/util");
 const IDIOMAS = ["pt-PT", "en-US", "en-GB", "es-ES"];
 
 module.exports = async (req, res) => {

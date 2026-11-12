@@ -3,9 +3,9 @@
    tipos: lead (Conteúdo) · newsletter · contato (Fale Conosco) · candidato (Trabalhe Conosco)
    1) grava no Supabase  2) avisa a equipe por e-mail  3) responde ao visitante quando aplicável
    ===================================================================== */
-const { db, BUCKET_CURRICULOS } = require("./_lib/supabase");
-const U = require("./_lib/util");
-const E = require("./_lib/email");
+const { db, BUCKET_CURRICULOS } = require("../_lib/supabase");
+const U = require("../_lib/util");
+const E = require("../_lib/email");
 
 const ROTULOS = { lead: "Novo lead — Biblioteca Técnica", newsletter: "Nova inscrição na Newsletter", contato: "Fale Conosco", candidato: "Trabalhe Conosco" };
 
@@ -76,8 +76,8 @@ module.exports = async (req, res) => {
 
     /* Ouvidoria: denúncias, reclamações e sugestões geram protocolo rastreável */
     let protocolo = null;
-    if (tipo === "contato" && require("./_lib/ouvidoria").TIPOS[r.assunto]) {
-      protocolo = await require("./_lib/ouvidoria").criar(id, r);
+    if (tipo === "contato" && require("../_lib/ouvidoria").TIPOS[r.assunto]) {
+      protocolo = await require("../_lib/ouvidoria").criar(id, r);
       if (protocolo) await db().from("registros").update({ extras: { ...extras, Protocolo: protocolo.protocolo } }).eq("id", id);
     }
 
@@ -103,7 +103,7 @@ module.exports = async (req, res) => {
         { replyTo: r.email || undefined, anexos }),
     ];
     if (tipo === "newsletter") {
-      const { configGet } = require("./_lib/supabase");
+      const { configGet } = require("../_lib/supabase");
       const assunto = await configGet("boas_vindas_assunto", "Bem-vindo(a) à Newsletter LIPPMANN");
       const texto = await configGet("boas_vindas_texto", "Obrigado por se cadastrar na Newsletter LIPPMANN.");
       envios.push(E.enviar(r.email, assunto, E.layout("Bem-vindo(a) à Newsletter LIPPMANN",

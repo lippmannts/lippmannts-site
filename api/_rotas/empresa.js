@@ -3,11 +3,11 @@
    ISOLAMENTO: toda consulta é filtrada pelo empresa_id do usuário logado
    (vem da sessão assinada, nunca do navegador).
    ===================================================================== */
-const { db, todas } = require("./_lib/supabase");
-const U = require("./_lib/util");
-const S = require("./_lib/sessao");
-const N = require("./_lib/uni");
-const { criarPortal } = require("./_lib/portal");
+const { db, todas } = require("../_lib/supabase");
+const U = require("../_lib/util");
+const S = require("../_lib/sessao");
+const N = require("../_lib/uni");
+const { criarPortal } = require("../_lib/portal");
 
 const portal = criarPortal({ tabela: "uni_empresa_usuarios", cookie: "emp_sessao", tipo: "empresa", campos: "id, empresa_id, nome, email, trocar_senha, ativo" });
 const CAMPOS = ["nome", "matricula", "rg", "cpf", "admissao", "aso_data", "aso_tipo", "apto_altura", "apto_confinado", "apto_eletricidade", "cargo", "unidade", "filial", "centro_custo", "area", "telefone", "email"];

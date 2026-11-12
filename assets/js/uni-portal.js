@@ -20,7 +20,7 @@
       const opt = { credentials: "same-origin", headers: { Accept: "application/json" } };
       if (corpo) { opt.method = "POST"; opt.headers["Content-Type"] = "application/json"; opt.headers["X-UniLTS"] = "1"; opt.body = JSON.stringify(corpo); }
       try {
-        const r = await fetch(`${C.api.base}${op.tipo}?${qs}`, opt);
+        const r = await fetch(`${C.api.base}portal?modulo=${op.tipo}&${qs}`, opt);
         const j = await r.json().catch(() => ({ ok: false, mensagem: "Resposta inválida do servidor." }));
         if (r.status === 401 && !["login", "esqueci", "sessao"].includes(acao)) telaLogin(j.mensagem);
         if (r.status === 403 && j.trocar_senha) telaTroca();

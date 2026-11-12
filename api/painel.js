@@ -10,7 +10,7 @@ const E = require("./_lib/email");
 const S = require("./_lib/sessao");
 const P = require("./_lib/permissoes");
 const K = require("./_lib/conteudo");
-const I18N_IDIOMAS = require("./i18n").IDIOMAS;
+const I18N_IDIOMAS = require("./_rotas/i18n").IDIOMAS;
 
 const COOKIE = "l3_sessao";
 const SENHAS_INICIAIS = { admin: "PassaporteLTSAdmin", marketing: "PassaporteLTSmkt" };

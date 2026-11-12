@@ -8,7 +8,7 @@
   const SIT = { valido: ["Certificado válido", "ok"], vencido: ["Certificado autêntico, porém vencido", "alerta"], cancelado: ["Certificado cancelado", "erro"] };
   async function consultar(codigo) {
     if (DEMO && window.UNI_DEMO) return window.UNI_DEMO.validar(codigo);
-    try { const r = await fetch(C.api.base + "certificado?c=" + encodeURIComponent(codigo)); return await r.json(); } catch (e) { return { ok: false, mensagem: "Não foi possível consultar agora. Tente novamente." }; }
+    try { const r = await fetch(C.api.base + "site?modulo=certificado&c=" + encodeURIComponent(codigo)); return await r.json(); } catch (e) { return { ok: false, mensagem: "Não foi possível consultar agora. Tente novamente." }; }
   }
   async function validar(codigo) {
     codigo = String(codigo || "").trim().toUpperCase(); if (!codigo) return;

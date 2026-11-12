@@ -1,9 +1,9 @@
 /* POST /api/protocolo · consulta pública da Ouvidoria (protocolo + código de acesso)
    acao: "consultar" | "complementar" (o solicitante acrescenta informações) */
-const U = require("./_lib/util");
-const O = require("./_lib/ouvidoria");
-const E = require("./_lib/email");
-const { db } = require("./_lib/supabase");
+const U = require("../_lib/util");
+const O = require("../_lib/ouvidoria");
+const E = require("../_lib/email");
+const { db } = require("../_lib/supabase");
 
 module.exports = async (req, res) => {
   if (!U.apenasMetodo(req, res, "POST")) return;

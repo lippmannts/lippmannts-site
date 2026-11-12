@@ -39,10 +39,11 @@ window.LTS_CONFIG = {
       "exibicao": "LIPPMANN"
     },
     "google": {
-      "url": "https://www.google.com/search?q=lippmann+treinamentos+e+solu%C3%A7%C3%B5es+google",
+      "url": "https://g.page/r/CdmducEbhRvCEAE",
       "exibicao": "Avaliações no Google",
       "notaReserva": "4,9",
-      "avaliarUrl": ""
+      "avaliarUrl": "https://g.page/r/CdmducEbhRvCEAE/review",
+      "qrCode": "assets/img/marca/qr-avaliar-google.svg"
     }
   },
   "downloads": {

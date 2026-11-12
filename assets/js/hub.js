@@ -22,12 +22,12 @@
   }
   async function carregarLista() {
     if (DEMO) return reserva();
-    try { return (await api("hub")).itens || []; } catch (e) { return reserva(); }
+    try { return (await api("site?modulo=hub")).itens || []; } catch (e) { return reserva(); }
   }
   async function carregarItem(slug) {
     const local = reserva().find(x => x.slug === slug);
     if (DEMO) return local || null;
-    try { return (await api("hub?slug=" + encodeURIComponent(slug))).item; } catch (e) { return local || null; }
+    try { return (await api("site?modulo=hub&slug=" + encodeURIComponent(slug))).item; } catch (e) { return local || null; }
   }
 
   function capa(p, cls) {

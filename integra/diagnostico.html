@@ -55,7 +55,7 @@
   async function servidor() {
     $("srv-status").textContent = "Verificando…"; $("srv").innerHTML = "";
     try {
-      const r = await fetch("/api/diagnostico", { cache: "no-store" });
+      const r = await fetch("/api/site?modulo=diagnostico", { cache: "no-store" });
       if (r.status === 404) throw new Error("A pasta api/ não foi encontrada na Vercel. Confira se ela está no GitHub, na raiz do repositório.");
       const j = await r.json();
       let g = "", html = "";

@@ -25,7 +25,7 @@
   const local = editadas ? (x => x && { ...x, corpo: x.corpo_html })(editadas.find(p => p.protegido)) : (window.LTS_POLITICAS || []).find(p => p.protegido);
   desenhar(local);
   if (!(C.api && C.api.modoDemonstracao)) {
-    fetch(C.api.base + "politicas").then(r => r.json()).then(j => {
+    fetch(C.api.base + "site?modulo=politicas").then(r => r.json()).then(j => {
       const p = j && j.ok && (j.politicas || []).find(x => x.protegido && x.corpo);
       if (p) desenhar(p);
     }).catch(() => {});

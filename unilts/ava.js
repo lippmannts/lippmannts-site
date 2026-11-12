@@ -6,6 +6,10 @@
 (function () {
   "use strict";
   const C = window.LTS_CONFIG;
+  /* convite para avaliar a LIPPMANN no Google (QR Code oficial + link direto) ao concluir o curso */
+  const qrGoogle = () => { const G = (C.redes && C.redes.google) || {}; return G.avaliarUrl ? `<a class="qr-google" href="${G.avaliarUrl}" target="_blank" rel="noopener" data-track="google-avaliar:ava">
+    <img src="/assets/img/marca/qr-avaliar-google.svg" alt="QR Code para avaliar a LIPPMANN no Google" width="104" height="104" loading="lazy">
+    <span><b>Gostou do curso? Avalie a LIPPMANN no Google</b><small>Aponte a câmera do celular para o QR Code ou toque aqui. Leva menos de 1 minuto e ajuda outras empresas a nos encontrar.</small><em>★★★★★ Avaliar no Google</em></span></a>` : ""; };
   const DEMO = !!(C.api && C.api.modoDemonstracao);
   const app = document.getElementById("ava-app");
   const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -254,7 +258,7 @@
       alvo.innerHTML = m.certificado ? `<p class="ava-eyebrow">Certificado</p><h1>Parabéns, você foi aprovado!</h1>
         <div class="ava-cert-cartao">${IC.cert}<div><b>${esc(m.curso.titulo)}</b><span>Nota final ${nota(m.nota)} · Conclusão em ${dataBR(m.concluido_em)}</span><span>Código ${esc(m.certificado)}</span></div></div>
         <div class="ava-acoes"><a class="btn btn-primario" href="/unilts/certificado.html?c=${encodeURIComponent(m.certificado)}" target="_blank" rel="noopener">${IC.baixar} Abrir certificado (PDF)</a>
-        <a class="btn btn-contorno" href="/validar.html?c=${encodeURIComponent(m.certificado)}" target="_blank" rel="noopener">Validar autenticidade</a></div>`
+        <a class="btn btn-contorno" href="/validar.html?c=${encodeURIComponent(m.certificado)}" target="_blank" rel="noopener">Validar autenticidade</a></div>${qrGoogle()}`
         : `<p class="ava-eyebrow">Certificado</p><h1>Certificado bloqueado</h1><p class="ava-lead">O certificado é liberado automaticamente quando você é aprovado na avaliação, com nota mínima ${nota(m.curso.nota_corte)}.</p>`;
     }
     protegerConteudo(alvo);
@@ -326,7 +330,7 @@
         <h1>${r.aguardando_pratica ? "Teoria aprovada!" : r.aprovado ? "Aprovado!" : "Não foi desta vez"}</h1>
         <p>${r.acertos} de ${r.total} questões corretas · nota mínima ${nota(r.nota_corte)}.</p>
         <p>${r.aguardando_pratica ? "Agora falta a avaliação prática presencial com o instrutor. O certificado é emitido após a prática." : r.aprovado ? "Seu certificado já está disponível." : r.restantes ? `Revise as aulas e tente novamente. Você ainda tem ${r.restantes} ${r.restantes === 1 ? "tentativa" : "tentativas"}.` : "Você utilizou todas as tentativas. A coordenação entrará em contato."}</p>
-        <div class="ava-acoes" style="justify-content:center">${r.aprovado && r.certificado ? `<a class="btn btn-primario" href="/unilts/certificado.html?c=${encodeURIComponent(r.certificado)}" target="_blank" rel="noopener">${IC.cert} Abrir certificado</a>` : ""}<a class="btn btn-contorno" href="#c/${m.id}">Voltar ao curso</a></div></div>`;
+        <div class="ava-acoes" style="justify-content:center">${r.aprovado && r.certificado ? `<a class="btn btn-primario" href="/unilts/certificado.html?c=${encodeURIComponent(r.certificado)}" target="_blank" rel="noopener">${IC.cert} Abrir certificado</a>` : ""}<a class="btn btn-contorno" href="#c/${m.id}">Voltar ao curso</a></div>${r.aprovado ? qrGoogle() : ""}</div>`;
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
   }

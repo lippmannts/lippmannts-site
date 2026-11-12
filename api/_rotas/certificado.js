@@ -1,7 +1,7 @@
 /* GET /api/certificado?c=CODIGO · validação pública de certificados UniLTS (QR Code)
    Mostra apenas o necessário para conferência; o CPF aparece mascarado (LGPD). */
-const U = require("./_lib/util");
-const N = require("./_lib/uni");
+const U = require("../_lib/util");
+const N = require("../_lib/uni");
 
 module.exports = async (req, res) => {
   if (!U.apenasMetodo(req, res, "GET")) return;

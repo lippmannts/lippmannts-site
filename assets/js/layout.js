@@ -139,6 +139,9 @@
               <li><a href="${C.redes.linkedin.url}" target="_blank" rel="noopener" data-track="linkedin">LinkedIn · ${C.redes.linkedin.exibicao}</a></li>
               <li><a href="${C.redes.google.url}" target="_blank" rel="noopener" data-track="google">${C.redes.google.exibicao}</a></li>
             </ul>
+            ${C.redes.google.avaliarUrl ? `<a class="qr-google qr-google-rodape" href="${C.redes.google.avaliarUrl}" target="_blank" rel="noopener" data-track="google-avaliar:rodape">
+              <img src="/assets/img/marca/qr-avaliar-google.svg" alt="QR Code para avaliar a LIPPMANN no Google" width="84" height="84" loading="lazy">
+              <span><b>Avalie-nos no Google</b><small>Aponte a câmera do celular ou toque aqui</small></span></a>` : ""}
           </div>
           <div>
             <h4>Contato</h4>
@@ -264,7 +267,7 @@
     const dados = {};
     fd.forEach((v, k) => { if (!(v instanceof File)) dados[k] = v; });
     try {
-      const r = await fetch(C.api.base + "registrar", { method: "POST", body: JSON.stringify(dados), headers: { "Content-Type": "application/json" }, credentials: "same-origin" });
+      const r = await fetch(C.api.base + "site?modulo=registrar", { method: "POST", body: JSON.stringify(dados), headers: { "Content-Type": "application/json" }, credentials: "same-origin" });
       const j = await r.json().catch(() => ({}));
       return { ok: r.ok && j.ok !== false, mensagem: j.mensagem, protocolo: j.protocolo, chave: j.chave };
     } catch (e) {
@@ -274,7 +277,7 @@
 
   /* Envia um arquivo direto ao Supabase Storage usando o endereço temporário gerado em /api/upload
      (ou pelo painel). Retorna o caminho gravado. */
-  async function enviarArquivo(arquivo, rota = "upload", extras = {}) {
+  async function enviarArquivo(arquivo, rota = "site?modulo=upload", extras = {}) {
     const r = await fetch(C.api.base + rota, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ nome: arquivo.name, tamanho: arquivo.size, ...extras }), credentials: "same-origin" });
     const j = await r.json().catch(() => ({}));
     if (!r.ok || !j.ok) throw new Error(j.mensagem || "Não foi possível preparar o envio do arquivo.");
@@ -300,8 +303,8 @@
     if (!fila.length || DEMO) return;
     const lote = JSON.stringify(fila.splice(0));
     try {
-      if (navigator.sendBeacon) navigator.sendBeacon(C.api.base + "evento", new Blob([lote], { type: "application/json" }));
-      else fetch(C.api.base + "evento", { method: "POST", body: lote, headers: { "Content-Type": "application/json" }, keepalive: true });
+      if (navigator.sendBeacon) navigator.sendBeacon(C.api.base + "site?modulo=evento", new Blob([lote], { type: "application/json" }));
+      else fetch(C.api.base + "site?modulo=evento", { method: "POST", body: lote, headers: { "Content-Type": "application/json" }, keepalive: true });
     } catch (e) {}
   }
   window.LTS_API = { registrar, evento, visitante, enviarArquivo };

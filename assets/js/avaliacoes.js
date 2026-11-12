@@ -1,4 +1,4 @@
-/* LIPPMANN · carrossel de avaliações (Google Places API via /api/avaliacoes, com depoimentos de reserva) */
+/* LIPPMANN · carrossel de avaliações (Google Places API via /api/site?modulo=avaliacoes, cache de 24 h no servidor; depoimentos de reserva) */
 (function () {
   const C = window.LTS_CONFIG || {}, G = (C.redes && C.redes.google) || {}, DEMO = C.api && C.api.modoDemonstracao;
   const $ = id => document.getElementById(id);
@@ -8,7 +8,7 @@
   const estrelas = (n, cls = "") => `<span class="aval-estrelas ${cls}" role="img" aria-label="${String(n).replace(".", ",")} de 5 estrelas">${[1, 2, 3, 4, 5].map(i => `<i class="${n >= i ? "cheia" : n >= i - .5 ? "meia" : ""}">★</i>`).join("")}</span>`;
   const iniciais = n => String(n || "?").split(/\s+/).filter(Boolean).slice(0, 2).map(x => x[0]).join("").toUpperCase();
   const dataBR = d => d ? new Date(d).toLocaleDateString(document.documentElement.lang || "pt-BR", { day: "2-digit", month: "long", year: "numeric" }) : "";
-  avaliar.href = G.avaliarUrl || G.url || "#";
+  avaliar.href = G.avaliarUrl || "https://g.page/r/CdmducEbhRvCEAE/review";   // link oficial de avaliação (sempre este)
   let atual = 0, timer = null;
 
   function cards() { return [...trilho.querySelectorAll(".aval-card")]; }
@@ -38,7 +38,7 @@
     montarPontos(); reiniciar();
   }
   if (DEMO) return reserva();
-  fetch((C.api && C.api.base || "/api/") + "avaliacoes").then(r => r.json()).then(j => {
+  fetch((C.api && C.api.base || "/api/") + "site?modulo=avaliacoes").then(r => r.json()).then(j => {
     if (!j || !j.ok || !j.reviews || !j.reviews.length) return reserva();
     trilho.innerHTML = j.reviews.map(r => `<figure class="aval-card">
       <div class="aval-autor">${r.foto ? `<img class="aval-avatar" src="${esc(r.foto)}" alt="" width="48" height="48" loading="lazy" referrerpolicy="no-referrer">` : `<span class="aval-avatar">${esc(iniciais(r.nome))}</span>`}
@@ -46,7 +46,6 @@
       <blockquote translate="no" lang="pt-BR"><p>${esc(r.texto).replace(/\n+/g, "</p><p>")}</p></blockquote>
       ${r.link ? `<a class="aval-ver" href="${esc(r.link)}" target="_blank" rel="noopener">Ver no Google</a>` : ""}</figure>`).join("");
     if (j.nota) { notaEl.hidden = false; notaEl.innerHTML = `<b>${String(j.nota.toFixed(1)).replace(".", ",")}</b>${estrelas(j.nota, "grande")}<small>${j.total ? `${j.total} avaliações no Google` : "no Google"}</small>`; }
-    if (j.avaliar) avaliar.href = j.avaliar;
     fonte.innerHTML = `Avaliações reais publicadas no perfil oficial no <a href="${esc(j.url || G.url || "#")}" target="_blank" rel="noopener">Google</a>, atualizadas automaticamente.`;
     montarPontos(); reiniciar();
   }).catch(reserva);

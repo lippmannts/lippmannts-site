@@ -171,7 +171,7 @@
 
   render();
   if (!(C.api && C.api.modoDemonstracao)) {
-    fetch(C.api.base + "materiais").then(r => r.ok ? r.json() : null).then(j => {
+    fetch(C.api.base + "site?modulo=materiais").then(r => r.ok ? r.json() : null).then(j => {
       if (j && j.ok && Array.isArray(j.materiais) && j.materiais.length) { MATS = j.materiais; render(); }
     }).catch(() => {});
   }

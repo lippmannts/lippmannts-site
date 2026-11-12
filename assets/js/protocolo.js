@@ -9,7 +9,7 @@
   let atual = null;
   async function chamar(corpo) {
     if (DEMO && window.LTS_OUV_DEMO) return window.LTS_OUV_DEMO.consultar(corpo.protocolo, corpo.chave, corpo.acao === "complementar" ? corpo.texto : undefined);
-    try { const r = await fetch(C.api.base + "protocolo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) }); return await r.json(); }
+    try { const r = await fetch(C.api.base + "site?modulo=protocolo", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(corpo) }); return await r.json(); }
     catch (e) { return { ok: false, mensagem: "Não foi possível consultar agora. Tente novamente." }; }
   }
   function desenhar(p) {

@@ -1,6 +1,6 @@
 /* POST /api/evento · estatísticas de navegação (só com consentimento do visitante) */
-const { db } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db } = require("../_lib/supabase");
+const U = require("../_lib/util");
 
 const TIPOS = ["pageview", "tempo", "clique", "download", "arquivo", "ficha", "material", "video", "solucao", "whatsapp-proposta"];
 

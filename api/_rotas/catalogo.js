@@ -1,7 +1,7 @@
 /* GET /api/catalogo · treinamentos ativos (editados no L³ INTEGRA › Treinamentos)
    GET /api/catalogo?tipo=solucoes · soluções ativas e grupos (L³ INTEGRA › Soluções) */
-const { db, configGet } = require("./_lib/supabase");
-const U = require("./_lib/util");
+const { db, configGet } = require("../_lib/supabase");
+const U = require("../_lib/util");
 
 module.exports = async (req, res) => {
   if (!U.apenasMetodo(req, res, "GET")) return;
