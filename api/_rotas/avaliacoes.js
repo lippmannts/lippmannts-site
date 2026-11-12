@@ -16,6 +16,7 @@
    Variáveis da Vercel:
      GOOGLE_PLACES_API_KEY  (obrigatória · Places API (New) ativada no projeto da chave)
      GOOGLE_PLACE_ID        (opcional · padrão: ChIJD_H4-aMgJ1wR2Z25wRuFG8I)
+   Comentários: a cópia só é gravada (e só é usada) se tiver pelo menos 1 avaliação.
    ===================================================================== */
 const PLACE_ID_PADRAO = "ChIJD_H4-aMgJ1wR2Z25wRuFG8I";
 const FICHA = "CdmducEbhRvCEAE";
@@ -25,7 +26,7 @@ const PERFIL = "https://g.page/r/" + FICHA;
 const CHAVE_CACHE = "google_avaliacoes_cache";
 const VALIDADE = 24 * 60 * 60 * 1000;
 const API = "https://places.googleapis.com/v1/places/";
-const CAMPOS = "rating,userRatingCount,reviews";
+const CAMPOS = "rating,userRatingCount,reviews.name,reviews.rating,reviews.text,reviews.originalText,reviews.authorAttribution,reviews.relativePublishTimeDescription,reviews.publishTime";
 
 /* limpa variáveis coladas com espaços, quebras de linha ou aspas */
 const limparEnv = (v) => String(v || "").replace(/[\s"'`]/g, "");
@@ -62,8 +63,8 @@ function dica(status, msg, motivo) {
 }
 
 /* ---------- Place Details (New) ---------- */
-async function consultarGoogle(chave, placeId) {
-  const url = API + encodeURIComponent(placeId) + "?languageCode=pt-BR&regionCode=BR";
+async function consultarGoogle(chave, placeId, idioma) {
+  const url = API + encodeURIComponent(placeId) + (idioma ? "?languageCode=" + idioma : "");
   let r, texto;
   try {
     const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 9000);
@@ -79,20 +80,21 @@ async function consultarGoogle(chave, placeId) {
     const motivo = (er.details || []).map((d) => d.reason || (d.metadata && d.metadata.service) || "").filter(Boolean).join(", ");
     return { ok: false, erro: { status: r.status, codigo: er.status || "", mensagem: er.message || j.bruto || r.statusText, motivo, detalhes: er.details || null, dica: dica(r.status, er.message, motivo + " " + (er.status || "")) } };
   }
-  const reviews = (j.reviews || []).map((x) => {
-    const a = x.authorAttribution || {};
+  const brutos = Array.isArray(j.reviews) ? j.reviews : [];
+  const reviews = brutos.map((r) => {
+    const a = r.authorAttribution || {};
     return {
       nome: a.displayName || "Cliente Google",
       foto: a.photoUri || "",
       perfil: a.uri || "",
-      nota: Number(x.rating) || 5,
-      relativo: x.relativePublishTimeDescription || "",
-      data: x.publishTime || null,
-      texto: (x.text && x.text.text) || (x.originalText && x.originalText.text) || "",
-      link: x.googleMapsUri || "",
+      nota: Number(r.rating) || 5,
+      relativo: r.relativePublishTimeDescription || "",
+      data: r.publishTime || null,
+      texto: (r.text && r.text.text) || (r.originalText && r.originalText.text) || "",
+      id: r.name || "",
     };
-  }).filter((x) => x.texto);
-  return { ok: true, dados: { nome: NOME, nota: typeof j.rating === "number" ? j.rating : null, total: Number(j.userRatingCount) || 0, reviews, url: PERFIL, avaliar: AVALIAR } };
+  });   // avaliações só com estrelas (sem texto) também entram
+  return { ok: true, brutos: brutos.length, dados: { nome: NOME, nota: typeof j.rating === "number" ? j.rating : null, total: Number(j.userRatingCount) || 0, reviews, url: PERFIL, avaliar: AVALIAR } };
 }
 
 /* ---------- resposta ---------- */
@@ -119,7 +121,7 @@ module.exports = async function avaliacoes(req, res) {
     if (!chave) return responder(res, { ok: false, configurado: false, erro_google: { status: 0, mensagem: "Variável GOOGLE_PLACES_API_KEY vazia ou ausente nesta implantação.", dica: "Vercel › Settings › Environment Variables › marque Production › Redeploy." } });
 
     const lido = await lerCache();
-    const cache = lido && lido.dados && (!lido.place_id || lido.place_id === placeId) ? lido : null;
+    const cache = lido && lido.dados && Array.isArray(lido.dados.reviews) && lido.dados.reviews.length && (!lido.place_id || lido.place_id === placeId) ? lido : null;   // cópia sem comentários é ignorada
     const agora = Date.now();
 
     if (autorizado(q.get("diagnostico"))) {
@@ -131,10 +133,19 @@ module.exports = async function avaliacoes(req, res) {
       return responder(res, Object.assign({ ok: true, cache: true, atualizado: new Date(cache.em).toISOString() }, cache.dados), CDN_OK);
     }
 
-    const r = await consultarGoogle(chave, placeId);
-    if (r.ok) {
+    let r = await consultarGoogle(chave, placeId, "pt-BR");
+    if (r.ok && !r.dados.reviews.length) {   // sem comentários em pt-BR: tenta sem idioma (o Google devolve no idioma original)
+      const r2 = await consultarGoogle(chave, placeId, "");
+      if (r2.ok && r2.dados.reviews.length) r = r2;
+    }
+    if (r.ok && r.dados.reviews.length) {
       const gravou = await gravarCache({ em: agora, place_id: placeId, dados: r.dados });
       return responder(res, Object.assign({ ok: true, cache: false, cache_gravado: gravou, atualizado: new Date(agora).toISOString() }, r.dados), CDN_OK);
+    }
+    if (r.ok) {   // nota e total vieram, mas nenhum comentário: NÃO grava cache (tenta de novo na próxima visita)
+      console.warn("avaliacoes: Google respondeu sem comentários (reviews brutos: " + r.brutos + ")");
+      if (cache) return responder(res, Object.assign({ ok: true, cache: true, atualizado: new Date(cache.em).toISOString() }, cache.dados));
+      return responder(res, Object.assign({ ok: true, cache: false, cache_gravado: false, aviso: "O Google devolveu a nota e o total, mas nenhum comentário. Nada foi gravado no cache.", reviews_brutos: r.brutos }, r.dados));
     }
 
     console.error("avaliacoes: Google " + r.erro.status + " " + r.erro.codigo + ": " + r.erro.mensagem);

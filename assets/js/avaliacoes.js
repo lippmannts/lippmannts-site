@@ -153,7 +153,7 @@
       ? `<img class="aval-avatar" src="${esc(r.foto)}" alt="Foto de ${nome}" width="48" height="48" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-ini="${esc(iniciais(r.nome))}">`
       : `<span class="aval-avatar" aria-hidden="true">${esc(iniciais(r.nome))}</span>`;
     const quando = r.relativo || dataBR(r.data);
-    const paragrafos = esc(r.texto).split(/\n+/).filter(Boolean).map((p) => `<p>${p}</p>`).join("");
+    const paragrafos = esc(r.texto).split(/\n+/).filter(Boolean).map((p) => `<p>${p}</p>`).join("") || `<p>Avaliou a LIPPMANN com ${Number(r.nota) || 5} estrela${(Number(r.nota) || 5) > 1 ? "s" : ""} no Google.</p>`;
     return `<figure class="aval-card">
       <div class="aval-autor">${avatar}
         <div><b translate="no">${r.perfil ? `<a href="${esc(r.perfil)}" target="_blank" rel="noopener nofollow">${nome}</a>` : nome}</b>
