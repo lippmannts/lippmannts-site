@@ -631,3 +631,11 @@ alter table public.lipp_conversas enable row level security;
 alter table public.lipp_mensagens enable row level security;
 alter table public.lipp_agendamentos enable row level security;
 grant all on public.lipp_conversas, public.lipp_mensagens, public.lipp_agendamentos to service_role;
+
+-- =====================================================================
+-- v8 · visibilidade correta dos buckets (LGPD)
+-- O "insert ... on conflict do nothing" acima não altera um bucket que já existia.
+-- Estas linhas corrigem a visibilidade mesmo em buckets criados antes (ex.: curriculos criado como público).
+-- =====================================================================
+update storage.buckets set public = false where id in ('curriculos', 'evidencias') and public is distinct from false;
+update storage.buckets set public = true  where id in ('materiais', 'publico')     and public is distinct from true;

@@ -1,4 +1,11 @@
-# Site LIPPMANN + L³ INTEGRA · GitHub + Vercel + Supabase · v7 DEFINITIVO (Fases 1 a 7)
+# Site LIPPMANN + L³ INTEGRA · GitHub + Vercel + Supabase · v8 (Fases 1 a 7 + ajustes de produção)
+
+## Novidades da v8 (ajustes de produção)
+
+- **Avaliações do Google:** consulta direta à Places API (New) v1 com o Place ID oficial `ChIJD_H4-aMgJ1wR2Z25wRuFG8I` (padrão no código; a variável `GOOGLE_PLACE_ID` só é necessária se um dia o ID mudar). Mostra nota geral, total de avaliações, foto real do autor, estrelas, tempo relativo ("há 2 semanas") e o texto de cada cliente. Cache de 24 h na tabela `config` (chave `google_avaliacoes_cache`). Teste: abra `https://lippmannts.com/api/site?modulo=avaliacoes`.
+- **Bucket `curriculos` privado (LGPD):** o `schema.sql` agora força `public = false` em `curriculos` e `evidencias` mesmo se o bucket já existia como público. Rode o `schema.sql` inteiro de novo no SQL Editor; depois abra o diagnóstico e o alerta some.
+- **Funções da Vercel:** 7 arquivos na raiz de `api/` (site, portal, uni, pagamento, lipp, painel, cron). Módulos em `api/_rotas/` e código comum em `api/_lib/`.
+- **Domínio oficial:** canonical, Open Graph, sitemap, robots, e-mails, links de certificado (QR Code) e retorno do Mercado Pago usam `https://lippmannts.com`. Para outro endereço, crie a variável `URL_SITE` na Vercel.
 
 ## Ajuste da v7 para o plano gratuito da Vercel (Hobby)
 
@@ -7,7 +14,7 @@
 - **Ao substituir a pasta no GitHub Desktop, apague os arquivos antigos da pasta `api/`** (catalogo.js, hub.js, empresa.js...). O jeito mais seguro: apague a pasta `api/` inteira do repositório e cole a nova. Se os antigos ficarem lá, a Vercel volta a contar 19 funções.
 
 ### Avaliações do Google (perfil oficial · ficha CdmducEbhRvCEAE)
-- O carrossel busca as avaliações reais da "Lippmann Treinamentos & Soluções". O site descobre sozinho o Place ID a partir do identificador oficial da ficha e guarda no banco; **só precisa da variável `GOOGLE_PLACES_API_KEY`** (`GOOGLE_PLACE_ID` é opcional).
+- O carrossel busca as avaliações reais da "Lippmann Treinamentos & Soluções". O Place ID oficial (`ChIJD_H4-aMgJ1wR2Z25wRuFG8I`) já vem no código; **só precisa da variável `GOOGLE_PLACES_API_KEY`** (`GOOGLE_PLACE_ID` é opcional).
 - **Cache de 24 horas:** o Google é consultado no máximo 1 vez por dia (cerca de 30 consultas por mês). A cópia fica na tabela `config` do Supabase e a Vercel ainda guarda a resposta por 1 hora. Se o Google falhar, o site continua mostrando a última cópia boa.
 - O botão "Avalie-nos no Google" e o QR Code apontam sempre para o link oficial `https://g.page/r/CdmducEbhRvCEAE/review`. O QR Code aparece na seção de avaliações, no rodapé de todas as páginas e na tela de conclusão de curso do AVA.
 - Para criar a chave: Google Cloud Console › projeto › *APIs e serviços › Biblioteca* › ative **Places API (New)** › *Credenciais › Criar credenciais › Chave de API* › em *Restrições da API*, deixe só a Places API (New). Configure também um alerta de orçamento (Faturamento › Orçamentos e alertas) de R$ 1 para ter certeza de que nada é cobrado.
@@ -48,7 +55,7 @@ Todas são **opcionais**: sem elas o site funciona, com as alternativas indicada
 **c) Avaliações do Google** · sem ela, aparecem os depoimentos fixos com a nota 4,9.
 1. No mesmo projeto do Google Cloud, ative a **Places API (New)** e crie uma *Chave de API* (restrinja-a à Places API).
 2. Descubra o Place ID da LIPPMANN em developers.google.com/maps/documentation/places/web-service/place-id (busque "Lippmann Treinamentos & Soluções").
-3. Na Vercel: `GOOGLE_PLACES_API_KEY` (o `GOOGLE_PLACE_ID` é opcional: o site o descobre sozinho pela ficha oficial). A API devolve até 5 avaliações (as mais relevantes) e o site consulta o Google no máximo 1 vez a cada 24 horas.
+3. Na Vercel: `GOOGLE_PLACES_API_KEY` (o `GOOGLE_PLACE_ID` é opcional: o Place ID oficial já vem no código). A API devolve até 5 avaliações (as mais relevantes) e o site consulta o Google no máximo 1 vez a cada 24 horas.
 
 Depois de criar as variáveis, faça *Redeploy*. O diagnóstico (`/integra/diagnostico.html`) mostra as novas tabelas.
 

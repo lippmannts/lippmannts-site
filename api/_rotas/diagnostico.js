@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
     add("Variáveis da Vercel", "CRON_SECRET", (process.env.CRON_SECRET || "").length >= 16, process.env.CRON_SECRET ? "Configurada" : "Não encontrada", "Protege a tarefa diária (prazos de 30 dias e revogação de 12 meses)."); }
   add("Variáveis da Vercel", "LIPP · IA (Claude)", !!process.env.ANTHROPIC_API_KEY, process.env.ANTHROPIC_API_KEY ? `Configurada · modelo ${process.env.LIPP_MODELO || "claude-haiku-5-5"}` : "Sem chave: o LIPP responde pela base de conhecimento do site", "Opcional. Cadastre ANTHROPIC_API_KEY (console.anthropic.com).");
   add("Variáveis da Vercel", "Google Agenda + Meet", !!(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN), process.env.GOOGLE_REFRESH_TOKEN ? `Agenda: ${process.env.GOOGLE_CALENDAR_ID || "primary"}` : "Não conectada: reuniões ficam a confirmar pela equipe", "Opcional. Veja o passo a passo no LEIA-ME (OAuth Playground).");
-  add("Variáveis da Vercel", "Avaliações do Google", !!process.env.GOOGLE_PLACES_API_KEY, process.env.GOOGLE_PLACES_API_KEY ? "Configurada · ficha oficial CdmducEbhRvCEAE · cache de 24 h" : "Não configurada: o carrossel mostra os depoimentos fixos", "Opcional. Cadastre GOOGLE_PLACES_API_KEY (Places API New).");
+  add("Variáveis da Vercel", "Avaliações do Google", !!process.env.GOOGLE_PLACES_API_KEY, process.env.GOOGLE_PLACES_API_KEY ? `Configurada · Place ID ${process.env.GOOGLE_PLACE_ID || "ChIJD_H4-aMgJ1wR2Z25wRuFG8I (padrão)"} · cache de 24 h` : "Não configurada: o carrossel mostra os depoimentos fixos", "Opcional. Cadastre GOOGLE_PLACES_API_KEY (Places API New).");
 
   /* 2. Banco de dados */
   if (url && secreta) {
