@@ -1,7 +1,8 @@
 /* =====================================================================
    LIPPMANN · carrossel de avaliações (página inicial)
    - Fonte: /api/site?modulo=avaliacoes (Google Places API New, cache de 24 h no servidor).
-   - Enquanto a API não responde "ok": true, mostra os depoimentos de reserva do index.html.
+   - Enquanto a API não traz comentários, mostra os depoimentos curados do index.html,
+     mas sempre com a nota real e o total oficial de avaliações devolvidos pela API.
    - Carrossel circular: setas ‹ ›, bolinhas, arrastar com o dedo/mouse, teclado e troca automática
      (6,5 s; pausa ao passar o mouse ou tocar). Funciona com qualquer número de cartões e
      gira mesmo quando todos cabem na tela (desktop: 3 por vez · tablet: 2 · celular: 1).
@@ -162,6 +163,16 @@
       ${r.link ? `<a class="aval-ver" href="${esc(r.link)}" target="_blank" rel="noopener">Ver no Google</a>` : ""}</figure>`;
   }
 
+  /* nota real e total oficial do Google (vale mesmo quando a API não devolve os comentários) */
+  function notaGoogle(j) {
+    const nota = Number(j && j.nota);
+    if (!notaEl || !isFinite(nota) || nota <= 0) return false;
+    const total = Number(j.total) || 0;
+    notaEl.hidden = false;
+    notaEl.innerHTML = `<b>${nota.toFixed(1).replace(".", ",")}</b>${estrelas(nota, "grande")}<small><a href="${esc(j.url || G.url || AVALIAR)}" target="_blank" rel="noopener" style="color:inherit">${total ? `${total.toLocaleString("pt-BR")} ${total === 1 ? "avaliação" : "avaliações"} no Google` : "no Google"}</a></small>`;
+    return true;
+  }
+
   function aplicarGoogle(j) {
     parar(); ocupado = false;
     faixa.style.transform = ""; faixa.classList.remove("animar", "trocar");
@@ -171,10 +182,7 @@
       im.addEventListener("error", trocar, { once: true });
       if (im.complete && im.naturalWidth === 0 && im.getAttribute("src")) trocar();
     });
-    if (typeof j.nota === "number" && notaEl) {
-      notaEl.hidden = false;
-      notaEl.innerHTML = `<b>${j.nota.toFixed(1).replace(".", ",")}</b>${estrelas(j.nota, "grande")}<small>${j.total ? `${Number(j.total).toLocaleString("pt-BR")} avaliações no Google` : "no Google"}</small>`;
-    }
+    notaGoogle(j);
     if (fonte) fonte.innerHTML = `Avaliações reais publicadas no perfil oficial da LIPPMANN no <a href="${esc(j.url || G.url || AVALIAR)}" target="_blank" rel="noopener">Google</a>, atualizadas automaticamente.`;
     atual = 0; iniciar();
   }
@@ -186,7 +194,8 @@
   fetch((C.api && C.api.base || "/api/") + "site?modulo=avaliacoes", { headers: { Accept: "application/json" }, cache: "no-store" })
     .then((r) => r.json())
     .then((j) => {
-      if (j && j.ok && Array.isArray(j.reviews) && j.reviews.length) aplicarGoogle(j);
+      if (j && j.ok && Array.isArray(j.reviews) && j.reviews.length) aplicarGoogle(j);   // comentários reais
+      else if (j && j.ok && notaGoogle(j)) { if (fonte) fonte.innerHTML = `Nota e total de avaliações atualizados automaticamente pelo perfil oficial da LIPPMANN no <a href="${esc(j.url || G.url || AVALIAR)}" target="_blank" rel="noopener">Google</a>. Depoimentos selecionados de clientes.`; }   // só nota e total: mantém os depoimentos curados
       else if (j && j.erro_google) console.warn("Avaliações do Google indisponíveis:", j.erro_google);
     })
     .catch((e) => console.warn("Avaliações do Google:", e));
